@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ product.name }} - Espace pièces traceurs{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-5 my-auto text-right h-100 w-100">
+            <img src="/assets/img/{{ product.illustration }}"
+                 alt ="{{ product.name }}"
+                 class="img-fluid"
+            >
+        </div>
+        <div class="col-md-5 my-lg-0">
+            <h3>
+                {{ product.name }}
+            </h3>
+            <p>{{ product.subtitle }}</p>
+            <span class="product-page-price">{{ (product.price /100) | number_format(2, ',' , '.')}} € </span>
+            <hr>
+            <p>
+                {{ product.description |nl2br }}
+
+            </p>
+            <a href="{{ path('app_add_to_cart', {'id': product.id}) }}" class="btn btn-primary"> Ajouter au panier</a>
+        </div>
+    </div>
+{% endblock %}
