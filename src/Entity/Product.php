@@ -65,6 +65,9 @@ class Product
     #[ORM\JoinColumn(nullable: false)]
     private ?Marque $marque = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $poids = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -248,6 +251,18 @@ class Product
     public function setMarque(?Marque $marque): self
     {
         $this->marque = $marque;
+
+        return $this;
+    }
+
+    public function getPoids(): ?string
+    {
+        return $this->poids;
+    }
+
+    public function setPoids(string $poids): self
+    {
+        $this->poids = $poids;
 
         return $this;
     }

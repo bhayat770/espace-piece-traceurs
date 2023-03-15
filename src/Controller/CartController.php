@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Classe\Cart;
 use App\Entity\Product;
+use App\Service\ShippingService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,9 +22,18 @@ class CartController extends AbstractController
 
     #[Route('/mon-panier', name: 'app_cart')]
 
-    public function index(Cart $cart): Response
+    public function index(Cart $cart, SessionInterface $session, ShippingService $shippingService): Response
     {
+        // Récupère le poids total du panier depuis la session
+        $totalWeight = $session->get('totalWeight');
+
+        // Récupère le pays de destination depuis la session (ou un formulaire)
+        $pays = 'Italy';
+
+        // Récupère les frais d'expédition pour le pays et le poids total
+        $shippingPrice = $shippingService->getShippingPrice($pays, $totalWeight);
         return $this->render('cart/index.html.twig', [
+            'shippingPrice' => $shippingPrice,
             'cart'=>$cart->getFull()
         ]);
     }

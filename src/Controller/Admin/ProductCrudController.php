@@ -13,6 +13,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
@@ -21,7 +22,10 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
+use EasyCorp\Bundle\EasyAdminBundle\Field\FieldAbstractType;
+
 
 class ProductCrudController extends AbstractCrudController
 {
@@ -32,6 +36,7 @@ class ProductCrudController extends AbstractCrudController
     {
         return Product::class;
     }
+
 
     public function configureActions(Actions $actions): Actions
     {
@@ -53,6 +58,14 @@ class ProductCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
+        $weightChoices = [
+            '0.25 kg' => '1',
+            '0.5 kg' => '2',
+            '1 kg' => '3',
+            '2 kg' => '4',
+            '3 kg' => '5',
+            // Ajoutez les poids que vous voulez ici
+        ];
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('name', 'Nom'),
@@ -74,9 +87,12 @@ class ProductCrudController extends AbstractCrudController
                 ->hideOnForm(),
             MoneyField::new('price', 'Prix')->setCurrency('EUR'),
             TextEditorField::new('description'),
+
             DateTimeField::new('updatedAt')->hideOnForm(),
             DateTimeField::new('createdAt')->hideOnForm(),
             BooleanField::new('active', 'Activé'),
+            ChoiceField::new('poids', 'Poids')->setChoices($weightChoices),
+
         ];
     }
 /*

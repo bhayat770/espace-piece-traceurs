@@ -50,7 +50,8 @@
                 <img src="{{ asset('assets/img/icones/trash.png') }}" height="18px" alt="Supprimer mon produit">
             </a>
         </td>
-                </tr>
+
+            </tr>
             {% set total = total + (product.product.price * product.quantity ) %}
         {% endfor %}
         </tbody>
@@ -60,7 +61,7 @@
            Nombre de produits : </b>{{ cart | length }}<br>
         <b> Total de mon panier : </b>{{ (total / 100) | number_format(2, ',' , '.') }} € <br>
 
-        <a href="" class="btn btn-success mt-3 ">Valider mon panier</a>
+        <a href="{{ path('app_order') }}" class="btn btn-success mt-3 ">Valider mon panier</a>
     </div>
     {% else %}
         <hr>
