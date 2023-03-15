@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes adresses - Espace pièces traceurs{% endblock %}
+
+{% block content %}
+    <a href="{{ path('app_account_adresse_add') }}" class="btn btn-info btn-sm float-right "> Ajouter une adresse</a>
+    <h1>Mes adresses</h1>
+    C'est dans cet espace que vous allez pouvoir gérer vos adresses
+    <a href="{{ path('app_account_adresse') }}"><br>Retour</a>
+    <hr>
+
+    {% if app.user.adresses | length ==0 %}
+        <p class="text-center">
+            Vous n'avez pas encore ajouté d'adresse à votre compte client.
+            Pour en ajouter une, <a href="adresse_form.html.twig"> cliquez-ici</a> !
+        </p>
+        {% else %}
+            <div class="row">
+            {% for adresse in app.user.adresses %}
+                <div class="col-md-3">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ adresse.name }}</h5>
+                            <p class="card-text">
+                                {{ adresse.adresse }},<br>
+                                {{ adresse.postal }} - {{ adresse.ville }} - {{ adresse.pays }}
+                            </p>
+                            <a href="{{ path('app_account_adresse_edit', {'id' : adresse.id}) }}" >Modifier</a> | <a href="{{ path('app_account_adresse_delete', {'id' : adresse.id }) }}" >Supprimer</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+    {% endif %}
+{% endblock %}
