@@ -3,13 +3,17 @@
 {% block title %}{{ product.name }} - Espace pièces traceurs{% endblock %}
 
 {% block content %}
+
+<main class="main">
+    <div class="container">
     <div class="row">
         <div class="col-md-5 my-auto text-right h-100 w-100">
-            <img src="/assets/img/{{ product.illustration }}"
+            <img src="/assets/images/hp/{{ product.illustration }}"
                  alt ="{{ product.name }}"
-                 class="img-fluid"
-            >
+                 class="img-fluid">
         </div>
+
+
         <div class="col-md-5 my-lg-0">
             <h3>
                 {{ product.name }}

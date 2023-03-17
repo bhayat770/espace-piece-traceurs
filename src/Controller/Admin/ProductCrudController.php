@@ -82,9 +82,8 @@ class ProductCrudController extends AbstractCrudController
                 ->onlyOnForms()
             ->hideOnForm(),
             ImageField::new('illustration')
-                ->setBasePath('/public/assets/img')
-                ->setUploadDir('public/assets/img')
-                ->hideOnForm(),
+                ->setBasePath('/public/assets/images/hp')
+                ->setUploadDir('public/assets/images/hp'),
             MoneyField::new('price', 'Prix')->setCurrency('EUR'),
             TextEditorField::new('description'),
 

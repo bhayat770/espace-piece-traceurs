@@ -40,5 +40,6 @@ class AccountPasswordController extends AbstractController
         return $this->render('account/password.html.twig',[
             'form'=>$form->createView()
         ]);
+
     }
 }

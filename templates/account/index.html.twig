@@ -12,4 +12,466 @@
     - <a href="{{ path('app_account_adresse') }}"> Gérer mes adresses</a><br/>
     - Mes commandes<br/>
     <hr>
+
+    <script>
+        WebFontConfig = {
+            google: { families: [ 'Open+Sans:300,400,600,700,800', 'Poppins:300,400,500,600,700', 'Shadows+Into+Light:400' ] }
+        };
+        ( function ( d ) {
+            var wf = d.createElement( 'script' ), s = d.scripts[ 0 ];
+            wf.src = 'assets/js/webfont.js';
+            wf.async = true;
+            s.parentNode.insertBefore( wf, s );
+        } )( document );
+    </script>
+
+    <!-- Plugins CSS File -->
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+
+    <!-- Main CSS File -->
+    <link rel="stylesheet" href="{{ asset('assets/css/style.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/fontawesome-free/css/all.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/simple-line-icons/css/simple-line-icons.min.css') }}">
+    </head>
+<main class="main">
+    <div class="page-header">
+        <div class="container d-flex flex-column align-items-center">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            Mon compte
+                        </li>
+                    </ol>
+                </div>
+            </nav>
+
+            <h1>Mon compte</h1>
+        </div>
+    </div>
+
+    <div class="container account-container custom-account-container">
+        <div class="row">
+            <div class="sidebar widget widget-dashboard mb-lg-0 mb-3 col-lg-3 order-0">
+                <h2 class="text-uppercase">Mon compte</h2>
+                <ul class="nav nav-tabs list flex-column mb-0" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="dashboard-tab" data-toggle="tab" href="#dashboard"
+                           role="tab" aria-controls="dashboard" aria-selected="true">Mon compte</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" id="order-tab" data-toggle="tab" href="#order" role="tab"
+                           aria-controls="order" aria-selected="true">Commandes</a>
+                    </li>
+
+                   <!-- <li class="nav-item">
+                        <a class="nav-link" id="download-tab" data-toggle="tab" href="#download" role="tab"
+                           aria-controls="download" aria-selected="false">Downloads</a>
+                    </li> -->
+
+                    <li class="nav-item">
+                        <a class="nav-link" id="address-tab" data-toggle="tab" href="#address" role="tab"
+                           aria-controls="address" aria-selected="false">Adresses</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" id="edit-tab" data-toggle="tab" href="#edit" role="tab"
+                           aria-controls="edit" aria-selected="false">Détails du compte</a>
+                    </li>
+                    <!--  <li class="nav-item">
+                        <a class="nav-link" id="shop-address-tab" data-toggle="tab" href="#shipping" role="tab"
+                           aria-controls="edit" aria-selected="false">Adresses de livraison</a>
+                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="wishlist.html">Wishlist</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-9 order-lg-last order-1 tab-content">
+                <div class="tab-pane fade show active" id="dashboard" role="tabpanel">
+                    <div class="dashboard-content">
+                        <p>
+                            Bonjour <strong class="text-dark">{{ app.user.firstname }}</strong>
+                        </p>
+
+
+                        <p>
+                            Depuis votre tableau de bord vous pouvez voir vos
+                            <a class="btn btn-link link-to-tab" href="#order">factures récentes</a>,
+                            gérer vos
+                            <a class="btn btn-link link-to-tab" href="{{ path('app_account_adresse') }}">adresses de livraison</a>, and
+                            <a class="btn btn-link link-to-tab" href="#edit">Modifier votre mot de passe </a>
+                        </p>
+
+                        <div class="mb-4"></div>
+
+                        <div class="row row-lg">
+                            <div class="col-6 col-md-4">
+                                <div class="feature-box text-center pb-4">
+                                    <a href="#order" class="link-to-tab"><i
+                                                class="sicon-social-dropbox"></i></a>
+                                    <div class="feature-box-content">
+                                        <h3>COMMANDES</h3>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-6 col-md-4">
+                                <div class="feature-box text-center pb-4">
+                                    <a href="{{ path('app_account_password') }}">
+                                        <i class="sicon-lock"></i>
+                                    </a>
+                                    <div class=" feature-box-content">
+                                        <h3>MODIFIER MON MOT DE PASSE</h3>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-6 col-md-4">
+                                <div class="feature-box text-center pb-4">
+                                    <a href="#address" class="link-to-tab"><i
+                                                class="sicon-location-pin"></i></a>
+                                    <div class="feature-box-content">
+                                        <h3>ADRESSES</h3>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-6 col-md-4">
+                                <div class="feature-box text-center pb-4">
+                                    <a href="#edit" class="link-to-tab"><i class="icon-user-2"></i></a>
+                                    <div class="feature-box-content p-0">
+                                        <h3>DETAILS DU COMPTE</h3>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-6 col-md-4">
+                                <div class="feature-box text-center pb-4">
+                                    <a href="wishlist.html"><i class="sicon-heart"></i></a>
+                                    <div class="feature-box-content">
+                                        <h3>WISHLIST</h3>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-6 col-md-4">
+                                <div class="feature-box text-center pb-4">
+                                    <a href="login.html"><i class="sicon-logout"></i></a>
+                                    <div class="feature-box-content">
+                                        <h3>DECONNEXION</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- End .row -->
+                    </div>
+                </div><!-- End .tab-pane -->
+
+                <div class="tab-pane fade" id="order" role="tabpanel">
+                    <div class="order-content">
+                        <h3 class="account-sub-title d-none d-md-block"><i
+                                    class="sicon-social-dropbox align-middle mr-3"></i>COMMANDES</h3>
+                        <div class="order-table-container text-center">
+                            <table class="table table-order text-left">
+                                <thead>
+                                <tr>
+                                    <th class="order-id">COMMANDES</th>
+                                    <th class="order-date">DATE</th>
+                                    <th class="order-status">STATUS</th>
+                                    <th class="order-price">TOTAL</th>
+                                    <th class="order-action">ACTIONS</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class="text-center p-0" colspan="5">
+                                        <p class="mb-5 mt-5">
+                                            No Order has been made yet.
+                                        </p>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <hr class="mt-0 mb-3 pb-2" />
+
+                            <a href="category.html" class="btn btn-dark">Go Shop</a>
+                        </div>
+                    </div>
+                </div><!-- End .tab-pane -->
+
+                <!--   <div class="tab-pane fade" id="download" role="tabpanel">
+                      <div class="download-content">
+                          <h3 class="account-sub-title d-none d-md-block"><i
+                                      class="sicon-cloud-download align-middle mr-3"></i>Downloads</h3>
+                          <div class="download-table-container">
+                              <p>No downloads available yet.</p> <a href="category.html" class="btn btn-primary text-transform-none mb-2">GO SHOP</a>
+                          </div>
+                      </div>
+                  </div>End .tab-pane -->
+
+                <div class="tab-pane fade" id="address" role="tabpanel">
+                    <h3 class="account-sub-title d-none d-md-block mb-1"><i class="sicon-location-pin align-middle mr-3"></i>Adresses</h3>
+                    <div class="addresses-content">
+                        <p class="mb-4">
+                            Ces adresses pourront être choisies lors de votre commande
+                        </p>
+
+                        <div class="row">
+                            <div class="col-md-10">
+
+                                <div class="row address-grid mt-5 mt-md-0">
+                                    <div class="col-md-12">
+                                        <div class="heading d-flex">
+                                            <h4 class="text-dark mb-0">
+                                                Adresses de livraison
+                                            </h4>
+                                        </div>
+                                    </div>
+
+                                    {% if app.user.adresses | length == 0 %}
+                                        <div class="col-md-12">
+                                            <p class="text-center">
+                                                Vous n'avez pas encore ajouté d'adresse à votre compte client. Pour en ajouter une, <a href="adresse_form.html.twig">cliquez-ici</a> !
+                                            </p>
+                                        </div>
+                                    {% else %}
+                                        {% for adresse in app.user.adresses %}
+                                            <div class="col-md-6 mb-5">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">{{ adresse.name }}</h5>
+                                                        <p class="card-text">
+                                                            {{ adresse.adresse }},<br>
+                                                            {{ adresse.postal }} - {{ adresse.ville }} - {{ adresse.pays }}
+                                                        </p>
+                                                        <div class="card-links">
+                                                            <a href="{{ path('app_account_adresse_edit', {'id' : adresse.id}) }}">Modifier</a> | <a href="{{ path('app_account_adresse_delete', {'id' : adresse.id }) }}">Supprimer</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+
+                                <a href="{{ path('app_account_adresse_add') }}" class="btn btn-default address-action link-to-tab">Ajouter une adresse</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="tab-pane fade" id="edit" role="tabpanel">
+                    <h3 class="account-sub-title d-none d-md-block mt-0 pt-1 ml-1"><i
+                                class="icon-user-2 align-middle mr-3 pr-1"></i>Détails du compte</h3>
+                    <div class="account-content">
+                        <form action="{{ path('app_account') }}" method="post">
+                        <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="acc-name">Prénom </label>
+                                        <input type="text" class="form-control" placeholder="{{ user.firstname }}"
+                                               id="acc-name" name="acc-name" value="{{ user.firstname }}" required readonly />
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="acc-lastname">Nom
+                                                    </label>
+                                        <input type="text" class="form-control" placeholder="{{ user.lastname }}"
+                                               id="acc-name" name="acc-name" value="{{ user.lastname }}" required readonly />
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group mb-4">
+                                <label for="acc-email">Adresse e-mail </label>
+                                <input type="email" class="form-control" id="acc-email" name="acc-email"
+                                       placeholder="{{ user.email }}" required readonly />
+                            </div>
+
+                        </form>
+                    </div>
+                </div><!-- End .tab-pane -->
+
+                <div class="tab-pane fade" id="billing" role="tabpanel">
+                    <div class="address account-content mt-0 pt-2">
+                        <h4 class="title">Billing address</h4>
+
+                        <form class="mb-2" action="#">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>First name <span class="required">*</span></label>
+                                        <input type="text" class="form-control" required />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Last name <span class="required">*</span></label>
+                                        <input type="text" class="form-control" required />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Company </label>
+                                <input type="text" class="form-control">
+                            </div>
+
+                            <div class="select-custom">
+                                <label>Country / Region <span class="required">*</span></label>
+                                <select name="orderby" class="form-control">
+                                    <option value="" selected="selected">British Indian Ocean Territory
+                                    </option>
+                                    <option value="1">Brunei</option>
+                                    <option value="2">Bulgaria</option>
+                                    <option value="3">Burkina Faso</option>
+                                    <option value="4">Burundi</option>
+                                    <option value="5">Cameroon</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Street address <span class="required">*</span></label>
+                                <input type="text" class="form-control"
+                                       placeholder="House number and street name" required />
+                                <input type="text" class="form-control"
+                                       placeholder="Apartment, suite, unit, etc. (optional)" required />
+                            </div>
+
+                            <div class="form-group">
+                                <label>Town / City <span class="required">*</span></label>
+                                <input type="text" class="form-control" required />
+                            </div>
+
+                            <div class="form-group">
+                                <label>State / Country <span class="required">*</span></label>
+                                <input type="text" class="form-control" required />
+                            </div>
+
+                            <div class="form-group">
+                                <label>Postcode / ZIP <span class="required">*</span></label>
+                                <input type="text" class="form-control" required />
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label>Phone <span class="required">*</span></label>
+                                <input type="number" class="form-control" required />
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label>Email address <span class="required">*</span></label>
+                                <input type="email" class="form-control" placeholder="editor@gmail.com"
+                                       required />
+                            </div>
+
+                            <div class="form-footer mb-0">
+                                <div class="form-footer-right">
+                                    <button type="submit" class="btn btn-dark py-4">
+                                        Save Address
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- End .tab-pane -->
+
+                <div class="tab-pane fade" id="shipping" role="tabpanel">
+                    <div class="address account-content mt-0 pt-2">
+                        <h4 class="title mb-3">Shipping Address</h4>
+
+                        <form class="mb-2" action="#">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>First name <span class="required">*</span></label>
+                                        <input type="text" class="form-control" required />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Last name <span class="required">*</span></label>
+                                        <input type="text" class="form-control" required />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Company </label>
+                                <input type="text" class="form-control">
+                            </div>
+
+                            <div class="select-custom">
+                                <label>Country / Region <span class="required">*</span></label>
+                                <select name="orderby" class="form-control">
+                                    <option value="" selected="selected">British Indian Ocean Territory
+                                    </option>
+                                    <option value="1">Brunei</option>
+                                    <option value="2">Bulgaria</option>
+                                    <option value="3">Burkina Faso</option>
+                                    <option value="4">Burundi</option>
+                                    <option value="5">Cameroon</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Street address <span class="required">*</span></label>
+                                <input type="text" class="form-control"
+                                       placeholder="House number and street name" required />
+                                <input type="text" class="form-control"
+                                       placeholder="Apartment, suite, unit, etc. (optional)" required />
+                            </div>
+
+                            <div class="form-group">
+                                <label>Town / City <span class="required">*</span></label>
+                                <input type="text" class="form-control" required />
+                            </div>
+
+                            <div class="form-group">
+                                <label>State / Country <span class="required">*</span></label>
+                                <input type="text" class="form-control" required />
+                            </div>
+
+                            <div class="form-group">
+                                <label>Postcode / ZIP <span class="required">*</span></label>
+                                <input type="text" class="form-control" required />
+                            </div>
+
+                            <div class="form-footer mb-0">
+                                <div class="form-footer-right">
+                                    <button type="submit" class="btn btn-dark py-4">
+                                        Save Address
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- End .tab-pane -->
+            </div><!-- End .tab-content -->
+        </div><!-- End .row -->
+    </div><!-- End .container -->
+
+    <div class="mb-5"></div><!-- margin -->
+</main><!-- End .main -->
+    <!-- Plugins JS File -->
+    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins.min.js') }}"></script>
+
+    <!-- Main JS File -->
+    <script src="{{ asset('assets/js/main.min.js') }}"></script>
+
+
+
 {% endblock %}

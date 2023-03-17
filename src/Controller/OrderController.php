@@ -55,7 +55,7 @@ class OrderController extends AbstractController
             $date = new \DateTimeImmutable();
             $carriers = $form->get('carriers')->getData();
             $delivery = $form->get('adresses')->getData();
-            $delivery_content = $delivery->getFirstName().''.$delivery->getLastName();
+            $delivery_content = $delivery->getFirstName().' '.$delivery->getLastName();
             $delivery_content .= '<br/>' .$delivery->getTelephone();
 
             if ($delivery->getSociete())
@@ -65,7 +65,7 @@ class OrderController extends AbstractController
 
             $delivery_content .= '<br/>' .$delivery->getAdresse();
             $delivery_content .= '<br/>' .$delivery->getPostal().$delivery->getVille();
-            $delivery_content .= '<br/>' .$delivery->getPays();
+            $delivery_content .= '<br/>' .$delivery->getPays($delivery_content);
 
 
             //enregistrer la commande
@@ -100,6 +100,7 @@ class OrderController extends AbstractController
                     'carrier'=>$carriers,
                     "delivery"=>$delivery_content
                 ]);
+
             }
 
          //   $this->entityManager->flush();
@@ -108,6 +109,5 @@ class OrderController extends AbstractController
         return $this->redirectToRoute('app_cart');
 
     }
-
 
 }
