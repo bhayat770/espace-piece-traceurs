@@ -1,0 +1,8 @@
+
+dphp:S103:"KSplit this 142 characters long line (which is greater than 120 authorized).(Ã¼şúÿÿÿÿ
+dphp:S103@"KSplit this 255 characters long line (which is greater than 120 authorized).(‹òà¶ÿÿÿÿÿ
+k	php:S18080"VRemove all space between the method name "findWithSearch" and the opening parenthesis.(®âÍ²
+J	php:S18084"6Put exactly one space after comma separated arguments.(’èã
+P	php:S1808@"6Put exactly one space after comma separated arguments.(‹òà¶ÿÿÿÿÿ
+8php:S125F"Remove this commented out code.(ÊÚ·áùÿÿÿÿ
+3php:S125U"Remove this commented out code.(òÕô
