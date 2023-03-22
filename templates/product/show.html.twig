@@ -8,10 +8,10 @@
 <div class="row">
     <div class="col-lg-5 col-md-6 product-single-gallery">
         <div class="product-slider-container">
-            <div class="product-single-carousel owl-carousel owl-theme show-nav-hover">
-                <div class="product-item">
-                    <img class="product-single-image" src="/assets/images/hp/{{ product.illustration }}"}
-                        width="468" height="468"
+            <div class="product-single-carousel owl-theme show-nav-hover">
+                 <div class="product-item">
+                   <img class="product-single-image" src="/assets/images/hp/{{ product.illustration }}"
+                        width="250" height="250"
                          alt="product" />
                 </div>
             </div>
@@ -30,7 +30,7 @@
         <h1 class="product-title">{{ product.name }}</h1>
         <div class="ratings-container">
             <div class="product-ratings">
-                <span class="ratings" style="width:60%"></span>
+                <span class="ratings" style="width:100%"></span>
                 <span class="tooltiptext tooltip-top"></span>
             </div>
             <a href="#" class="rating-link">( 6 Reviews )</a>
@@ -51,11 +51,12 @@
             <div class="product-single-qty">
                 <input class="horizontal-quantity form-control font1" type="text">
             </div>
-            <a href="{{ path('app_add_to_cart', {'id': product.id}) }}" class="btn btn-dark add-cart font1 mr-2" title="Add to Cart">Add to Cart</a>
+            <a href="{{ path('app_add_to_cart', {'id': product.id}) }}" class="btn btn-dark add-cart font1 mr-2" title="Add to Cart">Ajouter au panier</a>
             <a href="#" class="btn btn-gray view-cart d-none">View cart</a>
         </div>
         <hr class="divider mb-0 mt-0">
     </div>
-</main>
+</div>
+    </main>
 </div>
 {% endblock %}
