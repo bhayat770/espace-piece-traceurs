@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Classe\Cart;
 use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 class AccountController extends AbstractController
 {
     #[Route('/compte', name: 'app_account')]
-    public function index(Request $request, PersistenceManagerRegistry $doctrine): Response
+    public function index(Request $request, PersistenceManagerRegistry $doctrine, Cart $cart): Response
     {
         $user = $this->getUser(); //Récupérer l'utilisateur connecté
 
@@ -30,10 +31,14 @@ class AccountController extends AbstractController
             return $this->redirectToRoute('app_account');
         }
 
+        $cartTotal = $cart->getTotal();
+        $cartProducts = $cart->getProducts();
 
         return $this->render('account/index.html.twig', [
             'user'=>$user,
-            'request' => $request
+            'request' => $request,
+            'cartTotal' => $cartTotal,
+            'cartProducts' => $cartProducts,
         ]);
     }
 }

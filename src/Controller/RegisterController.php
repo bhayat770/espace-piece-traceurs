@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Classe\Cart;
 use App\Entity\User;
 use App\Form\RegisterType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,7 +18,7 @@ class RegisterController extends AbstractController
 {
     #[Route('/inscription', name: 'app_register')]
 
-    public function index(Request $request, PersistenceManagerRegistry $doctrine, UserPasswordHasherInterface $hasher): Response
+    public function index(Request $request, PersistenceManagerRegistry $doctrine, UserPasswordHasherInterface $hasher, Cart $cart): Response
     {
 
         $notification = null;
@@ -44,9 +45,13 @@ class RegisterController extends AbstractController
         //    $notification = "Votre mot de passe actuel n'est pas le bon";
         //}
 
+        $cartTotal = $cart->getTotal();
+        $cartProducts = $cart->getProducts();
 
         return $this->render('register/index.html.twig', [
             'form' => $form->createView(),
+            'cartTotal' => $cartTotal,
+            'cartProducts' => $cartProducts
             //'notification' => $notification,
 
         ]);

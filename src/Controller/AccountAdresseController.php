@@ -21,10 +21,16 @@ class AccountAdresseController extends AbstractController
     }
 
     #[Route('/compte/adresses', name: 'app_account_adresse')]
-    public function index(): Response
+    public function index(Cart $cart): Response
     {
 
-        return $this->render('account/adresse.html.twig');
+        $cartTotal = $cart->getTotal();
+        $cartProducts = $cart->getProducts();
+
+        return $this->render('account/adresse.html.twig', [
+            'cartTotal' => $cartTotal,
+            'cartProducts' => $cartProducts,
+        ]);
     }
 
     #[Route('/compte/ajouter-une-adresse', name: 'app_account_adresse_add')]
@@ -50,13 +56,18 @@ class AccountAdresseController extends AbstractController
             }
         }
 
+        $cartTotal = $cart->getTotal();
+        $cartProducts = $cart->getProducts();
+
         return $this->render('account/adresse_form.html.twig', [
             'form' => $form->createView(),
+            'cartTotal' => $cartTotal,
+            'cartProducts' => $cartProducts,
         ]);
     }
 
     #[Route('/compte/modifier-une-adresse/{id}', name: 'app_account_adresse_edit')]
-    public function edit(Request $request, $id ): Response
+    public function edit(Request $request, $id, Cart $cart ): Response
     {
         $adresse = $this->entityManager->getRepository(Adresse::class)->findOneBy(['id' => $id]);
 
@@ -73,9 +84,14 @@ class AccountAdresseController extends AbstractController
             $this->entityManager->flush();
             return $this->redirectToRoute('app_account_adresse');
         }
+        $cartTotal = $cart->getTotal();
+        $cartProducts = $cart->getProducts();
+
 
         return $this->render('account/adresse_form.html.twig', [
             'form' => $form->createView(),
+            'cartTotal' => $cartTotal,
+            'cartProducts' => $cartProducts,
         ]);
     }
 

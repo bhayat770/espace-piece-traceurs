@@ -17,6 +17,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
@@ -91,6 +92,8 @@ class ProductCrudController extends AbstractCrudController
             DateTimeField::new('createdAt')->hideOnForm(),
             BooleanField::new('active', 'Activé'),
             ChoiceField::new('poids', 'Poids')->setChoices($weightChoices),
+            IntegerField::new('quantite', 'Quantité')
+
 
         ];
     }

@@ -37,6 +37,7 @@ class Cart
     }
 
 
+
     public function get()
     {
         $request = $this->requestStack->getCurrentRequest();
@@ -80,6 +81,26 @@ class Cart
 
         return  $session->set('cart', $cart);
     }
+    public function getProducts(): int
+    {
+        $totalQuantity = 0;
+        foreach ($this->getFull() as $product) {
+            $totalQuantity += $product['quantity'];
+        }
+        return $totalQuantity;
+    }
+
+    public function getTotal(): float
+    {
+        $totalPrice = 0;
+        foreach ($this->getFull() as $product) {
+            $totalPrice += $product['product']->getPrice() * $product['quantity']/100;
+        }
+
+        return $totalPrice;
+    }
+
+
 
     public function getFull()
     {

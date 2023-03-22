@@ -66,9 +66,6 @@ class AdresseType extends AbstractType
                 'label' => 'Pays',
                 'placeholder' => 'Choisissez votre pays',
                 'required' => true,
-                'attr' => [
-                    'class' => 'country',
-                ],
             ])
             ->add('telephone', TelType::class, [
                 'label' => 'Téléphone',

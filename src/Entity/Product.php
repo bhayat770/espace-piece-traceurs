@@ -68,6 +68,9 @@ class Product
     #[ORM\Column(length: 255)]
     private ?string $poids = null;
 
+    #[ORM\Column]
+    private ?int $quantite = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -263,6 +266,18 @@ class Product
     public function setPoids(string $poids): self
     {
         $this->poids = $poids;
+
+        return $this;
+    }
+
+    public function getQuantite(): ?int
+    {
+        return $this->quantite;
+    }
+
+    public function setQuantite(int $quantite): self
+    {
+        $this->quantite = $quantite;
 
         return $this;
     }

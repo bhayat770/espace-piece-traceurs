@@ -3,42 +3,47 @@
 {% block title %}Mon panier{% endblock %}
 
 {% block content %}
-<h1>Mon panier</h1>
+    <div style="margin: auto; width: 80%;">
+    <h1>Mon panier</h1>
     Retrouvez l'ensemble de votre panier
 
     {% if cart | length > 0 %}
-    <table class="table mt-3">
-        <thead>
-        <tr>
-            <th scope="col">Produit</th>
-            <th scope="col"></th>
-            <th scope="col">Quantité</th>
-            <th scope="col">Prix</th>
-            <th scope="col">Total</th>
-            <th scope="col"></th>
-        </tr>
-        </thead>
-        <tbody>
-        {%  set total = null %}
-        {% for product in cart %}
+        <table class="table mt-3">
+            <thead>
             <tr>
-            <img>
+                <th scope="col">Produit</th>
+                <th scope="col"></th>
+                <th scope="col">Quantité</th>
+                <th scope="col">Prix</th>
+                <th scope="col">Total</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {%  set total = null %}
+
+            {% for product in cart %}
+
+                <tr>
+                <img>
                 <th>
-                    <img src="assets/img/{{ product.product.illustration }}" alt="{{ product.product.name }}" height="75px"><br>
-            </th>
+                    <img src="assets/images/hp/{{ product.product.illustration }}" alt="{{ product.product.name }}" height="100px" width="90px"><br>
+                </th>
                 <td>
                     {{ product.product.name }} <br/>
                     <small>{{ product.product.subtitle }}</small>
                 </td>
                 <td>
-                    <a href="{{ path('app_decrease_to_cart', {'id': product.product.id}) }}">
-                        <img src="{{ asset('assets/img/icones/moins.png') }}" height="12px" alt="Retirer un produit">
+                    <a href="{{ path('app_decrease_to_cart', {'id': product.product.id}) }}" style="display: inline-block;">
+                        <img src="{{ asset('assets/images/icons/moins.png') }}" height="12px" alt="Retirer un produit">
                     </a>
                     x {{ product.quantity }}
-                    <a href="{{ path('app_add_to_cart', {'id' : product.product.id}) }}">
-                    <img src="{{ asset('assets/img/icones/plus.png') }}" height="12px" alt="Supprimer mon produit">
-
+                    <a href="{{ path('app_add_to_cart', {'id' : product.product.id}) }}" style="display: inline-block;">
+                        <img src="{{ asset('assets/images/icons/plus.png') }}" height="16px" alt="Supprimer mon produit">
+                    </a>
                 </td>
+
                 <td>
                     {{ (product.product.price /100) | number_format(2, ',' , '.')}} €
                 </td>
@@ -47,13 +52,15 @@
                 </td>
         <td>
             <a href="{{ path('app_delete_to_cart', {'id': product.product.id}) }}">
-                <img src="{{ asset('assets/img/icones/trash.png') }}" height="18px" alt="Supprimer mon produit">
+                <img src="{{ asset('assets/images/icons/poubelle.png') }}" height="30px" alt="Supprimer mon produit">
             </a>
         </td>
 
             </tr>
+
             {% set total = total + (product.product.price * product.quantity ) %}
         {% endfor %}
+
         </tbody>
     </table>
     <div class="text-right mb-5">
@@ -63,8 +70,10 @@
 
         <a href="{{ path('app_order') }}" class="btn btn-success mt-3 ">Valider mon panier</a>
     </div>
+
     {% else %}
         <hr>
         <p><b>Votre panier est vide.</b></p>
+        </div>
     {% endif %}
 {% endblock %}

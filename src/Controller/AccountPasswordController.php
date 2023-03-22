@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Classe\Cart;
 use App\Form\ChangePasswordType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,7 +17,7 @@ class AccountPasswordController extends AbstractController
 {
     #[Route('/compte/modifier-mon-mot-de-passe', name: 'app_account_password')]
 
-    public function index(Request $request, PersistenceManagerRegistry $doctrine ,UserPasswordHasherInterface $passwordHasher): Response
+    public function index(Request $request, PersistenceManagerRegistry $doctrine ,UserPasswordHasherInterface $passwordHasher, Cart $cart): Response
     {
         $user= $this->getUser();
         $form= $this->createForm(ChangePasswordType::class, $user);
@@ -37,8 +38,13 @@ class AccountPasswordController extends AbstractController
             }
         }
 
+        $cartTotal = $cart->getTotal();
+        $cartProducts = $cart->getProducts();
+
         return $this->render('account/password.html.twig',[
-            'form'=>$form->createView()
+            'form'=>$form->createView(),
+            'cartTotal' => $cartTotal,
+            'cartProducts' => $cartProducts,
         ]);
 
     }

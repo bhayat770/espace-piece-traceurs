@@ -3,29 +3,59 @@
 {% block title %}{{ product.name }} - Espace pièces traceurs{% endblock %}
 
 {% block content %}
-
-<main class="main">
-    <div class="container">
-    <div class="row">
-        <div class="col-md-5 my-auto text-right h-100 w-100">
-            <img src="/assets/images/hp/{{ product.illustration }}"
-                 alt ="{{ product.name }}"
-                 class="img-fluid">
+    <main class="main">
+        <div class="container">
+<div class="row">
+    <div class="col-lg-5 col-md-6 product-single-gallery">
+        <div class="product-slider-container">
+            <div class="product-single-carousel owl-carousel owl-theme show-nav-hover">
+                <div class="product-item">
+                    <img class="product-single-image" src="/assets/images/hp/{{ product.illustration }}"}
+                        width="468" height="468"
+                         alt="product" />
+                </div>
+            </div>
+            <span class="prod-full-screen">
+                <i class="icon-plus"></i>
+            </span>
         </div>
-
-
-        <div class="col-md-5 my-lg-0">
-            <h3>
-                {{ product.name }}
-            </h3>
-            <p>{{ product.subtitle }}</p>
-            <span class="product-page-price">{{ (product.price /100) | number_format(2, ',' , '.')}} € </span>
-            <hr>
-            <p>
-                {{ product.description |nl2br }}
-
-            </p>
-            <a href="{{ path('app_add_to_cart', {'id': product.id}) }}" class="btn btn-primary"> Ajouter au panier</a>
+        <div class="prod-thumbnail owl-dots">
+            <div class="owl-dot">
+                <img src="/assets/images/hp/{{ product.illustration }}" width="110" height="110"
+                     alt="product-thumbnail" />
+            </div>
         </div>
     </div>
+    <div class="col-lg-7 col-md-6 product-single-details">
+        <h1 class="product-title">{{ product.name }}</h1>
+        <div class="ratings-container">
+            <div class="product-ratings">
+                <span class="ratings" style="width:60%"></span>
+                <span class="tooltiptext tooltip-top"></span>
+            </div>
+            <a href="#" class="rating-link">( 6 Reviews )</a>
+        </div>
+        <hr class="short-divider">
+        <div class="price-box">
+            <span class="product-price">{{ (product.price /100) | number_format(2, ',' , '.')}} €</span>
+        </div>
+        <div class="product-desc">
+            <p>
+                {{ product.description  }}
+            </p>
+        </div>
+        <ul class="single-info-list">
+            <li>CATEGORIE: <strong><a href="#" class="product-category">{{ product.category }}</a></strong></li>
+        </ul>
+        <div class="product-action">
+            <div class="product-single-qty">
+                <input class="horizontal-quantity form-control font1" type="text">
+            </div>
+            <a href="{{ path('app_add_to_cart', {'id': product.id}) }}" class="btn btn-dark add-cart font1 mr-2" title="Add to Cart">Add to Cart</a>
+            <a href="#" class="btn btn-gray view-cart d-none">View cart</a>
+        </div>
+        <hr class="divider mb-0 mt-0">
+    </div>
+</main>
+</div>
 {% endblock %}

@@ -125,7 +125,10 @@
                     </div><!-- End .social-icons -->
                 </div><!-- End .header-right -->
             </div><!-- End .container -->
-        </div><!-- End .header-top -->
+
+</header></div><!-- End .header-top -->
+</body>
+
 
         <div class="header-middle sticky-header" data-sticky-options="{'mobile': true}">
             <div class="container">
@@ -205,20 +208,21 @@
 
                     <div class="cart-dropdown-wrapper d-flex align-items-center">
                         <div class="dropdown cart-dropdown">
-                            <a href="#" title="Cart" class="dropdown-toggle cart-toggle" role="button"
+                            <a href="{{ path('app_cart') }}" title="Cart" class="dropdown-toggle cart-toggle" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                data-display="static">
+                                <span class="cart-count badge-circle">{{ cartProducts }}</span>
                                 <i class="icon-cart-thick"></i>
-                                <span class="cart-count badge-circle">3</span>
+
+                                <span class="cart-total">{{ cartTotal|number_format(2, ',', '.') }} €</span>
                             </a>
 
-                            <div class="cart-overlay"></div>
 
-                            <div class="dropdown-menu mobile-cart">
+               {#      <div class="dropdown-menu mobile-cart">
                                 <a href="#" title="Close (Esc)" class="btn-close">×</a>
 
                                 <div class="dropdownmenu-wrapper custom-scrollbar">
-                                    <div class="dropdown-cart-header">Shopping Cart</div>
+                                    <div class="dropdown-cart-header">Panier</div>
                                     <!-- End .dropdown-cart-header -->
 
                                     <div class="dropdown-cart-products">
@@ -300,15 +304,16 @@
                                     <div class="dropdown-cart-action">
                                         <a href="cart.html" class="btn btn-gray btn-block view-cart">View
                                             Cart</a>
-                                        <a href="checkout.html" class="btn btn-dark btn-block">Checkout</a>
+                                        <a href="checkout.html" class="btn btn-dark btn-block">Checkout</a>#}
                                     </div><!-- End .dropdown-cart-total -->
                                 </div><!-- End .dropdownmenu-wrapper -->
                             </div><!-- End .dropdown-menu -->
                         </div><!-- End .dropdown -->
 
+                    {#     <div class="cart-overlay"></div>
                         <span class="cart-subtotal font2 d-none d-sm-inline">Shopping Cart
-                                <span class="cart-price d-block font2">$0.00</span>
-                            </span>
+            <span class="cart-price d-block font2">{{ cartProducts|length }}</span>
+        </span>#}
                     </div>
                 </div><!-- End .header-right -->
             </div><!-- End .container -->
@@ -521,8 +526,8 @@
                                                             </h4>
                                                         </div>
                                                         <div class="content-right text-right">
-                                                            <h5 class=" ls-0"><del
-                                                                        class="d-block m-b-2 text-secondary">$450</del>$270
+                                                            <h5 class=" ls-0">
+                                                                <del class="d-block m-b-2 text-secondary">$450</del>$270
                                                             </h5>
                                                             <h4 class="m-b-1 ls-n-25">Watches</h4>
                                                             <h3 class="mb-0">HURRY UP!</h3>
@@ -978,7 +983,7 @@
                             </ul>
                         </div>
                         <ul class="menu">
-                            <li>
+                            {# <li>
                                 <a href="demo35-shop.html">Shop</a>
                                 <div class="megamenu megamenu-fixed-width megamenu-3cols">
                                     <div class="row">
@@ -1035,7 +1040,7 @@
                                         </div>
                                     </div>
                                 </div><!-- End .megamenu -->
-                            </li>
+                            </li> #}
                             <li>
                                 <a href="demo35-product.html">Products</a>
                                 <div class="megamenu megamenu-fixed-width">
@@ -1147,10 +1152,8 @@
 
 
 
-<div class="mt-5 mr-4 ml-4">
     {% block content %}
     {% endblock %}
-</div>
     <!-- Category Area End-->
     <!-- Latest Products Start -->
 <footer>
@@ -1164,7 +1167,7 @@
                         <div class="single-footer-caption mb-30">
                             <!-- logo -->
                             <div class="footer-logo">
-                                <a href="index.html"><img src="{{ asset('assets/img/logo/logo.png') }}" alt=""></a>
+                                <a href="{{ path('app_home') }}"><img src="{{ asset('assets/images/logos/1.png') }}" alt=""></a>
                             </div>
                             <div class="footer-tittle">
                                 <div class="footer-pera">
@@ -1242,14 +1245,6 @@
 
 </footer>
 
-<script> document.querySelector('.viewcart').addEventListener('click', function() {
-window.location.href = "{{ path('app_cart') }}";
-});
-
-document.querySelector('.checkout').addEventListener('click', function() {
-window.location.href = "{{ path('app_order') }}";
-});
-</script>
 <!-- Plugins JS File -->
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
@@ -1262,4 +1257,4 @@ window.location.href = "{{ path('app_order') }}";
 
     <!-- Main JS File -->
     <script src="{{ asset('assets/js/main.min.js') }}"></script>
-</body>
+</html>

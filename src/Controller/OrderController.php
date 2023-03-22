@@ -35,10 +35,15 @@ class OrderController extends AbstractController
         $form = $this->createForm(OrderType::class, null, [
             "user" => $this->getUser()
         ]);
+        $cartTotal = $cart->getTotal();
+        $cartProducts = $cart->getProducts();
+
 
         return $this->render('order/index.html.twig', [
             'form' => $form->createView(),
-            'cart'=> $cart->getFull()
+            'cart'=> $cart->getFull(),
+            'cartTotal' => $cartTotal,
+            'cartProducts' => $cartProducts
         ]);
     }
 
@@ -94,11 +99,16 @@ class OrderController extends AbstractController
 
 
                 $this->entityManager->persist($orderDetails);
+                $cartTotal = $cart->getTotal();
+                $cartProducts = $cart->getProducts();
+
 
                 return $this->render('order/add.html.twig', [
                     'cart'=> $cart->getFull(),
                     'carrier'=>$carriers,
-                    "delivery"=>$delivery_content
+                    "delivery"=>$delivery_content,
+                    'cartTotal' => $cartTotal,
+                    'cartProducts' => $cartProducts
                 ]);
 
             }

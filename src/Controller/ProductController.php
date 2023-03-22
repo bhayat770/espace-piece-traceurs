@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Classe\Cart;
 use App\Classe\Search;
 use App\Entity\Product;
 use App\Form\SearchType;
@@ -15,13 +16,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProductController extends AbstractController
 {
     private $entityManager;
+    private $cart;
 
-    public function __construct(EntityManagerInterface $entityManager) {
+    public function __construct(EntityManagerInterface $entityManager, Cart $cart) {
         $this->entityManager=$entityManager;
+        $this->cart=$cart;
+
     }
 
     #[Route('/nos-produits', name: 'app_products')]
-    public function index(Request $request): Response
+    public function index(Request $request, Cart $cart): Response
     {
         //Filtrage
 
@@ -43,14 +47,22 @@ class ProductController extends AbstractController
             $products = $this->entityManager->getRepository(Product::class)->findAll();
         }
 
+
+        $cartTotal = $cart->getTotal();
+        $cartProducts = $cart->getProducts();
+
+
         return $this->render('product/index.html.twig', [
             'products'=>$products,
-            'form'=>$form->createView()
+            'form'=>$form->createView(),
+
+            'cartTotal' => $cartTotal,
+            'cartProducts' => $cartProducts,
         ]);
     }
 
     #[Route('/produit/{slug}', name: 'app_product')]
-    public function show($slug): Response
+    public function show($slug, Cart $cart): Response
     {
 
 
@@ -59,9 +71,19 @@ class ProductController extends AbstractController
         if (!$product) {
             return $this->redirectToRoute('app_products');
         }
+        $this->cart->add($product->getId());
+
+
+        $cartTotal = $cart->getTotal();
+        $cartProducts = $cart->getProducts();
+
+
 
         return $this->render('product/show.html.twig', [
-            'product'=>$product
+            'product'=>$product,
+
+            'cartTotal' => $cartTotal,
+            'cartProducts' => $cartProducts,
         ]);
     }
 }

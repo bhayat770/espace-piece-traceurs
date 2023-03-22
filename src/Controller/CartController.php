@@ -30,11 +30,16 @@ class CartController extends AbstractController
         // Récupère le pays de destination depuis la session (ou un formulaire)
         $pays = 'Italy';
 
+        $cartTotal = $cart->getTotal();
+        $cartProducts = $cart->getProducts();
+
         // Récupère les frais d'expédition pour le pays et le poids total
         $shippingPrice = $shippingService->getShippingPrice($pays, $totalWeight);
         return $this->render('cart/index.html.twig', [
             'shippingPrice' => $shippingPrice,
-            'cart'=>$cart->getFull()
+            'cart'=>$cart->getFull(),
+            'cartTotal' => $cartTotal,
+            'cartProducts' => $cartProducts,
         ]);
     }
 

@@ -45,9 +45,6 @@ class SearchType extends AbstractType
                 ]
             ])
         ;
-
-
-
     }
 
     //Je le lie a ma searchClasse

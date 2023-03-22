@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <main class="main bg-gray">
+     <main class="main bg-gray">
         <section class="intro-section">
             <div class="home-slider owl-carousel owl-theme loaded slide-animate mb-4" data-owl-options="{
                     'nav': false,
@@ -10,7 +10,7 @@
                 }">
                 <div class="home-slide home-slide-1 banner" style="background-color: #d9e2e1;">
                     <figure>
-                        <img src="assets/images/demoes/demo35/slider/slide-1.jpg" alt="slide" width="1903"
+                        <img src="{{ asset('assets/images/Banniere2023.png') }}" alt="slide" width="1903"
                              height="520">
                     </figure>
 
@@ -68,7 +68,6 @@
         </section>
 
         <section class="popular-section">
-            <div class="container">
                 <div class="info-boxes-slider owl-carousel" data-owl-options="{
                         'items': 1,
                         'margin': 0,
@@ -90,8 +89,8 @@
                     <div class="info-box info-box-icon-left">
                         <i class="icon-shipping text-primary"></i>
                         <div class="info-content">
-                            <h4 class="ls-n-25">Free Shipping &amp; Return</h4>
-                            <p class="font2 font-weight-light text-body ls-10">Free shipping on all orders over $99.
+                            <h4 class="ls-n-25">Livraisons et retours gratuits</h4>
+                            <p class="font2 font-weight-light text-body ls-10">Livraison gratuite sur toutes les commandes supérieuees à 150€.
                             </p>
                         </div>
                     </div>
@@ -105,15 +104,15 @@
                     <div class="info-box info-box-icon-left">
                         <i class="icon-support text-primary"></i>
                         <div class="info-content">
-                            <h4 class="ls-n-25">Online Support 24/7</h4>
+                            <h4 class="ls-n-25">Support en ligne 7J/7 et 24h/24</h4>
                             <p class="font2 font-weight-light text-body ls-10">Lorem ipsum dolor sit amet.</p>
                         </div>
                     </div>
                     <div class="info-box info-box-icon-left">
                         <i class="icon-secure-payment text-primary"></i>
                         <div class="info-content">
-                            <h4 class="ls-n-25">Secure Payment</h4>
-                            <p class="font2 font-weight-light text-body ls-10">Lorem ipsum dolor sit amet.</p>
+                            <h4 class="ls-n-25">Payement sécrisé</h4>
+                            <p class="font2 font-weight-light text-body ls-10">Avec Stripe ou PayPal.</p>
                         </div>
                     </div>
                 </div>
@@ -1417,11 +1416,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
         </section>
 
         <section class="special-section">
-            <div class="container">
                 <div class="appear-animate" data-animation-name="fadeIn" data-animation-delay="200">
                     <h2 class="section-title">This Week's Specials</h2>
                     <p class="section-info font2">All our new arrivals in a exclusive brand selection</p>
@@ -2213,60 +2210,61 @@
             </div>
         </section>
 
-        <section class="brands-section">
-            <div class="container">
-                <div class="appear-animate" data-animation-name="fadeInUpShorter" data-animation-delay="100">
-                    <h2 class="section-title">Featured Brands</h2>
-                    <p class="section-info font2">All our new arrivals in a exclusive brand selection</p>
-                </div>
+         <section class="brands-section">
+             <div class="container mx-auto">
+                 <div class="appear-animate" data-animation-name="fadeInUpShorter" data-animation-delay="100">
+                     <h2 class="section-title">Featured Brands</h2>
+                     <p class="section-info font2">All our new arrivals in a exclusive brand selection</p>
+                 </div>
 
-                <div class="slider-wrapper bg-white rounded appear-animate" data-animation-name="fadeInUpShorter"
-                     data-animation-delay="300">
-                    <div class="brands-slider owl-carousel owl-theme nav-outer" data-owl-options="{
-                            'navText': ['<i class=icon-angle-left>', '<i class=icon-angle-right>'],
-                            'center': true,
-                            'loop': true,
-                            'nav': true,
-                            'responsive': {
-                                '992': {
-                                    'items': 6
-                                },
-                                '1200': {
-                                    'items': 8
-                                }
-                            }
-                        }">
-                        <div class="d-inline-block">
-                            <img src="assets/images/brands/small/brand1.png" alt="brand" width="140" height="40">
-                        </div>
-                        <div class="d-inline-block">
-                            <img src="assets/images/brands/small/brand1.png" alt="brand" width="140" height="40">
-                        </div>
-                        <div class="d-inline-block">
-                            <img src="assets/images/brands/small/brand6.png" alt="brand" width="140" height="40">
-                        </div>
-                        <div class="d-inline-block">
-                            <img src="assets/images/brands/small/brand3.png" alt="brand" width="140" height="40">
-                        </div>
-                        <div class="d-inline-block">
-                            <img src="assets/images/brands/small/brand3.png" alt="brand" width="140" height="40">
-                        </div>
-                        <div class="d-inline-block">
-                            <img src="assets/images/brands/small/brand2.png" alt="brand" width="140" height="40">
-                        </div>
-                        <div class="d-inline-block">
-                            <img src="assets/images/brands/small/brand3.png" alt="brand" width="140" height="40">
-                        </div>
-                        <div class="d-inline-block">
-                            <img src="assets/images/brands/small/brand5.png" alt="brand" width="140" height="40">
-                        </div>
-                        <div class="d-inline-block">
-                            <img src="assets/images/brands/small/brand6.png" alt="brand" width="140" height="40">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+                 <div class="slider-wrapper bg-white rounded appear-animate" data-animation-name="fadeInUpShorter"
+                      data-animation-delay="300">
+                     <div class="brands-slider owl-carousel owl-theme nav-outer" data-owl-options="{
+                    'navText': ['<i class=icon-angle-left>', '<i class=icon-angle-right>'],
+                    'center': true,
+                    'loop': true,
+                    'nav': true,
+                    'responsive': {
+                        '992': {
+                            'items': 6
+                        },
+                        '1200': {
+                            'items': 8
+                        }
+                    }
+                }">
+                         <div class="d-inline-block">
+                             <img src="assets/images/brands/small/brand1.png" alt="brand" width="140" height="40">
+                         </div>
+                         <div class="d-inline-block">
+                             <img src="assets/images/brands/small/brand1.png" alt="brand" width="140" height="40">
+                         </div>
+                         <div class="d-inline-block">
+                             <img src="assets/images/brands/small/brand6.png" alt="brand" width="140" height="40">
+                         </div>
+                         <div class="d-inline-block">
+                             <img src="assets/images/brands/small/brand3.png" alt="brand" width="140" height="40">
+                         </div>
+                         <div class="d-inline-block">
+                             <img src="assets/images/brands/small/brand3.png" alt="brand" width="140" height="40">
+                         </div>
+                         <div class="d-inline-block">
+                             <img src="assets/images/brands/small/brand2.png" alt="brand" width="140" height="40">
+                         </div>
+                         <div class="d-inline-block">
+                             <img src="assets/images/brands/small/brand3.png" alt="brand" width="140" height="40">
+                         </div>
+                         <div class="d-inline-block">
+                             <img src="assets/images/brands/small/brand5.png" alt="brand" width="140" height="40">
+                         </div>
+                         <div class="d-inline-block">
+                             <img src="assets/images/brands/small/brand6.png" alt="brand" width="140" height="40">
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </section>
+
 
         <section class="post-section">
             <div class="container">
@@ -2304,6 +2302,7 @@
 
                             <div class="post-body">
                                 <div class="category-list">Fresh Vegetables</div>
+
                                 <h2 class="post-title">
                                     <a href="single.html">Pasta With Pesto</a>
                                 </h2>
@@ -2342,7 +2341,6 @@
 
         <section class="newsletter-section appear-animate" data-animation-name="fadeInUpShorter"
                  data-animation-delay="200">
-            <div class="container">
                 <div class="row no-gutters m-0 align-items-center">
                     <div class="col-lg-6 col-xl-4 mb-2 mb-lg-0">
                         <div class="info-box d-block d-sm-flex text-center text-sm-left">
@@ -2368,5 +2366,7 @@
             </div>
         </section>
     </main><!-- End .main -->
+
+
 
 {% endblock %}
