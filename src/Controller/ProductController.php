@@ -34,15 +34,14 @@ class ProductController extends AbstractController
         //passée a la methode createForm
         $form = $this->createForm(SearchType::class, $search);
 
-        //ecouter le form
         $form->handleRequest($request);
 
-        //si soumis et valide:
+        //Si soumis et valide:
         if ($form->isSubmitted() && $form->isValid()) {
             //On rentre dedans et on crée une nouvelle méthode findWithSearch qui va chercher les produits de cette requete
          $products =$this->entityManager->getRepository(Product::class)->findWithSearch($search);
         }
-        else
+        else //Sinon on les affiche tous
         {
             $products = $this->entityManager->getRepository(Product::class)->findAll();
         }
@@ -58,32 +57,35 @@ class ProductController extends AbstractController
 
             'cartTotal' => $cartTotal,
             'cartProducts' => $cartProducts,
+            'cart'=>$cart->getFull(),
+
         ]);
     }
 
     #[Route('/produit/{slug}', name: 'app_product')]
     public function show($slug, Cart $cart): Response
     {
-
-
+        // Récupérer le produit à afficher à partir de son slug
         $product = $this->entityManager->getRepository(Product::class)->findOneBySlug($slug);
 
-        if (!$product) {
+        // Si le produit n'existe pas, Rediriger vers la page des produits
+        if (!$product)
+        {
             return $this->redirectToRoute('app_products');
         }
-        $this->cart->add($product->getId());
 
+        // Ajouter le produit au panier en fonction de son id
+        $this->cart->add($product->getId());
 
         $cartTotal = $cart->getTotal();
         $cartProducts = $cart->getProducts();
 
-
-
-        return $this->render('product/show.html.twig', [
+        return $this->render
+        ('product/show.html.twig', [
             'product'=>$product,
-
             'cartTotal' => $cartTotal,
             'cartProducts' => $cartProducts,
-        ]);
+            'cart'=>$cart->getFull(),
+            ]);
     }
 }

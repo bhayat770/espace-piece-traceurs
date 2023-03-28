@@ -41,6 +41,7 @@ class ProductCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
+
         $duplicate = Action::new(self::ACTION_DUPLICATE)
             ->linkToCrudAction('duplicateProduct')
             ->setCssClass('btn btn-info');
@@ -51,9 +52,7 @@ class ProductCrudController extends AbstractCrudController
 
         return $actions
             ->add(Crud::PAGE_EDIT, $duplicate)
-            ->add(Crud::PAGE_DETAIL, $details);
-
-
+            ->add('index', 'detail');
     }
 
 

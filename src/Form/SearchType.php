@@ -50,12 +50,17 @@ class SearchType extends AbstractType
     //Je le lie a ma searchClasse
     public function configureOptions(OptionsResolver $resolver): void
     {
+        // Définit les options par défaut pour le résolveur d'options
         $resolver->setDefaults([
+            // Spécifie la classe de données utilisée par le formulaire
             'data_class' => Search::class,
+            // Définit la méthode HTTP utilisée pour soumettre le formulaire
             'method'=> 'GET',
+            // Désactive la protection CSRF pour ce formulaire
             'crsf_protection'=> false,
         ]);
     }
+
 
     public function getBlockPrefix()
     {

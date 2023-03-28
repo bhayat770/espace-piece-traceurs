@@ -13,15 +13,18 @@ class SecurityController extends AbstractController
     #[Route(path: '/connexion', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils, Cart $cart): Response
     {
-         if ($this->getUser()) {
-             return $this->redirectToRoute('app_account');
-         }
+        // Si l'utilisateur est déjà connecté
+        if ($this->getUser()) {
+            // Rediriger vers la page du compte
+            return $this->redirectToRoute('app_account');
+        }
 
-        // get the login error if there is one
+        // Récupérer les erreurs d'authentification s'il y en a
         $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
+        // Récupérer le dernier nom d'utilisateur saisi par l'utilisateur
         $lastUsername = $authenticationUtils->getLastUsername();
 
+        // Récupérer les informations du panier
         $cartTotal = $cart->getTotal();
         $cartProducts = $cart->getProducts();
 
@@ -30,6 +33,7 @@ class SecurityController extends AbstractController
             'error' => $error,
             'cartTotal' => $cartTotal,
             'cartProducts' => $cartProducts,
+            'cart'=>$cart->getFull(),
         ]);
     }
 

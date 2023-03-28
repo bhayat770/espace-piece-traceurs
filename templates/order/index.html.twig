@@ -20,14 +20,14 @@
         </div>
         <div class="col-md-6">
             <div class="text-center">
-                <b>Récap de ma commande</b><br>
+                <b>Récapitulatif de ma commande</b><br>
                 <p>Retrouvez le récapitulatif de vos produit</p>
             </div>
             <div class="order-summary">
                 {% for key,product in cart %}
                     <div class="row {% if key >0 %}mt-2{% endif %}">
                         <div class="col-2">
-                            <img src="assets/img/{{ product.product.illustration }}" alt="{{ product.product.name }}" height="75px">
+                            <img src="assets/images/hp/{{ product.product.illustration }}" alt="{{ product.product.name }}" height="75px">
                             <br>
                         </div>
                         <div class="col-8 my-auto">
