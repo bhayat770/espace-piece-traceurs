@@ -198,6 +198,8 @@
                         <span class="cart-total">{{ cartTotal|number_format(2, ',', '.') }} €</span>
                     </a>
             #}
+
+            {% if cart | length > 0 %}
                     <div class="cart-dropdown-wrapper d-flex align-items-center">
                         <div class="dropdown cart-dropdown">
                             <a href="{{ path('app_cart') }}" title="Cart" class="dropdown-toggle cart-toggle" role="button"
@@ -214,7 +216,6 @@
                                 <div class="dropdownmenu-wrapper custom-scrollbar">
                                     <div class="dropdown-cart-header">Panier</div>
                                     <!-- End .dropdown-cart-header -->
-                                    {% if cart | length > 0 %}
                                     {%  set total = null %}
 
                                     <div class="dropdown-cart-products">
@@ -244,8 +245,8 @@
                                                     <a href="{{ path('app_remove_my_cart', { id: product.product.id }) }}" class="btn-remove" title="Remove Product"><span>×</span></a>
                                                 </figure>
                                             </div><!-- End .product -->
-                                        {% endfor %}
                                     </div><!-- End .cart-product -->
+                                    {% endfor %}
 
                                     <div class="dropdown-cart-total">
                                         <span>Sous-total</span>
@@ -264,14 +265,28 @@
                     </div>
 
                     <span class="cart-subtotal font2 d-none d-sm-inline">Total
-                                <span class="cart-price d-block font2">{{ cartTotal|number_format(2, ',', '.') }} </span>
+                                <span class="cart-price d-block font2">{{ cartTotal|number_format(2, ',', '.') }} €</span>
                             </span>
                     </div>
                 </div><!-- End .dropdown-menu -->
             </div><!-- End .dropdown -->
 
+{% else %}
+<div class="cart-dropdown-wrapper d-flex align-items-center">
+    <div class="dropdown cart-dropdown">
+        <a href="{{ path('app_cart') }}" title="Cart" class="dropdown-toggle cart-toggle" role="button"
+           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+            <i class="icon-cart-thick"></i>
+            <span class="cart-count badge-circle">{{ cartProducts }}</span>
+        </a>
+    </div>
+</div>
+    <div class="dropdown-cart-total">
+        <span>Panier (Vide) </span>
+    </div>
+
         {% endif %}
-        </div>
+
     </div><!-- End .container -->
 </div><!-- End .header-middle -->
 
@@ -1080,6 +1095,8 @@
 <script src="{{ asset('assets/js/jquery.appear.min.js') }}"></script>
 <script src="{{ asset('assets/js/jquery.plugin.min.js') }}"></script>
 <script src="{{ asset('assets/js/jquery.countdown.min.js') }}"></script>
+<!-- Include jQuery -->
+
 
 {% block script %}
 {% endblock %}

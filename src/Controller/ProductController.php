@@ -74,8 +74,10 @@ class ProductController extends AbstractController
             return $this->redirectToRoute('app_products');
         }
 
+
+
         // Ajouter le produit au panier en fonction de son id
-        $this->cart->add($product->getId());
+        //$this->cart->add($product->getId());
 
         $cartTotal = $cart->getTotal();
         $cartProducts = $cart->getProducts();

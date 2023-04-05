@@ -27,6 +27,7 @@ class AccountAdresseController extends AbstractController
         $cartTotal = $cart->getTotal();
         $cartProducts = $cart->getProducts();
 
+
         // Afficher la page des adresses avec les informations du panier
         return $this->render('account/adresse.html.twig', [
             'cartTotal' => $cartTotal,

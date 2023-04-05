@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\TextType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
@@ -27,14 +28,22 @@ class OrderCrudController extends AbstractCrudController
     }
 
 
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud->setDefaultSort(['id'=> 'DESC']);
+    }
+
     public function configureFields(string $pageName): iterable
     {
         return [
             IdField::new('id'),
             DateTimeField::new('createdAt', 'Passée le'),
             TextField::new('user.getFullName', 'Nom du client'),
-            MoneyField::new('total')->setCurrency('EUR'),
-            BooleanField::new('isPaid', 'Payée')
+            MoneyField::new('total', 'Total produit')->setCurrency('EUR'),
+            TextField::new('carrierName', 'Transporteur'),
+            MoneyField::new('carrierPrice', 'Frais de ports')->setCurrency('EUR'),
+            BooleanField::new('isPaid', 'Payée'),
+            ArrayField::new('orderDetails', 'Produits commandés')->hideOnIndex()
         ];
     }
 

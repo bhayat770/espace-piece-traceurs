@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes commandes - Espace pièces traceurs{% endblock %}
+
+{% block content %}
+    <h1>Mes commandes</h1>
+    C'est dans cet espace que vous allez pouvoir gérer vos commandes.<br/>
+    <a href="{{ path('app_account_adresse') }}"><br>Retour</a>
+    <hr>
+
+    {% if orders | length ==0 %}
+        <p class="text-center">
+            Vous n'avez pas encore de commande.
+        </p>
+    {% else %}
+
+
+                <table id="order-list" class="table table-bordered footab footable-loaded footable default">
+                    <thead>
+                    <tr>
+                        <th class="first_item footable-first-column " data-sort-ignore="true">Référence de commande</th>
+                        <th class="item footable-sortable">Date<span class="footable-sort-indicator"></span></th>
+                        <th data-hide="phone" class="item footable-sortable" style="display: table-cell;">Prix total<span class="footable-sort-indicator"></span></th>
+                       {#  <th data-sort-ignore="true" data-hide="phone,tablet" class="item" style="display: table-cell;">Paiement</th>#}
+                        <th class="item footable-sortable">État<span class="footable-sort-indicator"></span></th>
+                        <th data-sort-ignore="true" data-hide="phone,tablet" class="item" style="display: table-cell;">Facture</th>
+                        <th data-sort-ignore="true" data-hide="phone,tablet" class="last_item footable-last-column" style="display: table-cell;">&nbsp;</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+        {% for order in orders %}
+                    <tr class="first_item ">
+                        <td class="history_link bold footable-first-column">
+                            <span class="footable-toggle"></span>
+                            <a class="color-myaccount" href="javascript:showOrder(1, 1717, 'https://laboutiquedutraceur.fr/index.php?controller=order-detail');">
+                                {{ order.reference }}
+                            </a>
+                        </td>
+                        <td data-value="20200819173703" class="history_date bold">
+                            {{ order.createdAt | date('d-m-Y') }}
+                        </td>
+                        <td class="history_price" data-value="" style="display: table-cell;">
+                            <span class="price">
+                                {{ ((order.carrierPrice + order.getTotal) /100) |number_format(2,',','.') }} €
+                            </span>
+                        </td>
+
+                       {#  <td data-value="2" class="history_state">
+                            <span class="label dark" style="background-color:#32CD32; border-color:#32CD32;">
+
+                            </span>
+                        </td>#}
+                        <td class="history_invoice" style="display: table-cell;">
+                            -
+                        </td>
+                        <td class="history_detail footable-last-column" style="display: table-cell;">
+                           <a class="btn btn-default button button-small" href="{{ path('app_account_order_show', {'reference' : order.reference}) }}">
+
+                               {#  href="javascript:showOrder(1, 1717, 'https://laboutiquedutraceur.fr/index.php?controller=order-detail');">#}
+                                <span>
+                                    Détails<i class="icon-chevron-right right"></i>
+                                </span>
+                            </a>
+                            <a class="link-button" href="https://laboutiquedutraceur.fr/commande?submitReorder=&amp;id_order=1717" title="Re-commander">
+                                <i class="icon-refresh"></i>Re-commander
+                            </a>
+                        </td>
+                    </tr>
+        {% endfor %}
+                    </tbody>
+                </table>
+
+    {% endif %}
+{% endblock %}

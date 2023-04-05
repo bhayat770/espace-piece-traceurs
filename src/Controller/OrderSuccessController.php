@@ -30,9 +30,14 @@ class OrderSuccessController extends AbstractController
         }
 
 
+        $cart->remove();
 
         if (!$order->isIsPaid())
         {
+            //Vider la session cart
+
+            $cart->remove();
+
             //Modifier le statut isPaid de notre commande en mettant 1
 
             $order->setIsPaid(1);

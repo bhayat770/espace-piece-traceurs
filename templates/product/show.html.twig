@@ -5,27 +5,29 @@
 {% block content %}
     <main class="main">
         <div class="container">
-<div class="row">
-    <div class="col-lg-5 col-md-6 product-single-gallery">
-        <div class="product-slider-container">
-            <div class="product-single-carousel owl-theme show-nav-hover">
-                 <div class="product-item">
-                   <img class="product-single-image" src="/assets/images/hp/{{ product.illustration }}"
+            <div class="row">
+                <div class="col-lg-5 col-md-6 product-single-gallery">
+                    <div class="product-slider-container">
+                        <div class="product-single-carousel owl-theme show-nav-hover">
+                            <div class="product-item">
+                                <img class="product-single-image" src="/assets/images/hp/{{ product.illustration }}"
                         width="250" height="250"
                          alt="product" />
+                            </div>
+                        </div>
+                        <span class="prod-full-screen">
+                            <i class="icon-plus"></i>
+                        </span>
+                    </div>
+                    <div class="prod-thumbnail owl-dots">
+                        <div class="owl-dot">
+                            <img src="/assets/images/hp/{{ product.illustration }}"
+                                 width="110"
+                                 height="110"
+                                 alt="product-thumbnail" />
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <span class="prod-full-screen">
-                <i class="icon-plus"></i>
-            </span>
-        </div>
-        <div class="prod-thumbnail owl-dots">
-            <div class="owl-dot">
-                <img src="/assets/images/hp/{{ product.illustration }}" width="110" height="110"
-                     alt="product-thumbnail" />
-            </div>
-        </div>
-    </div>
     <div class="col-lg-7 col-md-6 product-single-details">
         <h1 class="product-title">{{ product.name }}</h1>
         <div class="ratings-container">
@@ -51,12 +53,13 @@
             <div class="product-single-qty">
                 <input class="horizontal-quantity form-control font1" type="text">
             </div>
-            <a href="{{ path('app_add_to_cart', {'id': product.id}) }}" class="btn btn-dark add-cart font1 mr-2" title="Add to Cart">Ajouter au panier</a>
+            <a href="{{ path('app_add_to_cart', {'id': product.id}) }}" class="btn btn-dark add-cart font1 mr-2" title="Ajouter au panier">Ajouter au panier</a>
             <a href="#" class="btn btn-gray view-cart d-none">View cart</a>
         </div>
         <hr class="divider mb-0 mt-0">
     </div>
 </div>
+        </div>
     </main>
-</div>
+
 {% endblock %}
