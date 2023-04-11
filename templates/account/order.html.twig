@@ -3,10 +3,23 @@
 {% block title %}Mes commandes - Espace pièces traceurs{% endblock %}
 
 {% block content %}
+
+    <div class="container">
     <h1>Mes commandes</h1>
-    C'est dans cet espace que vous allez pouvoir gérer vos commandes.<br/>
+        <br>
+        <br>
+    </div>
+    <div class="container">
+        <p>C'est dans cet espace que vous allez pouvoir gérer vos commandes.
+            <br/>
+        </p>
+    </div>
+    <div class="container">
     <a href="{{ path('app_account_adresse') }}"><br>Retour</a>
+
+    </div>
     <hr>
+<div class="container">
 
     {% if orders | length ==0 %}
         <p class="text-center">
@@ -23,8 +36,8 @@
                         <th data-hide="phone" class="item footable-sortable" style="display: table-cell;">Prix total<span class="footable-sort-indicator"></span></th>
                        {#  <th data-sort-ignore="true" data-hide="phone,tablet" class="item" style="display: table-cell;">Paiement</th>#}
                         <th class="item footable-sortable">État<span class="footable-sort-indicator"></span></th>
-                        <th data-sort-ignore="true" data-hide="phone,tablet" class="item" style="display: table-cell;">Facture</th>
-                        <th data-sort-ignore="true" data-hide="phone,tablet" class="last_item footable-last-column" style="display: table-cell;">&nbsp;</th>
+                        {# <th data-sort-ignore="true" data-hide="phone,tablet" class="item" style="display: table-cell;">Facture</th> #}
+                        <th data-sort-ignore="true" data-hide="phone,tablet" class="last_item footable-last-column" style="display: table-cell;">;</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -33,7 +46,7 @@
                     <tr class="first_item ">
                         <td class="history_link bold footable-first-column">
                             <span class="footable-toggle"></span>
-                            <a class="color-myaccount" href="javascript:showOrder(1, 1717, 'https://laboutiquedutraceur.fr/index.php?controller=order-detail');">
+                            <a class="color-myaccount">
                                 {{ order.reference }}
                             </a>
                         </td>
@@ -70,6 +83,130 @@
         {% endfor %}
                     </tbody>
                 </table>
-
+        </div>
+{#
+<style>
+    /* Styles pour la page */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #F5F5F5;
+        color: #333333;
+        font-size: 14px;
+        line-height: 1.5;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .page-header {
+        text-align: center;
+        margin-top: 60px;
+        margin-bottom: 40px;
+    }
+    .table {
+        width: 100%;
+        margin-bottom: 40px;
+    }
+    .table th {
+        font-weight: bold;
+        background-color: #F5F5F5;
+        border: none;
+        text-transform: uppercase;
+        padding: 12px 15px;
+        font-size: 12px;
+        color: #9B9B9B;
+        letter-spacing: 1px;
+    }
+    .table td {
+        border: none;
+        vertical-align: middle;
+        padding: 15px;
+        font-size: 14px;
+    }
+    .table .order-number {
+        font-weight: bold;
+        color: #333333;
+    }
+    .table .order-date {
+        color: #9B9B9B;
+    }
+    .table .order-status {
+        font-weight: bold;
+        color: #5DA5DA;
+        text-transform: uppercase;
+    }
+    .table .order-total {
+        font-weight: bold;
+        color: #333333;
+    }
+    .table .order-actions {
+        text-align: right;
+    }
+    .btn-see-details {
+        background-color: #5DA5DA;
+        color: #FFFFFF;
+        border: none;
+        padding: 8px 20px;
+        font-size: 14px;
+        font-weight: bold;
+        text-transform: uppercase;
+        border-radius: 2px;
+        transition: background-color 0.3s ease;
+    }
+    .btn-see-details:hover {
+        background-color: #3C8DBC;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="page-header">
+        <h1>Historique de commandes</h1>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Numéro de commande</th>
+            <th>Date de commande</th>
+            <th>Statut de commande</th>
+            <th>Total de commande</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="order-number">#1234567890</td>
+            <td class="order-date">15/03/2023</td>
+            <td class="order-status">Expédié</td>
+            <td class="order-total">150,00 €</td>
+            <td class="order-actions"><button class="btn-see-details">Voir les détails</button></td>
+        </tr>
+        <tr>
+            <td class="order-number">#0987654321</td>
+            <td class="order-date">02/03/2023</td>
+            <td class="order-status">En attente</td>
+            <td class="order-total">75,00 €</td>
+            <td class="order-actions"><button class="btn-see-details">Voir les détails</button></td>
+        </tr>
+        <tr>
+            <td class="order-number">#5678901234</td>
+            <td class="order-date">22/02/2023</td>
+            <td class="order-status">Livré</td>
+            <td class="order-total">220,00 €</td>
+            <td class="order-actions"><button class="btn-see-details">Voir les détails</button></td>
+        </tr>
+        <tr>
+            <td class="order-number">#2345678901</td>
+            <td class="order-date">10/02/2023</td>
+            <td class="order-status">Annulé</td>
+            <td class="order-total">50,00 €</td>
+            <td class="order-actions"><button class="btn-see-details">Voir les détails</button></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+</body>
+#}
     {% endif %}
 {% endblock %}

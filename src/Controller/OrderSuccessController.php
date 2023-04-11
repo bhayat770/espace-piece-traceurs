@@ -42,7 +42,7 @@ class OrderSuccessController extends AbstractController
 
             $order->setIsPaid(1);
             $this->entityManager->flush();
-            //Envoyer maiul pour confirmer la commande
+            //Envoyer mail pour confirmer la commande
         }
 
         //afficher qq info de la commande de l'user

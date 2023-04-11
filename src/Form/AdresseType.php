@@ -62,7 +62,7 @@ class AdresseType extends AbstractType
                     'placeholder' => 'Entrez votre ville'
                 ]
             ])
-            ->add('pays', CountryType::class,[
+            ->add('pays', CountryType::class, [
                 'label' => 'Pays',
                 'placeholder' => 'Choisissez votre pays',
                 'required' => true,
