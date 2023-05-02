@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1>Pièces compatibles avec {{ tag }}</h1>
+
+    {% if pieces is empty %}
+        <p>Aucune pièce n'a été trouvée pour ce tag.</p>
+    {% else %}
+        <ul>
+            {% for piece in pieces %}
+                <li>{{ piece.nom }} - {{ piece.reference }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

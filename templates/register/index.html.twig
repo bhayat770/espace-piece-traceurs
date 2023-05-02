@@ -1,9 +1,18 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
+    <div class="container">
+        <h1>Inscription</h1>
+    </div>
 
-    <h1>Inscription</h1>
+    {% if notification %}
+        <div class="alert alert-info">{{ notification }}</div>
 
-    {{ form(form) }}
-
+        <hr>
+    {% endif %}
+    <div class="container">
+        <div class="w-50">
+            {{ form(form) }}
+        </div>
+    </div>
 {% endblock %}

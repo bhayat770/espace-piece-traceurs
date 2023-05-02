@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Classe\Cart;
+use App\Classe\Mail;
 use App\Entity\Order;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -32,7 +33,7 @@ class OrderSuccessController extends AbstractController
 
         $cart->remove();
 
-        if (!$order->isIsPaid())
+        if ($order->getState() == 0)
         {
             //Vider la session cart
 
@@ -40,9 +41,18 @@ class OrderSuccessController extends AbstractController
 
             //Modifier le statut isPaid de notre commande en mettant 1
 
-            $order->setIsPaid(1);
+            $order->setState(1);
             $this->entityManager->flush();
             //Envoyer mail pour confirmer la commande
+
+            $mail = new Mail();
+            $content = "Bonjour, ".$order->getUser()->getFirstname()."<br/>Merci pour votre commande ".$stripeSessionId. ".<br><br> Voici la liste des produits commandés :<br>";
+            foreach ($order->getOrderDetails() as $orderDetail) {
+                $produit = $orderDetail->getProduit();
+                $content .= "- ".$produit." (x".$orderDetail->getQuantite().")<br> ";
+                $content .= '<img src="'.$produit->getIllustrationFile().'" alt="'.$produit->getTitre().'"><br>';
+            }
+            $mail->send($order->getUser()->getEmail(), $order->getUser()->getFirstname(), 'Votre commande chez inforiel a bien été validée !', $content);
         }
 
         //afficher qq info de la commande de l'user

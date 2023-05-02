@@ -3,7 +3,10 @@
 {% block title %}Mon panier{% endblock %}
 
 {% block content %}
+    {{ include('partials/breadcrumbs.html.twig') }}
+
     <div style="margin: auto; width: 80%;">
+
     <h1>Mon panier</h1>
     Retrouvez l'ensemble de votre panier
 
@@ -26,15 +29,15 @@
             {% for product in cart %}
 
                 <tr>
-                <img>
                 <th>
                     <img src="assets/images/hp/{{ product.product.illustration }}" alt="{{ product.product.name }}" height="100px" width="90px"><br>
                 </th>
-                <td>
-                    {{ product.product.name }} <br/>
-                    <small>{{ product.product.subtitle }}</small>
-                </td>
-                <td>
+                    <td>
+                        <a href="{{ path('app_product', {'slug': product.product.slug}) }}">{{ product.product.name }}</a> <br/>
+                        <small>{{ product.product.subtitle }}</small>
+                    </td>
+
+                    <td>
                     <a href="{{ path('app_decrease_to_cart', {'id': product.product.id}) }}" style="display: inline-block;">
                         <img src="{{ asset('assets/images/icons/moins.png') }}" height="12px" alt="Retirer un produit">
                     </a>

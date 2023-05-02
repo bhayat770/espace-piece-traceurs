@@ -4,6 +4,10 @@ namespace App\Controller\Admin;
 
 use App\Entity\Category;
 use App\Entity\Product;
+use App\Entity\Tag;
+use App\Form\ProductImageType;
+use App\Form\TagEntityType;
+use Doctrine\DBAL\Types\TextType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
@@ -14,6 +18,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
@@ -23,9 +28,12 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FieldAbstractType;
+
 
 
 class ProductCrudController extends AbstractCrudController
@@ -38,6 +46,11 @@ class ProductCrudController extends AbstractCrudController
         return Product::class;
     }
 
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->addFormTheme('@FOSCKEditor/Form/ckeditor_widget.html.twig');
+    }
 
     public function configureActions(Actions $actions): Actions
     {
@@ -53,6 +66,8 @@ class ProductCrudController extends AbstractCrudController
         return $actions
             ->add(Crud::PAGE_EDIT, $duplicate)
             ->add('index', 'detail');
+
+
     }
 
 
@@ -85,15 +100,22 @@ class ProductCrudController extends AbstractCrudController
                 ->setBasePath('/public/assets/images/hp')
                 ->setUploadDir('public/assets/images/hp'),
             MoneyField::new('price', 'Prix')->setCurrency('EUR'),
-            TextEditorField::new('description'),
+            TextEditorField::new('description')
+            ->setFormType(CKEditorType::class),
 
             DateTimeField::new('updatedAt')->hideOnForm(),
             DateTimeField::new('createdAt')->hideOnForm(),
             BooleanField::new('active', 'Activé'),
             ChoiceField::new('poids', 'Poids')->setChoices($weightChoices),
-            IntegerField::new('quantite', 'Quantité')
-
-
+            IntegerField::new('quantite', 'Quantité'),
+            CollectionField::new('productImages')
+                ->setEntryType(ProductImageType::class),
+            AssociationField::new('tags')
+                ->setFormTypeOptions([
+                    'by_reference' => false,
+                ])
+                ->autocomplete(),
+            BooleanField::new('isBest')
         ];
     }
 /*

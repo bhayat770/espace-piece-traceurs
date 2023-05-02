@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "lightgallery": "^2.7.1"
+  },
+  "devDependencies": {
+    "magnific-popup": "^1.1.0"
+  }
+}

@@ -24,7 +24,6 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/doctrine-messenger" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/doctrine-bridge" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/dotenv" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/dom-crawler" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/event-dispatcher" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/error-handler" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/expression-language" />
@@ -84,7 +83,6 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/theseer/tokenizer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/cache" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/annotations" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/common" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/collections" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/deprecations" />
@@ -146,7 +144,6 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpdocumentor/reflection-docblock" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/league/uri" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpdocumentor/reflection-common" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/sensio/framework-extra-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/league/uri-parser" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpdocumentor/type-resolver" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/kelunik/certificate" />
@@ -161,9 +158,27 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/data-fixtures" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/doctrine-fixtures-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/stripe/stripe-php" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sensio/framework-extra-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/dom-crawler" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/annotations" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/mhujer/breadcrumbs-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/friendsofsymfony/ckeditor-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/guzzlehttp/guzzle" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/guzzlehttp/promises" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/guzzlehttp/psr7" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/mailjet/mailjet-apiv3-php" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/psr/http-client" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/psr/http-factory" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/ralouphie/getallheaders" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/twbs/bootstrap" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="jquery-3.6.0" level="application" />
+    <orderEntry type="library" name="jquery-3.3.1.slim" level="application" />
+    <orderEntry type="library" name="popper.js" level="application" />
+    <orderEntry type="library" name="bootstrap" level="application" />
+    <orderEntry type="library" name="slick-carousel" level="application" />
+    <orderEntry type="library" name="jquery" level="application" />
   </component>
 </module>

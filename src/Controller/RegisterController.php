@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Classe\Cart;
+use App\Classe\Mail;
 use App\Entity\User;
 use App\Form\RegisterType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +18,13 @@ use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
 
 class RegisterController extends AbstractController
 {
+    private $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
     #[Route('/inscription', name: 'app_register')]
 
     public function index(Request $request, PersistenceManagerRegistry $doctrine, UserPasswordHasherInterface $hasher, Cart $cart): Response
@@ -31,13 +40,33 @@ class RegisterController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $password = $hasher->hashPassword($user, $user->getPassword()) ;
+            $search_mail = $this->entityManager->getRepository(User::class)->findOneByEmail($user->getEmail());
 
-            $user->setPassword($password);
+            if (!$search_mail)
+            {
 
-            $em = $doctrine->getManager();
-            $em->persist($user); //fige la donnée
-            $em->flush();
+                $password = $hasher->hashPassword($user, $user->getPassword()) ;
+
+                $user->setPassword($password);
+
+                $em = $doctrine->getManager();
+                $em->persist($user); //fige la donnée
+                $em->flush();
+
+                $mail = new Mail();
+                $content = "Bonjour,".$user->getFirstname()."<br/>Bienvenue sur votre boutique de pièces détachées de traceurs<br><br> Vous pouvez acheter des pièces détachées HP, Canon, Epson et bien d'autres";
+                $mail->send($user->getEmail(), $user->getFirstname(), 'Bienvenue sur la boutique Inforiel', $content);
+
+                $notification = "Votre inscription s'est correctement déroulée. Vous pouvez dès à présent vous connecter à votre compte";
+
+            }
+            else
+            {
+
+                $notification = "L'email que vous avez renseigné existe déjà.";
+
+            }
+
           //  $notification = "Votre mot de passe a bien été mis à jour";
         }
        // else
@@ -53,7 +82,7 @@ class RegisterController extends AbstractController
             'cartTotal' => $cartTotal,
             'cartProducts' => $cartProducts,
             'cart'=>$cart->getFull(),
-            //'notification' => $notification,
+            'notification' => $notification,
 
         ]);
 

@@ -2,64 +2,82 @@
 
 {% block title %}{{ product.name }} - Espace pièces traceurs{% endblock %}
 
-{% block content %}
-    <main class="main">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-5 col-md-6 product-single-gallery">
-                    <div class="product-slider-container">
-                        <div class="product-single-carousel owl-theme show-nav-hover">
-                            <div class="product-item">
-                                <img class="product-single-image" src="/assets/images/hp/{{ product.illustration }}"
-                        width="250" height="250"
-                         alt="product" />
-                            </div>
-                        </div>
-                        <span class="prod-full-screen">
-                            <i class="icon-plus"></i>
-                        </span>
-                    </div>
-                    <div class="prod-thumbnail owl-dots">
-                        <div class="owl-dot">
-                            <img src="/assets/images/hp/{{ product.illustration }}"
-                                 width="110"
-                                 height="110"
-                                 alt="product-thumbnail" />
-                        </div>
-                    </div>
-                </div>
-    <div class="col-lg-7 col-md-6 product-single-details">
-        <h1 class="product-title">{{ product.name }}</h1>
-        <div class="ratings-container">
-            <div class="product-ratings">
-                <span class="ratings" style="width:100%"></span>
-                <span class="tooltiptext tooltip-top"></span>
-            </div>
-            <a href="#" class="rating-link">( 6 Reviews )</a>
-        </div>
-        <hr class="short-divider">
-        <div class="price-box">
-            <span class="product-price">{{ (product.price /100) | number_format(2, ',' , '.')}} €</span>
-        </div>
-        <div class="product-desc">
-            <p>
-                {{ product.description|raw }}
-            </p>
-        </div>
-        <ul class="single-info-list">
-            <li>CATEGORIE: <strong><a href="#" class="product-category">{{ product.category }}</a></strong></li>
-        </ul>
-        <div class="product-action">
-            <div class="product-single-qty">
-                <input class="horizontal-quantity form-control font1" type="text">
-            </div>
-            <a href="{{ path('app_add_to_cart', {'id': product.id}) }}" class="btn btn-dark add-cart font1 mr-2" title="Ajouter au panier">Ajouter au panier</a>
-            <a href="#" class="btn btn-gray view-cart d-none">View cart</a>
-        </div>
-        <hr class="divider mb-0 mt-0">
-    </div>
-</div>
-        </div>
-    </main>
+{% block content%}
 
+<main class="main">
+    <div class="row">
+        <div class="container">
+        <div class="col-lg-4 col-md-5">
+            <div class="slider-for">
+                {#  <div><img src="/assets/images/hp/{{ firstImage.name }}" alt="product"></div>#}
+                {% for image in product.productImages %}
+                    <div><img src="/assets/images/hp/{{ image.name }}" alt="product"></div>
+                {% endfor %}
+            </div>
+            <div class="slider-nav">
+               {#  <div><img src="/assets/images/hp/{{ firstImage.name }}" alt="product"></div>#}
+                {% for image in product.productImages %}
+                    <div><img src="/assets/images/hp/{{ image.name }}" alt="product"></div>
+                {% endfor %}
+            </div>
+            <!-- Ajoutez les fichiers CSS et JS de Slick Carousel ici -->
+            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+            <script type="text/javascript">
+                var $j = jQuery.noConflict();
+            </script>
+            <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" />
+            <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css" />
+            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
+            <script type="text/javascript">
+                $j(document).ready(function(){
+                    $j('.slider-for').slick({
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        arrows: false,
+                        fade: true,
+                        asNavFor: '.slider-nav'
+                    });
+                    $j('.slider-nav').slick({
+                        slidesToShow: 3,
+                        slidesToScroll: 1,
+                        asNavFor: '.slider-for',
+                        dots: true,
+                        centerMode: true,
+                        focusOnSelect: true
+                    });
+                });
+            </script>
+        </div>
+        <div class="col-lg-7 col-md-6 product-single-details">
+            <h1 class="product-title">{{ product.name }}</h1>
+            <div class="ratings-container">
+                <div class="product-ratings">
+                    <span class="ratings" style="width:100%"></span>
+                    <span class="tooltiptext tooltip-top"></span>
+                </div>
+                <a href="#" class="rating-link">( 6 Reviews )</a>
+            </div>
+            <hr class="short-divider">
+            <div class="price-box">
+                <span class="product-price">{{ (product.price /100) | number_format(2, ',' , '.')}} €</span>
+            </div>
+            <div class="product-desc">
+                <p>
+                    {{ product.description|raw }}
+                </p>
+            </div>
+            <ul class="single-info-list">
+                <li>CATEGORIE: <strong><a href="#" class="product-category">{{ product.category }}</a></strong></li>
+            </ul>
+            <div class="product-action">
+                <form method="post" action="{{ path('app_add_to_cart', {'id': product.id}) }}">
+                    <input type="number" name="quantite" value="1" min="1" max="{{ maxQuantity }}">
+                    <button type="submit">Ajouter au panier</button>
+                </form>
+                <a href="#" class="btn btn-gray view-cart d-none">Voir le panier</a>
+            </div>
+
+        </div>
+    </div>
+</main>
 {% endblock %}

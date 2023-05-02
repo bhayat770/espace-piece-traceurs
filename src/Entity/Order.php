@@ -39,14 +39,15 @@ class Order
     #[ORM\ManyToOne(targetEntity: Adresse::class)]
     private Adresse $adresse;
 
-    #[ORM\Column]
-    private ?bool $isPaid = null;
 
     #[ORM\Column(length: 255)]
     private ?string $reference = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $stripeSessionId = null;
+
+    #[ORM\Column]
+    private ?int $state = null;
 
 
     public function __construct()
@@ -161,18 +162,6 @@ class Order
         return $this;
     }
 
-    public function isIsPaid(): ?bool
-    {
-        return $this->isPaid;
-    }
-
-    public function setIsPaid(bool $isPaid): self
-    {
-        $this->isPaid = $isPaid;
-
-        return $this;
-    }
-
     public function getReference(): ?string
     {
         return $this->reference;
@@ -205,6 +194,18 @@ class Order
     public function setUsers(?User $users): self
     {
         $this->users = $users;
+
+        return $this;
+    }
+
+    public function getState(): ?int
+    {
+        return $this->state;
+    }
+
+    public function setState(int $state): self
+    {
+        $this->state = $state;
 
         return $this;
     }

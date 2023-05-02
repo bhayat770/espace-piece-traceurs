@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use phpDocumentor\Reflection\Types\String_;
@@ -70,6 +71,15 @@ class Product
 
     #[ORM\Column]
     private ?int $quantite = null;
+
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductImage::class, cascade: ['persist'], orphanRemoval: true,)]
+    private Collection $productImages;
+
+    #[ORM\ManyToMany(targetEntity: Tag::class, mappedBy: 'product', cascade: ['persist'])]
+    private Collection $tags;
+
+    #[ORM\Column]
+    private ?bool $isBest = null;
 
     public function getId(): ?int
     {
@@ -145,6 +155,8 @@ class Product
     public function __construct()
     {
         $this->illustration = new ArrayCollection();
+        $this->productImages = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
 
@@ -281,4 +293,79 @@ class Product
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, ProductImage>
+     */
+    public function getProductImages(): Collection
+    {
+        return $this->productImages;
+    }
+
+    public function addProductImage(ProductImage $productImage): self
+    {
+        if (!$this->productImages->contains($productImage)) {
+            $this->productImages->add($productImage);
+            $productImage->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProductImage(ProductImage $productImage): self
+    {
+        if ($this->productImages->removeElement($productImage)) {
+            // set the owning side to null (unless already changed)
+            if ($productImage->getProduct() === $this) {
+                $productImage->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Tag>
+     */
+    public function getTags(): Collection
+    {
+        return $this->tags;
+    }
+
+    public function addTag(Tag $tag): self
+    {
+        if (!$this->tags->contains($tag)) {
+            $this->tags->add($tag);
+            $tag->addProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTag(Tag $tag): self
+    {
+        if ($this->tags->removeElement($tag)) {
+            $tag->removeProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function getAvailableQuantity(): int
+    {
+        return $this->quantite;
+    }
+
+    public function isIsBest(): ?bool
+    {
+        return $this->isBest;
+    }
+
+    public function setIsBest(bool $isBest): self
+    {
+        $this->isBest = $isBest;
+
+        return $this;
+    }
+
 }

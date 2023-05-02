@@ -9,11 +9,24 @@
     <hr><strong></strong>
     <strong>Commande passée le : </strong> {{ order.createdAt|date('d/m/Y') }}<br/>
     <strong>Référence de commande </strong> {{ order.reference }}<br/>
-
     <strong>
-        Détails
+        Statut de la commande :
+        {% if order.state ==1 %}
+            Paiement accepté
+        {% elseif order.state ==2 %}
+            Préparation en cours
+        {% elseif order.state == 3 %}
+            Livraison en cours
+        {% endif %}
+        <br/>
     </strong>
-
+    <br>
+    <br>
+    <h3>
+        <strong>
+            Détails
+        </strong>
+    </h3>
 
     <table class="table">
         <thead>
@@ -27,12 +40,12 @@
         </thead>
         <tbody>
         {% for product in order.orderDetails %}
-            {{ dump(order) }}
         <tr>
             <td>{{ product.produit }}</td>
             <td>{{ product.quantite }}</td>
             <td>{{ (product.prix/100)|round(2, 'floor')|number_format(2, ',', '.') }} €</td>
-            <td><img src="{{ asset('assets/images/hp/' ~ product.produit.illustration) }}"></td>
+           {#  <td><img src="{{ asset('assets/images/hp/' ~ product.produit.illustration) }}" alt="{{ product.product.name }}" height="75px"></td>#}
+
             <th scope="row">
             </th>
         </tr>

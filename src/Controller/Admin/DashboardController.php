@@ -7,6 +7,8 @@ use App\Entity\Category;
 use App\Entity\Marque;
 use App\Entity\Order;
 use App\Entity\Product;
+use App\Entity\ProductImage;
+use App\Entity\Tag;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -75,6 +77,18 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::subMenu("Actions",'fa-solid fa-cart-shopping')->setSubItems([
             MenuItem::linkToCrud('Ajouter un transporteur', 'fas fa-plus', Order::class)->setAction(Crud::PAGE_NEW),
             MenuItem::linkToCrud('Voir les commandes', 'fas fa-eye', Order::class)
+        ]);
+
+        yield MenuItem::section("Images");
+        yield MenuItem::subMenu("Actions",'fa-solid fa-cart-image')->setSubItems([
+            MenuItem::linkToCrud('Ajouter une image', 'fas fa-plus', ProductImage::class)->setAction(Crud::PAGE_NEW),
+            MenuItem::linkToCrud('Voir les images', 'fas fa-eye', ProductImage::class)
+        ]);
+
+        yield MenuItem::section("Tags");
+        yield MenuItem::subMenu("Actions",'fa-solid fa-cart-image')->setSubItems([
+            MenuItem::linkToCrud('Ajouter un tag', 'fas fa-plus', Tag::class)->setAction(Crud::PAGE_NEW),
+            MenuItem::linkToCrud('Voir les tags', 'fas fa-eye', Tag::class)
         ]);
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }

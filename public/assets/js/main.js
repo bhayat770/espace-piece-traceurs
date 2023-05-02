@@ -2561,3 +2561,13 @@
 	} );
 } )( jQuery );
 
+
+$(document).ready(function () {
+	$('.product-single-image').elevateZoom({
+		gallery: 'product-single-carousel',
+		galleryActiveClass: 'active',
+		zoomType: 'inner',
+		cursor: 'crosshair',
+		zoomContainer: '.product-single-image-container'
+	});
+});

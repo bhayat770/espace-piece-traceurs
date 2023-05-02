@@ -22,7 +22,7 @@
         };
         (function (d) {
             var wf = d.createElement('script'), s = d.scripts[0];
-            wf.src = 'assets/js/webfont.js';
+            wf.src = '../assets/js/webfont.js';
             wf.async = true;
             s.parentNode.insertBefore(wf, s);
         })(document);
@@ -35,6 +35,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/demo35.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/simple-line-icons/css/simple-line-icons.min.css') }}">
+
 
     {% block javascript %}
     {% endblock %}
@@ -187,108 +188,103 @@
                 {% endif %}
             </div>
 
-            {# <div class="cart-dropdown-wrapper d-flex align-items-center">
+            {% if cart | length > 0 %}
+            <div class="cart-dropdown-wrapper d-flex align-items-center">
                 <div class="dropdown cart-dropdown">
-                    <a href="{{ path('app_cart') }}" title="Cart" class="dropdown-toggle cart-toggle" role="button"
+                    <a href="{{ path('app_cart') }}" title="Panier" class="dropdown-toggle cart-toggle" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                        data-display="static">
-                        <span class="cart-count badge-circle">{{ cartProducts }}</span>
                         <i class="icon-cart-thick"></i>
-
-                        <span class="cart-total">{{ cartTotal|number_format(2, ',', '.') }} €</span>
+                        <span class="cart-count badge-circle">{{ cartProducts }}</span>
                     </a>
-            #}
 
-            {% if cart | length > 0 %}
-                    <div class="cart-dropdown-wrapper d-flex align-items-center">
-                        <div class="dropdown cart-dropdown">
-                            <a href="{{ path('app_cart') }}" title="Cart" class="dropdown-toggle cart-toggle" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-                                <i class="icon-cart-thick"></i>
-                                <span class="cart-count badge-circle">{{ cartProducts }}</span>
-                            </a>
+                    <div class="cart-overlay"></div>
 
-                            <div class="cart-overlay"></div>
+                    <div class="dropdown-menu mobile-cart">
+                        <a href="#" title="Close (Esc)" class="btn-close">×</a>
 
-                            <div class="dropdown-menu mobile-cart">
-                                <a href="#" title="Close (Esc)" class="btn-close">×</a>
+                        <div class="dropdownmenu-wrapper custom-scrollbar">
+                            <div class="dropdown-cart-header">Panier</div>
+                            <!-- End .dropdown-cart-header -->
+                            {%  set total = null %}
 
-                                <div class="dropdownmenu-wrapper custom-scrollbar">
-                                    <div class="dropdown-cart-header">Panier</div>
-                                    <!-- End .dropdown-cart-header -->
-                                    {%  set total = null %}
+                            <div class="dropdown-cart-products">
 
-                                    <div class="dropdown-cart-products">
-
-                                        {% for product in cart %}
-                                            <div class="product">
-                                                <div class="product-details">
-                                                    <h4 class="product-title">
-                                                        <a href="{{ path('app_product', {'slug': product.product.slug}) }}">
-                                                            {{ product.product.name }}
-                                                        </a>
-                                                    </h4>
-
-                                                    <span class="cart-product-info">
-                                                        <span class="cart-product-qty">
-                                                            {{ product.quantity }}
-                                                        </span>
-                                                        × {{ (product.product.price /100) | number_format(2, ',' , '.')}} €
-                                                    </span>
-                                                </div><!-- End .product-details -->
-
-                                                <figure class="product-image-container">
-                                                    <a href="#" class="product-image">
-                                                        <img src="/assets/images/hp/{{ product.product.illustration }}" alt="{{ product.product.name }}" width="80" height="80">
-                                                    </a>
-
-                                                    <a href="{{ path('app_remove_my_cart', { id: product.product.id }) }}" class="btn-remove" title="Remove Product"><span>×</span></a>
-                                                </figure>
-                                            </div><!-- End .product -->
-                                    </div><!-- End .cart-product -->
-                                    {% endfor %}
-
-                                    <div class="dropdown-cart-total">
-                                        <span>Sous-total</span>
-
-                                        <span class="cart-total-price float-right">{{ cartTotal|number_format(2, '.', ',') }} €</span>
-                                    </div><!-- End .dropdown-cart-total -->
-
-                                    <div class="dropdown-cart-action">
-                                        <a href="{{ path('app_cart') }}" class="btn btn-gray btn-block view-cart">Voir mon panier
+                                {% for product in cart %}
+                                <div class="product">
+                                    <div class="product-details">
+                                        <h4 class="product-title">
+                                            <a href="{{ path('app_product', {'slug': product.product.slug}) }}">
+                                                {{ product.product.name }}
                                             </a>
-                                       {#  <a href="{{ path('app_order_validate') }}" class="btn btn-dark btn-block">Payement</a>#}
-                                    </div><!-- End .dropdown-cart-total -->
-                                </div><!-- End .dropdownmenu-wrapper -->
-                            </div><!-- End .dropdown-menu -->
-                        </div><!-- End .dropdown -->
-                    </div>
+                                        </h4>
 
-                    <span class="cart-subtotal font2 d-none d-sm-inline">Total
-                                <span class="cart-price d-block font2">{{ cartTotal|number_format(2, ',', '.') }} €</span>
-                            </span>
-                    </div>
-                </div><!-- End .dropdown-menu -->
-            </div><!-- End .dropdown -->
+                                        <span class="cart-product-info">
+                                                <span class="cart-product-qty">
+                                                    {{ product.quantity }}
+                                                </span>
+                                                × {{ (product.product.price /100) | number_format(2, ',' , '.')}} €
+                                            </span>
+                                    </div><!-- End .product-details -->
+
+
+
+                                    <figure class="product-image-container">
+                                        <a href="#" class="product-image">
+                                            <img src="/assets/images/hp/{{ product.product.illustration }}" alt="{{ product.product.name }}"
+                                                 width="80" height="80">
+                                        </a>
+
+                                        <a href="{{ path('app_remove_my_cart', { id: product.product.id }) }}" class="btn-remove" title="Remove Product"><span>×</span></a>
+                                    </figure>
+                                </div><!-- End .product -->
+                            </div><!-- End .cart-product -->
+                            {% endfor %}
+
+                            <div class="dropdown-cart-total">
+                                <span>Sous-total</span>
+
+                                <span class="cart-total-price float-right">{{ cartTotal|number_format(2, '.', ',') }} €</span>
+                            </div><!-- End .dropdown-cart-total -->
+
+                            <div class="dropdown-cart-action">
+                                <a href="{{ path('app_cart') }}" class="btn btn-gray btn-block view-cart">
+                                    Voir mon panier
+                                </a>
+                                {#  <a href="{{ path('app_order_validate') }}" class="btn btn-dark btn-block">Payement</a>#}
+                            </div><!-- End .dropdown-cart-total -->
+                        </div>
+                        </div><!-- End .dropdownmenu-wrapper -->
+                    </div><!-- End .dropdown-menu -->
+                </div>
+
+
+                <span class="cart-subtotal font2 d-none d-sm-inline">Total
+                    <span class="cart-price d-block font2">
+                        {{ cartTotal|number_format(2, ',', '.') }} €
+                    </span>
+                </span>
+        </div>
+    </div><!-- End .dropdown-menu -->
+</div><!-- End .dropdown -->
+
 
 {% else %}
-<div class="cart-dropdown-wrapper d-flex align-items-center">
-    <div class="dropdown cart-dropdown">
-        <a href="{{ path('app_cart') }}" title="Cart" class="dropdown-toggle cart-toggle" role="button"
-           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-            <i class="icon-cart-thick"></i>
-            <span class="cart-count badge-circle">{{ cartProducts }}</span>
-        </a>
+    <div class="cart-dropdown-wrapper d-flex align-items-center">
+        <div class="dropdown cart-dropdown">
+            <a href="{{ path('app_cart') }}" title="Cart" class="dropdown-toggle cart-toggle" role="button"
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                <i class="icon-cart-thick"></i>
+                <span class="cart-count badge-circle">{{ cartProducts }}</span>
+            </a>
+        </div>
     </div>
-</div>
     <div class="dropdown-cart-total">
         <span>Panier (Vide) </span>
     </div>
 
-        {% endif %}
+{% endif %}
 
-    </div><!-- End .container -->
-</div><!-- End .header-middle -->
 
 <div class="header-bottom sticky-header d-none d-lg-flex" data-sticky-options="{'mobile': false}">
     <div class="container">
@@ -1065,7 +1061,7 @@
                 <div class="col-xl-7 col-lg-7 col-md-7">
                     <div class="footer-copy-right">
                         <p>
-                            Copyright &copy;<script>document.write(new Date().getFullYear());</script> </a>
+                            Copyright &copy;<script>document.write(new Date().getFullYear());</script>
                         </p>
                     </div>
                 </div>
@@ -1095,6 +1091,9 @@
 <script src="{{ asset('assets/js/jquery.appear.min.js') }}"></script>
 <script src="{{ asset('assets/js/jquery.plugin.min.js') }}"></script>
 <script src="{{ asset('assets/js/jquery.countdown.min.js') }}"></script>
+
+
+
 <!-- Include jQuery -->
 
 
@@ -1102,4 +1101,5 @@
 {% endblock %}
 <!-- Main JS File -->
 <script src="{{ asset('assets/js/main.min.js') }}"></script>
+
 </html>

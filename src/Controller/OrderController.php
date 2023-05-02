@@ -49,7 +49,7 @@ class OrderController extends AbstractController
 
 
     #[Route('/commande/recapitulatif', name: 'app_order_recap', methods: ['POST'])]
-    public function add(Cart $cart, Request $request, PersistenceManagerRegistry $doctrine): Response
+    public function add(Cart $cart, Request $request, PersistenceManagerRegistry $doctrine, $carriers = null): Response
     {
         $form = $this->createForm(OrderType::class, null, [
             "user" => $this->getUser()
@@ -84,7 +84,7 @@ class OrderController extends AbstractController
             $order->setCarrierName($carriers->getName());
             $order->setCarrierPrice($carriers->getPrix());
             $order->setDelivery($delivery_content);
-            $order->SetIsPaid(0);
+            $order->SetState(0);
             $this->entityManager->persist($order);
 
 
@@ -103,7 +103,7 @@ class OrderController extends AbstractController
             }
 
             // Enregistrer la commande dans la base de données
-           $this->entityManager->persist($order);
+            $this->entityManager->persist($order);
             $this->entityManager->flush();
 
             $cartTotal = $cart->getTotal();

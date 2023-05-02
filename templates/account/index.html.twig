@@ -14,10 +14,10 @@
     <hr> #}
 
     <!-- Plugins CSS File -->
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+
 
     <!-- Main CSS File -->
-    <link rel="stylesheet" href="{{ asset('assets/css/style.min.css') }}">
+
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/simple-line-icons/css/simple-line-icons.min.css') }}">
 
@@ -34,7 +34,7 @@
                     </ol>
                 </div>
             </nav>
-
+{% if app.user %}
             <h1>Mon compte</h1>
         </div>
     </div>
@@ -449,29 +449,10 @@
             </div><!-- End .tab-content -->
         </div><!-- End .row -->
     </div><!-- End .container -->
-
+{% endif %}
 </main><!-- End .main -->
     <!-- Plugins JS File -->
 
-
-    <script>
-        WebFontConfig = {
-            google: { families: [ 'Open+Sans:300,400,600,700,800', 'Poppins:300,400,500,600,700', 'Shadows+Into+Light:400' ] }
-        };
-        ( function ( d ) {
-            const wf = d.createElement('script'), s = d.scripts[0];
-            wf.src = 'assets/js/webfont.js';
-            wf.async = true;
-            s.parentNode.insertBefore( wf, s );
-        } )( document );
-    </script>
-
-    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
-    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('assets/js/plugins.min.js') }}"></script>
-
-    <!-- Main JS File -->
-    <script src="{{ asset('assets/js/main.min.js') }}"></script>
 
 
 

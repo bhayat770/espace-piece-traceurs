@@ -18,6 +18,7 @@ class Cart
     {
         $this->requestStack=$requestStack;
         $this->entityManager=$entityManager;
+        $total = 0;
     }
 
     public function add($id)
@@ -143,4 +144,28 @@ class Cart
         // Renvoyer les informations complètes du panier
         return $cartComplete;
     }
+
+    // Dans la classe Cart
+
+    public function hasProduct($id)
+    {
+        return isset($this->products[$id]);
+    }
+    public function updateTotal(): void
+    {
+        $total = 0;
+
+        foreach ($this->products as $product) {
+            $total += $product['product']->getPrice() * $product['quantity'];
+        }
+
+        $this->total = $total;
+    }
+
+    public function increase($id, $quantity)
+    {
+        $this->products[$id]['quantity'] += $quantity;
+        $this->updateTotal();
+    }
+
 }

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Classe\Search;
+use App\Entity\Category;
 use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -40,6 +41,15 @@ class ProductRepository extends ServiceEntityRepository
         }
     }
 
+    public function findByCategory(Category $category): array
+    {
+        return $this->createQueryBuilder('p')
+            ->join('p.category', 'c')
+            ->where('c.id = :categoryId')
+            ->setParameter('categoryId', $category->getId())
+            ->getQuery()
+            ->getResult();
+    }
 
     /**
      # Requête pour reccupérer produits en fonction de la recherche de l'user
