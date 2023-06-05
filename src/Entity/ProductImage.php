@@ -102,8 +102,9 @@ class ProductImage
         return $this;
     }
 
-    public function __toString(): string
+    public function __toString()
     {
-        return $this->name;
+        return strval($this->id);
     }
+
 }

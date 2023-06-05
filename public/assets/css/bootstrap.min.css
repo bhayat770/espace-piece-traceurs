@@ -28,3 +28,62 @@
 .card-links {
     margin-top: auto; /* pousser les liens "Modifier" et "Supprimer" en bas de la carte */
 }
+
+.container-cart {
+    background-color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin: 20px auto;
+    max-width: 83%;
+}
+
+.step-progress {
+    display: flex;
+    justify-content: space-between;
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    color: #808080;
+}
+
+.step.active {
+    color: #000000;
+}
+
+.active-icon {
+    color: orange;
+}
+
+.step-icon {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.progress-bar {
+    height: 8px;
+    background-color: #e0e0e0;
+    margin-top: 16px;
+    width: 100%;
+}
+
+.progress {
+    height: 100%;
+    background-color: #ff9800;
+}
+
+@media (max-width: 768px) {
+    .container-cart {
+        padding: 10px;
+        max-width: 400px;
+    }
+
+    .step-icon {
+        font-size: 20px;
+    }
+}
+

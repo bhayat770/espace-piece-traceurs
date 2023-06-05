@@ -63,7 +63,8 @@ class OrderCrudController extends AbstractCrudController
             ->setAction('index')
             ->generateUrl();
 
-
+        //$mail = new Mail();
+        //$mail->send($order->getUser);
 
         return $this->redirect($url);
     }
@@ -80,6 +81,7 @@ class OrderCrudController extends AbstractCrudController
             ->setController(OrderCrudController::class)
             ->setAction('index')
             ->generateUrl();
+
 
         $to_email = $order->getUser()->getEmail();
         $to_name = $order->getUser()->getFirstname();

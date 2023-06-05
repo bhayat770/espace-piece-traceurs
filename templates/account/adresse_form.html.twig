@@ -3,16 +3,19 @@
 {% block title %}Ajouter une adresse - Espace pièces traceurs{% endblock %}
 
 {% block content %}
+    <div class="container">
     {% if form.vars.value.id is null %}
         <h1>Ajouter une adresse</h1>
     {% else %}
         <h1>Modifier mon adresse</h1>
     {% endif %}
-
+    </div>
     {# <h1>Gérer mes adresses</h1> #}
+    <div class="container">
     <a href="{{ path('app_account') }}"><br>Retour</a>
     <hr>
-
+    </div>
+    <div class="container">
     {{ form_start(form) }}
     <div class="row">
         <div class="col-md-12">{{ form_row(form.name) }}</div>
@@ -28,6 +31,6 @@
     {{ form_end(form) }}
 
     {% block stylesheets %}
-
+        </div>
     {% endblock %}
 {% endblock %}

@@ -1,0 +1,16 @@
+{# templates/form/fields/_country_choice.html.twig #}
+{% block _pays_widget %}
+    <div class="country-widget">
+        <select{{ block('widget_attributes') }}>
+            {% if placeholder is not empty %}
+                <option value=""{% if required %} disabled{% endif %}>{{ placeholder }}</option>
+            {% endif %}
+            {% for value, label in choices %}
+                <option value="{{ value }}"{{ value == selected_choice ? ' selected' : '' }}>
+                    <span class="flag-icon flag-icon-{{ value|lower }}"></span>
+                    {{ label }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+{% endblock %}

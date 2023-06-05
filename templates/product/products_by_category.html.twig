@@ -3,35 +3,43 @@
 {% block title %}Produits de la catégorie {{ category.name }}{% endblock %}
 
 {% block content %}
-    <h1>Produits de la catégorie {{ category.name }}</h1>
-
-{% for product in products %}
-    <div class="col-6 col-sm-4 col-xl-3">
-        <div class="product-default inner-quickview inner-icon">
-            <figure>
-                <a href="{{ path('app_product', {'slug': product.slug}) }}">
-                    <img src="assets/images/hp/{{ product.illustration }}" width="150"
-                         height="217" alt="product">
+  <div class="container">
+      <h1>Produits de la catégorie {{ category.name }}</h1>
+  </div>
+<div class="container">
+    <br>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ path('app_home') }}">
+                    <i class="fa fa-home"></i>  Accueil
                 </a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('app_products') }}">Nos Produits</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">{{ category.name }}</li>
+        </ol>
+    </nav>
+</div>
+<main class="main">
+    <div class="container">
+        <div class="row">
 
-            </figure>
-
-            <div class="product-details">
-                {# <div class="category-wrap">
-                                     <div class="category-list">
-                                        <a href="{{ path('products_by_category', {'categorySlug': product.category.slug}) }}" class="product-category">{{ product.category.name }}</a>
-                                    </div>
-                                </div>#}
-                <h3 class="product-title">
-                    <a href="{{ path('app_product', {'slug': product.slug}) }}">{{ product.name }}</a>
-                </h3>
-                <div class="price-box">
-                    <span class="product-price">{{ (product.price /100) | number_format(2, ',' , '.')}} €</span>
+            <div class="col-md-9">
+                <h3>Nos produits</h3>
+                <br>
+                <div class="row">
+                    {% for product in products %}
+                        <div class="col-6 col-sm-4 col-xl-3">
+                            {% include 'product/single_product.html.twig' %}
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
     </div>
-{% endfor %}
-        </div>
+</main>
         <p>Aucun produit pour cette catégorie.</p>
+
 {% endblock %}

@@ -24,6 +24,8 @@ class HomeController extends AbstractController
     public function index(SessionInterface $session, Cart $cart): Response
     {
         $products = $this->entityManager->getRepository(Product::class)->findByIsBest(1);
+        $promos = $this->entityManager->getRepository(Product::class)->findByEnPromo(1);
+
 
         $cartTotal = $cart->getTotal();
         $cartProducts = $cart->getProducts();
@@ -32,7 +34,8 @@ class HomeController extends AbstractController
             'cartTotal' => $cartTotal,
             'cartProducts' => $cartProducts,
             'cart'=>$cart->getFull(),
-            'products' => $products
+            'products' => $products,
+            'promos' => $promos
         ]);
     }
 }

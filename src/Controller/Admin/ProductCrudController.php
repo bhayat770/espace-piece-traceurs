@@ -91,7 +91,7 @@ class ProductCrudController extends AbstractCrudController
             }),
             AssociationField::new('marque'),
             TextField::new('partnumber', 'Numéro de référence'),
-            TextField::new('subtitle', 'Sous-titre'),
+            TextField::new('subtitle', 'Sous-titre')->hideOnIndex(),
             TextField::new('illustrationFile')
                 ->setFormType(VichImageType::class)
                 ->onlyOnForms()
@@ -103,8 +103,8 @@ class ProductCrudController extends AbstractCrudController
             TextEditorField::new('description')
             ->setFormType(CKEditorType::class),
 
-            DateTimeField::new('updatedAt')->hideOnForm(),
-            DateTimeField::new('createdAt')->hideOnForm(),
+            DateTimeField::new('updatedAt')->hideOnForm()->hideOnIndex(),
+            DateTimeField::new('createdAt')->hideOnForm()->hideOnIndex(),
             BooleanField::new('active', 'Activé'),
             ChoiceField::new('poids', 'Poids')->setChoices($weightChoices),
             IntegerField::new('quantite', 'Quantité'),
@@ -115,7 +115,10 @@ class ProductCrudController extends AbstractCrudController
                     'by_reference' => false,
                 ])
                 ->autocomplete(),
-            BooleanField::new('isBest')
+            BooleanField::new('isBest'),
+            BooleanField::new('enPromo'),
+            MoneyField::new('prixPromo', 'Prix promotionnel')->setCurrency('EUR')->onlyOnForms(),
+
         ];
     }
 /*

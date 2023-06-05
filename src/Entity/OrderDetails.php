@@ -29,6 +29,12 @@ class OrderDetails
     #[ORM\Column]
     private ?float $total = null;
 
+    #[ORM\ManyToOne(inversedBy: 'orderDetails')]
+    private ?Product $Produit = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $illustration = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -98,5 +104,17 @@ class OrderDetails
     {
         return $this->getProduit().' x '.$this->getQuantite();
 
+    }
+
+    public function getIllustration(): ?string
+    {
+        return $this->illustration;
+    }
+
+    public function setIllustration(string $illustration): self
+    {
+        $this->illustration = $illustration;
+
+        return $this;
     }
 }

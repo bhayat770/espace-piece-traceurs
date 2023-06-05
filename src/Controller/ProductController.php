@@ -11,6 +11,7 @@ use App\Entity\Tag;
 use App\Form\SearchType;
 use App\Repository\CategoryRepository;
 use App\Repository\TagRepository;
+use App\Service\BreadcrumbService;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,10 +25,10 @@ class ProductController extends AbstractController
     private $entityManager;
     private $cart;
 
-    public function __construct(EntityManagerInterface $entityManager, Cart $cart) {
+    public function __construct(EntityManagerInterface $entityManager, Cart $cart, BreadcrumbService $breadcrumbService) {
         $this->entityManager=$entityManager;
         $this->cart=$cart;
-
+        $this->breadcrumbService = $breadcrumbService;
     }
 
     #[Route('/nos-produits', name: 'app_products')]
@@ -119,6 +120,10 @@ class ProductController extends AbstractController
 
 
         $firstImage = $product->getProductImages()->first();
+        $breadcrumb = $this->breadcrumbService->generateBreadcrumb([
+            'slug' => $slug,
+            'pageName' => 'Product Page',
+        ]);
 
 
 
@@ -136,6 +141,7 @@ class ProductController extends AbstractController
             'cart'=>$cart->getFull(),
             'firstImage'=> $firstImage,
             'maxQuantity' => $maxQuantity,
+            'breadcrumb' => $breadcrumb
             ]);
     }
 

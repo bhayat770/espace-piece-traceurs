@@ -3,7 +3,33 @@
 {% block title %}Mon panier{% endblock %}
 
 {% block content %}
-    {{ include('partials/breadcrumbs.html.twig') }}
+
+
+    <div class="container-cart">
+        <div class="step-progress">
+            <div class="step active">
+                <span class="step-icon active-icon"><i class="fas fa-shopping-cart"></i></span>
+                <a href="{{ path('app_cart') }}">
+                    <span class="step-text">Mon panier</span>
+                </a>
+            </div>
+            <div class="step">
+                <span class="step-icon"><i class="fas fa-truck"></i></span>
+                <span class="step-text">Choisir l'adresse et le transporteur</span>
+            </div>
+            <div class="step">
+                <span class="step-icon"><i class="fas fa-clipboard-list"></i></span>
+                <span class="step-text">Récapitulatif</span>
+            </div>
+            <div class="step">
+                <span class="step-icon"><i class="fas fa-credit-card"></i></span>
+                <span class="step-text">Paiement</span>
+            </div>
+        </div>
+        <div class="progress-bar">
+            <div class="progress" style="width: 25%;"></div>
+        </div>
+    </div>
 
     <div style="margin: auto; width: 80%;">
 
@@ -48,10 +74,18 @@
                 </td>
 
                 <td>
-                    {{ (product.product.price /100) | number_format(2, ',' , '.')}} €
+                    {% if product.product.prixPromo is not null %}
+                        {{ (product.product.prixPromo /100) | number_format(2, ',' , '.')}} €
+                    {% else %}
+                        {{ (product.product.price /100) | number_format(2, ',' , '.')}} €
+                    {% endif %}
                 </td>
                 <td>
-                    {{ ((product.product.price * product.quantity )/100) | number_format(2, ',' , '.')}} €
+                    {% if product.product.prixPromo is not null %}
+                        {{ ((product.product.prixPromo * product.quantity)/100) | number_format(2, ',' , '.')}} €
+                    {% else %}
+                        {{ ((product.product.price * product.quantity)/100) | number_format(2, ',' , '.')}} €
+                    {% endif %}
                 </td>
         <td>
             <a href="{{ path('app_delete_to_cart', {'id': product.product.id}) }}">
@@ -61,7 +95,11 @@
 
             </tr>
 
-            {% set total = total + (product.product.price * product.quantity ) %}
+                {% if product.product.prixPromo is not null %}
+                    {% set total = total + (product.product.prixPromo * product.quantity) %}
+                {% else %}
+                    {% set total = total + (product.product.price * product.quantity) %}
+                {% endif %}
         {% endfor %}
 
         </tbody>

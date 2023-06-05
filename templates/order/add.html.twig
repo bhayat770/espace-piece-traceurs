@@ -7,6 +7,31 @@
 {% block title %}Valider ma commande{% endblock %}
 
 {% block content %}
+
+    <div class="container-cart">
+        <div class="step-progress">
+            <div class="step ">
+                <span class="step-icon active-icon"><i class="fas fa-shopping-cart"></i></span>
+                <span class="step-text">Mon panier</span>
+            </div>
+            <div class="step active">
+                <span class="step-icon active-icon"><i class="fas fa-truck"></i></span>
+                <span class="step-text">Choisir l'adresse et le transporteur</span>
+            </div>
+            <div class="step active">
+                <span class="step-icon active-icon"><i class="fas fa-clipboard-list"></i></span>
+                <span class="step-text">Récapitulatif</span>
+            </div>
+            <div class="step">
+                <span class="step-icon"><i class="fas fa-credit-card"></i></span>
+                <span class="step-text">Paiement</span>
+            </div>
+        </div>
+        <div class="progress-bar">
+            <div class="progress" style="width: 75%;"></div>
+        </div>
+    </div>
+
     <h2>Mon recapitulatif !</h2>
     <p>Vérifiez vos informations avant de payer votre commande</p>
     <hr>

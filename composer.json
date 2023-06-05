@@ -4,16 +4,19 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": ">=8.0.2",
+        "php": ">=8.0.13",
         "ext-ctype": "*",
+        "ext-curl": "*",
         "ext-iconv": "*",
         "amphp/http-client": "^4.6",
+        "components/flag-icon-css": "^3.5",
         "doctrine/annotations": "*",
         "doctrine/doctrine-bundle": "^2.7",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.13",
         "easycorp/easyadmin-bundle": "^4.6",
         "friendsofsymfony/ckeditor-bundle": "^2.4",
+        "liip/imagine-bundle": "^2.10",
         "mailjet/mailjet-apiv3-php": "^1.5",
         "mhujer/breadcrumbs-bundle": "^1.5",
         "phpdocumentor/reflection-docblock": "^5.3",
@@ -50,8 +53,7 @@
         "twbs/bootstrap": "^5.2",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0",
-        "vich/uploader-bundle": "^1.21",
-      "ext-curl": "*"
+        "vich/uploader-bundle": "^1.21"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.4",

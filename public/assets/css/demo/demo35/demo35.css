@@ -5224,8 +5224,8 @@ figure .porto-loading-icon {
   margin-bottom: 1.6rem;
 }
 .product-default figure > a:first-child {
-  width: 100%;
-  height: 100%;
+  width: 50%;
+  height: 50%;
 }
 .product-default figure img {
   transition: opacity 0.3s ease-in-out;
@@ -15541,4 +15541,111 @@ aside .widget-info i {
   .products-section {
     padding-bottom: 3.3rem;
   }
+}
+
+.cart-dropdown-wrapper {
+  position: relative;
+}
+
+.dropdown.cart-dropdown {
+  position: relative;
+}
+
+.cart-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: none;
+}
+
+.dropdown-menu.mobile-cart {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.dropdownmenu-wrapper {
+  position: relative;
+}
+
+.dropdown-cart-header {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.dropdown-cart-products .product {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.product-details {
+  flex: 1;
+  margin-left: 10px;
+}
+
+.product-details .product-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.product-details .cart-product-info {
+  font-size: 14px;
+  color: #888;
+}
+
+.product-image-container {
+  width: 80px;
+  height: 80px;
+  position: relative;
+}
+
+.product-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.btn-remove {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 16px;
+  color: #888;
+}
+
+.dropdown-cart-total {
+  margin-top: 10px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dropdown-cart-action .btn {
+  margin-top: 10px;
+}
+
+.cart-subtotal {
+  margin-left: 10px;
+}
+
+.cart-content.cart-empty {
+  margin-left: 10px;
+  color: #888;
+}
+.product-image {
+  width: 50px;
+  height: 50px;
 }

@@ -101,7 +101,7 @@
                     <div class="info-box info-box-icon-left">
                         <i class="icon-money text-primary"></i>
                         <div class="info-content">
-                            <h4 class="ls-n-25">Money Back Guarantee</h4>
+                            <h4 class="ls-n-25">Remboursement en cas de problème de pièce</h4>
                             <p class="font2 font-weight-light text-body ls-10">100% money back guarantee</p>
                         </div>
                     </div>
@@ -109,7 +109,7 @@
                         <i class="icon-support text-primary"></i>
                         <div class="info-content">
                             <h4 class="ls-n-25">Support en ligne 7J/7 et 24h/24</h4>
-                            <p class="font2 font-weight-light text-body ls-10">Lorem ipsum dolor sit amet.</p>
+                            <p class="font2 font-weight-light text-body ls-10">Grâce à notre chat en ligne.</p>
                         </div>
                     </div>
                     <div class="info-box info-box-icon-left">
@@ -120,56 +120,58 @@
                         </div>
                     </div>
                 </div>
-
-                <h2 class="section-title">Popular Departments</h2>
-                <p class="section-info font2">Products From These Categories Often Buy</p>
-
-                <div class="categories-slider owl-carousel owl-theme mb-4 appear-animate" data-owl-options="{
+                 </div>
+                 <div class="container">
+                <h2 class="section-title">Marques populaires</h2>
+                <p class="section-info font2"></p>
+                 </div>
+                 <div class="container">
+                <div class="categories-slider owl-carousel owl-theme mb-3 appear-animate" data-owl-options="{
                         'items': 1,
                         'responsive': {
                             '576': {
-                                'items': 2
+                                'items': 1
                             },
                             '768': {
-                                'items': 3
+                                'items': 2
                             },
                             '992': {
-                                'items': 4
+                                'items': 3
                             }
                         }
                     }" data-animation-name="fadeInUpShorter" data-animation-delay="200">
                     <div class="product-category bg-white">
-                        <a href="category.html">
-                            <figure><img src="assets/images/demoes/demo35/products/cats/cat-3.png" alt="cat"
+                        <a href="{{ path('app_products_by_category', {'categoryName': 'hp'}) }}">
+                            <figure><img src="{{ asset('assets/images/hp-2.png') }}" alt="cat"
                                          width="341" height="200"></figure>
                             <div class="category-content">
-                                <h3 class="font2 ls-n-25">Cooking</h3>
-                                <span class="font2 ls-n-20">4 Products</span>
+                                <h3 class="font2 ls-n-25">HP</h3>
+                                <span class="font2 ls-n-20">60 produits</span>
                             </div>
                         </a>
                     </div>
                     <div class="product-category bg-white">
-                        <a href="category.html">
-                            <figure><img src="assets/images/demoes/demo35/products/cats/cat-2.png" alt="cat"
+                        <a href="{{ path('app_products_by_category', {'categoryName': 'canon'}) }}">
+                            <figure><img src="{{ asset('assets/images/canon.png') }}" alt="cat"
                                          width="341" height="200"></figure>
                             <div class="category-content">
-                                <h3 class="font2 ls-n-25">Fruits</h3>
-                                <span class="font2 ls-n-20">10 Products</span>
+                                <h3 class="font2 ls-n-25">Canon</h3>
+                                <span class="font2 ls-n-20">150 produits</span>
                             </div>
                         </a>
                     </div>
                     <div class="product-category bg-white">
-                        <a href="category.html">
-                            <figure><img src="assets/images/demoes/demo35/products/cats/cat-1.png" alt="cat"
+                        <a href="{{ path('app_products_by_category', {'categoryName': 'epson'}) }}">
+                            <figure><img src="{{ asset('assets/images/epson.png') }}" alt="cat"
                                          width="341" height="200"></figure>
                             <div class="category-content">
-                                <h3 class="font2 ls-n-25">Vegetables</h3>
+                                <h3 class="font2 ls-n-25">Epson</h3>
                                 <span class="font2 ls-n-20">1 Products</span>
                             </div>
                         </a>
                     </div>
                     <div class="product-category bg-white">
-                        <a href="category.html">
+                        <a href="{{ path('app_products_by_category', {'categoryName': 'epson'}) }}">
                             <figure><img src="assets/images/demoes/demo35/products/cats/cat-4.png" alt="cat"
                                          width="341" height="200"></figure>
                             <div class="category-content">
@@ -179,10 +181,13 @@
                         </a>
                     </div>
                 </div>
+                 </div>
 
-                <div class="appear-animate" data-animation-name="fadeIn" data-animation-delay="200">
+                 <div class="container">
+                <div class="appear-animate" data-animation-name="fadeIn" data-animation-delay="100">
                     <h2 class="section-title">Most Popular</h2>
                     <p class="section-info font2">All our new arrivals in a exclusive brand selection</p>
+
 
                     <div class="products-container product-slider-tab rounded">
                         <ul class="nav nav-tabs border-0 px-4 pb-0 m-b-3">
@@ -220,7 +225,7 @@
                                                     'items': 4
                                                 },
                                                 '1200': {
-                                                    'items': 6
+                                                    'items': 4
                                                 }
                                             }
                                         }">
@@ -264,6 +269,7 @@
                                             </div><!-- End .price-box -->
                                         </div><!-- End .product-details -->
                                     </div>
+
                                     <div class="product-default inner-quickview inner-icon">
                                         <figure>
                                             <a href="demo35-product.html">
@@ -553,6 +559,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="tab-pane fade" id="breakfast">
                                 <div class="products-slider owl-carousel owl-theme nav-outer" data-owl-options="{
                                             'dots': false,
@@ -1421,8 +1428,11 @@
                     </div>
                 </div>
              </div>
-        </section>
+             </section>
+         </div>
 
+
+         <div class="container">
              <section class="special-section">
 
                  <div class="appear-animate" data-animation-name="fadeIn" data-animation-delay="200">
@@ -1455,8 +1465,9 @@
                      </div>
                  </div>
              </section>
+         </div>
 
-
+         <div class="container">
              <div class="row">
                     <div class="col-md-8">
                         <div class="banner banner1 rounded m-b-4" style="background-color: #d9e1e1;">
@@ -1499,56 +1510,47 @@
                         </div>
                     </div>
                 </div>
+         </div>
 
+         <div class="container">
                 <h2 class="section-title">Special Offers</h2>
                 <p class="section-info font2">All our new arrivals in a exclusive brand selection</p>
-
+             <div class="container">
                 <div class="row offer-products">
-                    <div class="col-md-4 appear-animate" data-animation-name="fadeInRightShorter"
-                         data-animation-delay="100">
+                    <div class="col-md-4 appear-animate" data-animation-name="fadeInRightShorter" data-animation-delay="100">
                         <div class="count-deal bg-white rounded mb-md-0">
                             <div class="product-default">
-                                <figure>
-                                    <a href="demo35-product.html">
-                                        <img src="assets/images/demoes/demo35/products/product-16.jpg" alt="product"
-                                             width="1200" height="1200">
-                                    </a>
-                                    <div class="product-countdown-container">
-                                        <span class="product-countdown-title">offer ends in:</span>
-                                        <div class="product-countdown countdown-compact" data-until="2021, 10, 5"
-                                             data-compact="true">
-                                        </div><!-- End .product-countdown -->
-                                    </div><!-- End .product-countdown-container -->
-                                </figure>
-                                <div class="product-details">
-                                    <div class="category-list">
-                                        <a href="demo35-shop.html" class="product-category">Category</a>
+                                {% for promo in promos %}
+                                    <div class="product-default inner-quickview inner-icon">
+                                        <figure>
+                                            <a href="{{ path('app_product', {'slug': promo.slug}) }}">
+                                                <img src="assets/images/hp/{{ promo.illustration }}" class="product-image" alt="product">
+                                            </a>
+                                        </figure>
+
+                                        <div class="product-details">
+                                            <h3 class="product-title">
+                                                <a href="{{ path('app_product', {'slug': promo.slug}) }}">{{ promo.name }}</a>
+                                            </h3>
+                                            <div class="price-box">
+                                                {% if promo.prixPromo is not null %}
+                                                    <div class="label-group">
+                                                        <div class="product-label label-hot">PROMO</div>
+                                                    </div>
+                                                    <del class="product-price old" style="color: gray; text-decoration: line-through;">{{ (promo.price / 100) | number_format(2, ',', '.') }} €</del>
+                                                    <span class="product-price promo">{{ ( promo.prixPromo / 100) | number_format(2, ',', '.') }} €</span>
+                                                {% else %}
+                                                    <span class="product-price">{{ (promo.price / 100) | number_format(2, ',', '.') }} €</span>
+                                                {% endif %}
+                                            </div>
+                                        </div>
                                     </div>
-                                    <h3 class="product-title">
-                                        <a href="demo35-product.html">Raw Meat</a>
-                                    </h3>
-                                    <div class="ratings-container">
-                                        <div class="product-ratings">
-                                            <span class="ratings" style="width:80%"></span><!-- End .ratings -->
-                                            <span class="tooltiptext tooltip-top"></span>
-                                        </div><!-- End .product-ratings -->
-                                    </div><!-- End .product-container -->
-                                    <div class="price-box">
-                                        <del class="old-price">$59.00</del>
-                                        <span class="product-price">$49.00</span>
-                                    </div><!-- End .price-box -->
-                                    <div class="product-action">
-                                        <a href="wishlist.html" class="btn-icon-wish" title="wishlist"><i
-                                                    class="icon-heart"></i></a>
-                                        <a href="product.html" class="btn-icon btn-add-cart product-type-simple"><i
-                                                    class="icon-shopping-cart"></i><span>ADD TO CART</span></a>
-                                        <a href="ajax/product-quick-view.html" class="btn-quickview"
-                                           title="Quick View"><i class="fas fa-external-link-alt"></i></a>
-                                    </div>
-                                </div><!-- End .product-details -->
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
+
+
                     <div class="col-md-8 appear-animate" data-animation-name="fadeInLeftShorter"
                          data-animation-delay="300">
                         <div class="custom-products bg-white rounded">
@@ -1900,8 +1902,10 @@
                         </div>
                     </div>
                 </div>
+         </div>
         </section>
 
+         <div class="container">
          <section class="brands-section">
              <div class="mx-auto">
                  <div class="appear-animate" data-animation-name="fadeInUpShorter" data-animation-delay="100">
@@ -1926,37 +1930,37 @@
                     }
                 }">
                          <div class="d-inline-block">
-                             <img src="assets/images/brands/small/brand1.png" alt="brand" width="140" height="40">
+                             <img src="{{ asset('assets/images/logo.png') }}" alt="brand" width="140" height="40">
                          </div>
                          <div class="d-inline-block">
-                             <img src="assets/images/brands/small/brand1.png" alt="brand" width="140" height="40">
+                             <img src="{{ asset('assets/images/logo.png') }}" alt="brand" width="140" height="40">
                          </div>
                          <div class="d-inline-block">
-                             <img src="assets/images/brands/small/brand6.png" alt="brand" width="140" height="40">
+                             <img src="{{ asset('assets/images/logo.png') }}" alt="brand" width="140" height="40">
                          </div>
                          <div class="d-inline-block">
-                             <img src="assets/images/brands/small/brand3.png" alt="brand" width="140" height="40">
+                             <img src="{{ asset('assets/images/logo.png') }}" alt="brand" width="140" height="40">
                          </div>
                          <div class="d-inline-block">
-                             <img src="assets/images/brands/small/brand3.png" alt="brand" width="140" height="40">
+                             <img src="{{ asset('assets/images/logo.png') }}" alt="brand" width="140" height="40">
                          </div>
                          <div class="d-inline-block">
-                             <img src="assets/images/brands/small/brand2.png" alt="brand" width="140" height="40">
+                             <img src="{{ asset('assets/images/logo.png') }}" alt="brand" width="140" height="40">
                          </div>
                          <div class="d-inline-block">
-                             <img src="assets/images/brands/small/brand3.png" alt="brand" width="140" height="40">
+                             <img src="{{ asset('assets/images/logo.png') }}" alt="brand" width="140" height="40">
                          </div>
                          <div class="d-inline-block">
-                             <img src="assets/images/brands/small/brand5.png" alt="brand" width="140" height="40">
+                             <img src="{{ asset('assets/images/logo.png') }}" alt="brand" width="140" height="40">
                          </div>
                          <div class="d-inline-block">
-                             <img src="assets/images/brands/small/brand6.png" alt="brand" width="140" height="40">
+                             <img src="{{ asset('assets/images/logo.png') }}" alt="brand" width="140" height="40">
                          </div>
                      </div>
                  </div>
              </div>
          </section>
-
+         </div>
 
         <section class="post-section">
                 <div class="appear-animate" data-animation-name="fadeInUpShorter" data-animation-delay="300">

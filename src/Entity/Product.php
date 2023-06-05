@@ -81,6 +81,18 @@ class Product
     #[ORM\Column]
     private ?bool $isBest = null;
 
+    #[ORM\Column]
+    private ?bool $enPromo = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $prixPromo = null;
+
+    #[ORM\OneToMany(mappedBy: 'Produit', targetEntity: OrderDetails::class)]
+    private Collection $orderDetails;
+
+    #[ORM\OneToMany(mappedBy: 'Produit', targetEntity: OrderDetails::class)]
+    private Collection $orderDetail;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -157,6 +169,8 @@ class Product
         $this->illustration = new ArrayCollection();
         $this->productImages = new ArrayCollection();
         $this->tags = new ArrayCollection();
+        $this->orderDetails = new ArrayCollection();
+        $this->orderDetail = new ArrayCollection();
     }
 
 
@@ -366,6 +380,68 @@ class Product
         $this->isBest = $isBest;
 
         return $this;
+    }
+
+    public function isEnPromo(): ?bool
+    {
+        return $this->enPromo;
+    }
+
+    public function setEnPromo(bool $enPromo): self
+    {
+        $this->enPromo = $enPromo;
+
+        return $this;
+    }
+
+    public function getPrixPromo(): ?float
+    {
+        return $this->prixPromo;
+    }
+
+    public function setPrixPromo(?float $prixPromo): self
+    {
+        $this->prixPromo = $prixPromo;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, OrderDetails>
+     */
+    public function getOrderDetails(): Collection
+    {
+        return $this->orderDetails;
+    }
+
+    public function addOrderDetail(OrderDetails $orderDetail): self
+    {
+        if (!$this->orderDetails->contains($orderDetail)) {
+            $this->orderDetails->add($orderDetail);
+            $orderDetail->setProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderDetail(OrderDetails $orderDetail): self
+    {
+        if ($this->orderDetails->removeElement($orderDetail)) {
+            // set the owning side to null (unless already changed)
+            if ($orderDetail->getProduit() === $this) {
+                $orderDetail->setProduit(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, OrderDetails>
+     */
+    public function getOrderDetail(): Collection
+    {
+        return $this->orderDetail;
     }
 
 }

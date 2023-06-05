@@ -50,9 +50,9 @@ class OrderSuccessController extends AbstractController
             foreach ($order->getOrderDetails() as $orderDetail) {
                 $produit = $orderDetail->getProduit();
                 $content .= "- ".$produit." (x".$orderDetail->getQuantite().")<br> ";
-                $content .= '<img src="'.$produit->getIllustrationFile().'" alt="'.$produit->getTitre().'"><br>';
+                $content .= '<img src="'.$orderDetail->getIllustration().'" alt="'.$orderDetail->getProduit().'"><br>';
             }
-            $mail->send($order->getUser()->getEmail(), $order->getUser()->getFirstname(), 'Votre commande chez inforiel a bien été validée !', $content);
+            $mail->send($order->getUser()->getEmail(), $order->getUser()->getFirstname(), 'Votre commande chez Inforiel a bien été validée !', $content);
         }
 
         //afficher qq info de la commande de l'user

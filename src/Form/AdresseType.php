@@ -66,7 +66,11 @@ class AdresseType extends AbstractType
                 'label' => 'Pays',
                 'placeholder' => 'Choisissez votre pays',
                 'required' => true,
+                'attr' => [
+                    'class' => 'form-control',
+                ],
             ])
+
             ->add('telephone', TelType::class, [
                 'label' => 'Téléphone',
                 'attr' => [

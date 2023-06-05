@@ -3,6 +3,21 @@
 {% block title %}Se connecter - Espace pièces traceurs!{% endblock %}
 
 {% block content %}
+    <div class="container">
+        <br>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('app_home') }}">
+                        <i class="fa fa-home"></i>  Accueil
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    Connexion
+                </li>
+            </ol>
+        </nav>
+    </div>
     <div class="container d-flex justify-content-center align-items-center">
         <form method="post">
             {% if error %}

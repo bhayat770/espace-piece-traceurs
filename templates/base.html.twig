@@ -22,7 +22,7 @@
         };
         (function (d) {
             var wf = d.createElement('script'), s = d.scripts[0];
-            wf.src = '../assets/js/webfont.js';
+            wf.src = '/public/assets/js/webfont.js';
             wf.async = true;
             s.parentNode.insertBefore(wf, s);
         })(document);
@@ -120,18 +120,16 @@
 </body>
 
 
-<div class="header-middle sticky-header" data-sticky-options="{'mobile': true}">
     <div class="container">
         <div class="header-left w-lg-max">
             <button class="mobile-menu-toggler text-primary mr-2" type="button">
                 <i class="fas fa-bars"></i>
             </button>
-            <a href="demo35.html" class="logo">
-                <img src="assets/images/logo-black.png" class="w-100" width="111" height="44"
+            <a href="{{ path('app_home') }}" class="logo">
+                <img src="{{ asset('assets/images/logo.png') }}" class="w-100" width="111" height="44"
                      alt="Porto Logo">
             </a>
-            <div
-                    class="header-icon header-search header-search-inline header-search-category d-lg-block d-none text-right mt-0">
+            <div class="header-icon header-search header-search-inline header-search-category d-lg-block d-none text-right mt-0">
                 <a href="#" class="search-toggle" role="button"><i class="icon-magnifier"></i></a>
                 <form action="#" method="get">
                     <div class="header-search-wrapper">
@@ -163,37 +161,43 @@
                 </form>
             </div><!-- End .header-search -->
         </div><!-- End .header-left -->
-
-        <div class="header-right">
-
-            <a href="wishlist.html" class="header-icon position-relative d-lg-none mr-2">
-                <i class="icon-wishlist-2"></i>
-                <span class="badge-circle">0</span>
-            </a>
-
-            <div class="header-user d-lg-flex align-items-center" style="margin-right: 100px;">
-                {% if app.user %}
+        {% if app.user %}
+            <div class="header-right">
+                <a href="wishlist.html" class="header-icon position-relative d-lg-none mr-2">
+                    <i class="icon-wishlist-2"></i>
+                    <span class="badge-circle">0</span>
+                </a>
+                <div class="header-user d-lg-flex align-items-center" style="margin-right: 100px;">
                     <h6 class="font1 d-none d-lg-block mb-0">
                         <span class="d-block text-body">Bonjour {{ app.user.firstname }}</span>
                         <a href="{{ path('app_account') }}" class="header-icon mr-0" title="login">Mon compte</a>|
                         <a href="{{ path('app_logout') }}">Déconnexion</a>
                         <i class="icon-user-2 mr-2"></i>
                     </h6>
-                {% else %}
+                </div>
+            </div>
+        {% else %}
+            <div class="header-right">
+                <a href="wishlist.html" class="header-icon position-relative d-lg-none mr-2">
+                    <i class="icon-wishlist-2"></i>
+                    <span class="badge-circle">0</span>
+                </a>
+                <div class="header-user d-lg-flex align-items-center" style="margin-right: 100px;">
                     <h6 class="font1 d-none d-lg-block mb-0">
                         <span class="d-block text-body">Bonjour !</span>
                         <a href="{{ path('app_login') }}" class="font-weight-bold">Connexion</a> |
                         <a href="{{ path('app_register') }}">Inscription</a>
                     </h6>
-                {% endif %}
+                </div>
             </div>
+        {% endif %}
 
-            {% if cart | length > 0 %}
+
+        {% if cart | length > 0 %}
             <div class="cart-dropdown-wrapper d-flex align-items-center">
                 <div class="dropdown cart-dropdown">
                     <a href="{{ path('app_cart') }}" title="Panier" class="dropdown-toggle cart-toggle" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                       data-display="static">
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
                         <i class="icon-cart-thick"></i>
                         <span class="cart-count badge-circle">{{ cartProducts }}</span>
                     </a>
@@ -205,111 +209,105 @@
 
                         <div class="dropdownmenu-wrapper custom-scrollbar">
                             <div class="dropdown-cart-header">Panier</div>
-                            <!-- End .dropdown-cart-header -->
-                            {%  set total = null %}
 
                             <div class="dropdown-cart-products">
-
+                                {% set subtotal = 0 %}
                                 {% for product in cart %}
-                                <div class="product">
-                                    <div class="product-details">
-                                        <h4 class="product-title">
-                                            <a href="{{ path('app_product', {'slug': product.product.slug}) }}">
-                                                {{ product.product.name }}
+                                    <div class="product">
+                                        <div class="product-details">
+                                            <h4 class="product-title">
+                                                <a href="{{ path('app_product', {'slug': product.product.slug}) }}">
+                                                    {{ product.product.name }}
+                                                </a>
+                                            </h4>
+                                            <span class="cart-product-info">
+                                        <span class="cart-product-qty">
+                                            {{ product.quantity }}
+                                        </span>
+                                        × {% if product.product.prixPromo is not null %}
+                                                    <del class="product-price old" style="color: gray; text-decoration: line-through;">{{ (product.product.price / 100) | number_format(2, ',', '.') }} €</del>
+                                                    <span class="product-price promo">{{ (product.product.prixPromo / 100) | number_format(2, ',', '.') }} €</span>
+                                            {% set subtotal = subtotal + (product.product.prixPromo * product.quantity) %}
+                                        {% else %}
+                                                    <span class="product-price">{{ (product.product.price / 100) | number_format(2, ',', '.') }} €</span>
+                                                    {% set subtotal = subtotal + (product.product.price * product.quantity) %}
+                                                {% endif %}
+                                    </span>
+                                        </div>
+                                        <figure class="product-image-container">
+                                            <a href="#" class="product-image">
+                                                <img src="/assets/images/hp/{{ product.product.illustration }}"
+                                                     alt="{{ product.product.name }}" width="80" height="80">
                                             </a>
-                                        </h4>
-
-                                        <span class="cart-product-info">
-                                                <span class="cart-product-qty">
-                                                    {{ product.quantity }}
-                                                </span>
-                                                × {{ (product.product.price /100) | number_format(2, ',' , '.')}} €
-                                            </span>
-                                    </div><!-- End .product-details -->
-
-
-
-                                    <figure class="product-image-container">
-                                        <a href="#" class="product-image">
-                                            <img src="/assets/images/hp/{{ product.product.illustration }}" alt="{{ product.product.name }}"
-                                                 width="80" height="80">
-                                        </a>
-
-                                        <a href="{{ path('app_remove_my_cart', { id: product.product.id }) }}" class="btn-remove" title="Remove Product"><span>×</span></a>
-                                    </figure>
-                                </div><!-- End .product -->
-                            </div><!-- End .cart-product -->
-                            {% endfor %}
+                                            <a href="{{ path('app_remove_my_cart', { id: product.product.id }) }}"
+                                               class="btn-remove" title="Remove Product"><span>×</span></a>
+                                        </figure>
+                                    </div>
+                                {% endfor %}
+                            </div>
 
                             <div class="dropdown-cart-total">
                                 <span>Sous-total</span>
-
-                                <span class="cart-total-price float-right">{{ cartTotal|number_format(2, '.', ',') }} €</span>
-                            </div><!-- End .dropdown-cart-total -->
+                                <span class="cart-total-price float-right">
+                            {{ (subtotal / 100) | number_format(2, ',', '.') }} €
+                        </span>
+                            </div>
 
                             <div class="dropdown-cart-action">
                                 <a href="{{ path('app_cart') }}" class="btn btn-gray btn-block view-cart">
                                     Voir mon panier
                                 </a>
-                                {#  <a href="{{ path('app_order_validate') }}" class="btn btn-dark btn-block">Payement</a>#}
-                            </div><!-- End .dropdown-cart-total -->
+                            </div>
                         </div>
-                        </div><!-- End .dropdownmenu-wrapper -->
-                    </div><!-- End .dropdown-menu -->
+                    </div>
                 </div>
 
-
                 <span class="cart-subtotal font2 d-none d-sm-inline">Total
-                    <span class="cart-price d-block font2">
-                        {{ cartTotal|number_format(2, ',', '.') }} €
-                    </span>
-                </span>
-        </div>
-    </div><!-- End .dropdown-menu -->
-</div><!-- End .dropdown -->
-
-
-{% else %}
-    <div class="cart-dropdown-wrapper d-flex align-items-center">
-        <div class="dropdown cart-dropdown">
-            <a href="{{ path('app_cart') }}" title="Cart" class="dropdown-toggle cart-toggle" role="button"
-               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-                <i class="icon-cart-thick"></i>
-                <span class="cart-count badge-circle">{{ cartProducts }}</span>
-            </a>
-        </div>
-    </div>
-    <div class="dropdown-cart-total">
-        <span>Panier (Vide) </span>
+            <span class="cart-price d-block font2">
+                {{ (subtotal / 100) | number_format(2, ',', '.') }} €
+            </span>
+        </span>
+            </div>
+        {% else %}
+            <div class="cart-dropdown-wrapper d-flex align-items-center">
+                <div class="dropdown cart-dropdown">
+                    <a href="{{ path('app_cart') }}" title="Cart" class="dropdown-toggle cart-toggle" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                        <i class="icon-cart-thick"></i>
+                        <span class="cart-count badge-circle">{{ cartProducts }}</span>
+                    </a>
+                </div>
+                <div class="cart-content cart-empty">
+                    <span>Panier (Vide)</span>
+                </div>
+            </div>
+        {% endif %}
     </div>
 
-{% endif %}
-
-
-<div class="header-bottom sticky-header d-none d-lg-flex" data-sticky-options="{'mobile': false}">
-    <div class="container">
-        <div class="header-center w-100 ml-0">
-            <nav class="main-nav d-flex font2">
-                <div class="menu-depart">
-                    <a href="demo35.html"><i class="fa fa-bars align-middle mr-3"></i>All
-                        Departments</a>
-                    <ul class="menu menu-vertical">
-                        <li>
-                            <a href="#"><i class="icon-category-fashion"></i>Fashion</a>
-                            <span class="menu-btn"></span>
-                            <div class="megamenu megamenu-fixed-width megamenu-one">
-                                <div class="row">
-                                    <div class="col-md-6">
+        <div class="header-bottom">
+            <div class="container">
+                <div class="header-center w-100 ml-0">
+                    <nav class="main-nav d-flex font2">
+                        <div class="menu-depart">
+                            <a href="demo35.html"><i class="fa fa-bars align-middle mr-3"></i>All
+                                Departments</a>
+                            <ul class="menu menu-vertical">
+                                <li>
+                                    <a href="#"><i class="icon-category-fashion"></i>Fashion</a>
+                                    <span class="menu-btn"></span>
+                                    <div class="megamenu megamenu-fixed-width megamenu-one">
                                         <div class="row">
-                                            <div class="col-md-6 mb-1">
-                                                <a href="#" class="nolink pl-0">Woman</a>
-                                                <ul class="submenu">
-                                                    <li><a href="demo35-shop.html">Tops &amp; Blouses</a></li>
-                                                    <li><a href="demo35-shop.html">Accessories</a></li>
-                                                    <li><a href="demo35-shop.html">Dresses &amp; Skirts</a></li>
-                                                    <li><a href="demo35-shop.html">Shoes &amp; Boots</a></li>
-                                                </ul>
-                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-1">
+                                                        <a href="#" class="nolink pl-0">Woman</a>
+                                                        <ul class="submenu">
+                                                            <li><a href="demo35-shop.html">Tops &amp; Blouses</a></li>
+                                                            <li><a href="demo35-shop.html">Accessories</a></li>
+                                                            <li><a href="demo35-shop.html">Dresses &amp; Skirts</a></li>
+                                                            <li><a href="demo35-shop.html">Shoes &amp; Boots</a></li>
+                                                        </ul>
+                                                    </div>
 
                                             <div class="col-md-6 mb-1">
                                                 <a href="#" class="nolink pl-0">Men</a>
@@ -344,7 +342,7 @@
                                         <div
                                                 class="menu-banner menu-banner-2 d-inline-block position-relative h-auto">
                                             <figure class="text-right">
-                                                <img src="assets/images/demoes/demo35/menu-banner-1.jpg"
+                                                <img src="{{ asset('assets/images/offre_mai.png') }}"
                                                      alt="Menu banner" class="product-promo d-inline-block"
                                                      width="300" height="383">
                                             </figure>
@@ -372,23 +370,23 @@
                                                             }
                                                         }">
                                                 <div class="partner">
-                                                    <img src="assets/images/brands/small/brand1.png"
+                                                    <img src="{{ asset('assets/images/logo.png') }}"
                                                          alt="logo image" width="140" height="60">
                                                 </div>
                                                 <div class="partner">
-                                                    <img src="assets/images/brands/small/brand2.png"
+                                                    <img src="{{ asset('assets/images/logo.png') }}"
                                                          alt="logo image" width="140" height="60">
                                                 </div>
                                                 <div class="partner">
-                                                    <img src="assets/images/brands/small/brand3.png"
+                                                    <img src="{{ asset('assets/images/logo.png') }}"
                                                          alt="logo image" width="140" height="60">
                                                 </div>
                                                 <div class="partner">
-                                                    <img src="assets/images/brands/small/brand4.png"
+                                                    <img src="{{ asset('assets/images/logo.png') }}"
                                                          alt="logo image" width="140" height="60">
                                                 </div>
                                                 <div class="partner">
-                                                    <img src="assets/images/brands/small/brand5.png"
+                                                    <img src="{{ asset('assets/images/logo.png') }}"
                                                          alt="logo image" width="140" height="60">
                                                 </div>
                                             </div>
@@ -453,7 +451,7 @@
                                     <div class="col-md-6">
                                         <div class="banner menu-banner-3 banner-md-vw text-transform-none">
                                             <figure>
-                                                <img src="assets/images/demoes/demo35/menu-banner-2.jpg"
+                                                <img src="{{ asset('assets/images/logo.png') }}"
                                                      alt="banner">
                                             </figure>
 
@@ -477,7 +475,7 @@
                                     <div class="col-md-6">
                                         <div class="banner menu-banner-4 banner-md-vw">
                                             <figure>
-                                                <img src="assets/images/demoes/demo35/menu-banner-3.jpg"
+                                                <img src="{{ asset('assets/images/logo.png') }}"
                                                      alt="banner">
                                             </figure>
 
@@ -509,7 +507,7 @@
                                 <div class="row">
                                     <div class="col-lg-3 mb-1">
                                         <div class="image-wrapper">
-                                            <img src="assets/images/demoes/demo35/icons/boy.png" alt="icon"
+                                            <img src="{{ asset('assets/images/logo.png') }}" alt="icon"
                                                  width="50" height="68" />
                                         </div>
                                         <a href="#" class="nolink">FOR HIM</a>
@@ -523,7 +521,7 @@
 
                                     <div class="col-lg-3 mb-1">
                                         <div class="image-wrapper">
-                                            <img src="assets/images/demoes/demo35/icons/girl.png" alt="icon"
+                                            <img src="{{ asset('assets/images/logo.png') }}" alt="icon"
                                                  width="50" height="68" />
                                         </div>
                                         <a href="#" class="nolink">FOR HER</a>
@@ -537,7 +535,7 @@
 
                                     <div class="col-lg-3 mb-1">
                                         <div class="image-wrapper">
-                                            <img src="assets/images/demoes/demo35/icons/kid.png" alt="icon"
+                                            <img src="{{ asset('assets/images/logo.png') }}" alt="icon"
                                                  width="50" height="68" />
                                         </div>
                                         <a href="#" class="nolink">FOR KIDS</a>
@@ -551,7 +549,7 @@
 
                                     <div class="col-lg-3 mb-1">
                                         <div class="image-wrapper">
-                                            <img src="assets/images/demoes/demo35/icons/supermarket.png"
+                                            <img src="{{ asset('assets/images/logo.png') }}"
                                                  alt="icon" width="50" height="68" />
                                         </div>
                                         <a href="#" class="nolink">BIRTHDAY</a>
@@ -624,7 +622,7 @@
                                             <div class="product-default left-details product-widget">
                                                 <figure>
                                                     <a href="demo35-product.html">
-                                                        <img src="assets/images/demoes/demo35/products/small/product-1.jpg"
+                                                        <img src="{{ asset('assets/images/logo.png') }}"
                                                              width="84" height="84" alt="product">
                                                     </a>
                                                 </figure>
@@ -650,7 +648,7 @@
                                             <div class="product-default left-details product-widget">
                                                 <figure>
                                                     <a href="demo35-product.html">
-                                                        <img src="assets/images/demoes/demo35/products/small/product-2.jpg"
+                                                        <img src="{{ asset('assets/images/logo.png') }}"
                                                              width="84" height="84" alt="product">
                                                     </a>
                                                 </figure>
@@ -677,7 +675,7 @@
                                             <div class="product-default left-details product-widget">
                                                 <figure>
                                                     <a href="demo35-product.html">
-                                                        <img src="assets/images/demoes/demo35/products/small/product-3.jpg"
+                                                        <img src="{{ asset('assets/images/logo.png') }}"
                                                              width="84" height="84" alt="product">
                                                     </a>
                                                 </figure>
@@ -703,7 +701,7 @@
                                             <div class="product-default left-details product-widget">
                                                 <figure>
                                                     <a href="demo35-product.html">
-                                                        <img src="assets/images/demoes/demo35/products/small/product-4.jpg"
+                                                        <img src="{{ asset('assets/images/logo.png') }}"
                                                              width="84" height="84" alt="product">
                                                     </a>
                                                 </figure>
@@ -729,7 +727,7 @@
                                             <div class="product-default left-details product-widget">
                                                 <figure>
                                                     <a href="demo35-product.html">
-                                                        <img src="assets/images/demoes/demo35/products/small/product-5.jpg"
+                                                        <img src="{{ asset('assets/images/logo.png') }}"
                                                              width="84" height="84" alt="product">
                                                     </a>
                                                 </figure>
@@ -761,7 +759,7 @@
                             <a href="demo35-shop.html"><i class="icon-category-music"></i>Music</a>
                             <span class="menu-btn"></span>
                             <div class="megamenu megamenu-fixed-width megamenu-five text-transform-none p-0"
-                                 style="background-image: url('public/assets/images/demoes/demo35/menu-banner-4.jpg');">
+                                 style="background-image: url('public/assets/images/offre_mai.png');">
                                 <div class="row m-0">
                                     <div class="col-lg-4 pt-0">
                                         <a href="#" class="nolink text-white pl-0">INSTRUMENTS</a>
@@ -848,7 +846,7 @@
                                                 <h2 class="heading ls-n-10 text-uppercase mb-0">Flash Deals</h2>
                                                 <figure>
                                                     <a href="demo35-product.html">
-                                                        <img src="assets/images/demoes/demo35/products/product-16.jpg"
+                                                        <img src="{{ asset('assets/images/logo.png') }}"
                                                              alt="product" width="1200" height="1200">
                                                     </a>
                                                     <div class="product-countdown-container">
@@ -919,7 +917,7 @@
                                 <div class="col-lg-4 p-0">
                                     <div class="menu-banner menu-banner-2">
                                         <figure>
-                                            <img src="assets/images/menu-banner-1.jpg" alt="Menu banner"
+                                            <img src="{{ asset('assets/images/offre_mai.png') }}" alt="Menu banner"
                                                  class="product-promo" width="380" height="790">
                                         </figure>
                                         <i>OFF</i>
@@ -1091,7 +1089,7 @@
 <script src="{{ asset('assets/js/jquery.appear.min.js') }}"></script>
 <script src="{{ asset('assets/js/jquery.plugin.min.js') }}"></script>
 <script src="{{ asset('assets/js/jquery.countdown.min.js') }}"></script>
-
+<script src="https://kit.fontawesome.com/fe52aecc4f.js" crossorigin="anonymous"></script>
 
 
 <!-- Include jQuery -->

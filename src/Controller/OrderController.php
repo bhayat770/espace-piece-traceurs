@@ -94,7 +94,11 @@ class OrderController extends AbstractController
                 $orderDetails->setMyOrder($order);
                 $orderDetails->setProduit($product['product']->getName());
                 $orderDetails->setQuantite($product['quantity']);
-                $orderDetails->setPrix($product['product']->getPrice());
+                if ($product['product']->getPrixPromo() !== null) {
+                    $orderDetails->setPrix($product['product']->getPrixPromo());
+                } else {
+                    $orderDetails->setPrix($product['product']->getPrice());
+                }
                 $orderDetails->setTotal($product['product']->getPrice() * $product['quantity']);
 
                 // Enregistrer les détails de la commande dans la base de données

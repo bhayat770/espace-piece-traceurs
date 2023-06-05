@@ -1,23 +1,26 @@
 <div class="product-default inner-quickview inner-icon">
     <figure>
         <a href="{{ path('app_product', {'slug': product.slug}) }}">
-            <img src="assets/images/hp/{{ product.illustration }}" width="217"
-                 height="217" alt="product">
+            <img class="product-image" src="assets/images/hp/{{ product.illustration }}" alt="product">
         </a>
-
     </figure>
 
     <div class="product-details">
-        {# <div class="category-wrap">
-                                     <div class="category-list">
-                                        <a href="{{ path('products_by_category', {'categorySlug': product.category.slug}) }}" class="product-category">{{ product.category.name }}</a>
-                                    </div>
-                                </div>#}
         <h3 class="product-title">
             <a href="{{ path('app_product', {'slug': product.slug}) }}">{{ product.name }}</a>
         </h3>
         <div class="price-box">
-            <span class="product-price">{{ (product.price /100) | number_format(2, ',' , '.')}} €</span>
+            {% if product.prixPromo is not null %}
+                <div class="label-group">
+                    <div class="product-label label-hot">PROMO</div>
+                </div>
+                <del class="product-price old" style="color: gray; text-decoration: line-through;">{{ (product.price / 100) | number_format(2, ',', '.') }} €</del>
+                <span class="product-price promo">{{ (product.prixPromo / 100) | number_format(2, ',', '.') }} €</span>
+            {% else %}
+                <span class="product-price">{{ (product.price / 100) | number_format(2, ',', '.') }} €</span>
+            {% endif %}
         </div>
     </div>
 </div>
+
+

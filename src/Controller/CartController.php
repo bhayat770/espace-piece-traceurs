@@ -54,14 +54,15 @@ class CartController extends AbstractController
     #[Route('/cart/add/{id}', name: 'app_add_to_cart')]
     public function add(Cart $cart, $id, Request $request): Response
     {
+
         $product = $this->entityManager->getRepository(Product::class)->find($id);
         if (!$product) {
             throw $this->createNotFoundException('Le produit n\'existe pas');
         }
 
-        // On récupère la quantité à ajouter au panier
-        $quantity = $request->request->getInt('quantity', 1);
 
+        // On récupère la quantité à ajouter au panier
+        $quantity = $request->request->getInt('quantity', $product->getQuantite());
         // On vérifie que la quantité demandée est valide
         if ($quantity <= 0 || $quantity > $product->getQuantite()) {
             $this->addFlash('warning', 'Le produit n\'est plus en stock');
@@ -70,10 +71,14 @@ class CartController extends AbstractController
             ]);
         }
 
+
         // Si le produit est déjà dans le panier, on augmente simplement sa quantité
-        if ($cart->hasProduct($id)) {
+        if ($cart->hasProduct($id))
+        {
             $cart->increase($id, $quantity);
-        } else {
+        }
+        else
+        {
             // Sinon, on ajoute une nouvelle entrée au panier
             $cart->add($id, $quantity);
         }

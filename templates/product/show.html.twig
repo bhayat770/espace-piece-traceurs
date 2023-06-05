@@ -2,82 +2,160 @@
 
 {% block title %}{{ product.name }} - Espace pièces traceurs{% endblock %}
 
-{% block content%}
+{% block content %}
+<div class="container">
+    <br>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ path('app_home') }}">
+                    <i class="fa fa-home"></i>  Accueil
+                </a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('app_products') }}">Nos Produits</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
+        </ol>
+    </nav>
+</div>
+    <BR>
 
 <main class="main">
+
     <div class="row">
         <div class="container">
-        <div class="col-lg-4 col-md-5">
-            <div class="slider-for">
-                {#  <div><img src="/assets/images/hp/{{ firstImage.name }}" alt="product"></div>#}
-                {% for image in product.productImages %}
-                    <div><img src="/assets/images/hp/{{ image.name }}" alt="product"></div>
-                {% endfor %}
-            </div>
-            <div class="slider-nav">
-               {#  <div><img src="/assets/images/hp/{{ firstImage.name }}" alt="product"></div>#}
-                {% for image in product.productImages %}
-                    <div><img src="/assets/images/hp/{{ image.name }}" alt="product"></div>
-                {% endfor %}
-            </div>
-            <!-- Ajoutez les fichiers CSS et JS de Slick Carousel ici -->
-            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-            <script type="text/javascript">
-                var $j = jQuery.noConflict();
-            </script>
-            <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" />
-            <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css" />
-            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
-            <script type="text/javascript">
-                $j(document).ready(function(){
-                    $j('.slider-for').slick({
-                        slidesToShow: 1,
-                        slidesToScroll: 1,
-                        arrows: false,
-                        fade: true,
-                        asNavFor: '.slider-nav'
-                    });
-                    $j('.slider-nav').slick({
-                        slidesToShow: 3,
-                        slidesToScroll: 1,
-                        asNavFor: '.slider-for',
-                        dots: true,
-                        centerMode: true,
-                        focusOnSelect: true
-                    });
-                });
-            </script>
-        </div>
-        <div class="col-lg-7 col-md-6 product-single-details">
-            <h1 class="product-title">{{ product.name }}</h1>
-            <div class="ratings-container">
-                <div class="product-ratings">
-                    <span class="ratings" style="width:100%"></span>
-                    <span class="tooltiptext tooltip-top"></span>
+            <div class="col-lg-4 col-md-5">
+                <div class="slider-for">
+                    {#  <div><img src="/assets/images/hp/{{ firstImage.name }}" alt="product"></div>#}
+                    {% for image in product.productImages %}
+                        <div>
+                            <img src="/assets/images/hp/{{ image.name}}" alt="product"></div>
+                    {% endfor %}
                 </div>
-                <a href="#" class="rating-link">( 6 Reviews )</a>
+                <div class="slider-nav">
+                    {#  <div><img src="/assets/images/hp/{{ firstImage.name }}" alt="product"></div>#}
+                    {% for image in product.productImages %}
+                        <div>
+                            <img src="{{ asset('assets/images/hp/' ~ image.name) }}" alt="product">
+                        </div>
+                    {% endfor %}
+                </div>
+                <!-- Ajoutez les fichiers CSS et JS de Slick Carousel ici -->
+                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+                <script type="text/javascript">
+                    var $j = jQuery.noConflict();
+                </script>
+                <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" />
+                <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css" />
+                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
+                <script type="text/javascript">
+                    $j(document).ready(function(){
+                        $j('.slider-for').slick({
+                            slidesToShow: 1,
+                            slidesToScroll: 1,
+                            arrows: false,
+                            fade: true,
+                            asNavFor: '.slider-nav'
+                        });
+                        $j('.slider-nav').slick({
+                            slidesToShow: 3,
+                            slidesToScroll: 1,
+                            asNavFor: '.slider-for',
+                            dots: true,
+                            centerMode: true,
+                            focusOnSelect: true
+                        });
+                    });
+                </script>
             </div>
-            <hr class="short-divider">
-            <div class="price-box">
-                <span class="product-price">{{ (product.price /100) | number_format(2, ',' , '.')}} €</span>
-            </div>
-            <div class="product-desc">
-                <p>
-                    {{ product.description|raw }}
-                </p>
-            </div>
-            <ul class="single-info-list">
-                <li>CATEGORIE: <strong><a href="#" class="product-category">{{ product.category }}</a></strong></li>
-            </ul>
-            <div class="product-action">
-                <form method="post" action="{{ path('app_add_to_cart', {'id': product.id}) }}">
-                    <input type="number" name="quantite" value="1" min="1" max="{{ maxQuantity }}">
-                    <button type="submit">Ajouter au panier</button>
-                </form>
+            <div class="col-lg-7 col-md-6 product-single-details">
+                <h1 class="product-title">{{ product.name }}</h1>
+                <div class="ratings-container">
+                    <div class="product-ratings">
+                        <span class="ratings" style="width:100%"></span>
+                        <span class="tooltiptext tooltip-top"></span>
+                    </div>
+                    <a href="#" class="rating-link">( 6 Reviews )</a>
+                </div>
+                <hr class="short-divider">
+                <div class="price-box">
+                    {% if product.prixPromo is not null %}
+                        <div class="label-group">
+                            <div class="product-label label-hot">PROMO !</div>
+                            <br>
+                        </div>
+                        <del class="product-price old" style="color: gray; text-decoration: line-through;">{{ (product.price / 100) | number_format(2, ',', '.') }} €</del>
+                        <span class="product-price promo">{{ (product.prixPromo / 100) | number_format(2, ',', '.') }} €</span>
+                    {% else %}
+                        <span class="product-price">{{ (product.price / 100) | number_format(2, ',', '.') }} €</span>
+                    {% endif %}
+                </div>
+                <div class="product-desc">
+                    <p>
+                        {{ product.description|raw }}
+                    </p>
+                </div>
+                <ul class="single-info-list">
+                    <li>CATEGORIE: <strong><a href="#" class="product-category">{{ product.category }}</a></strong></li>
+                </ul>
+                <div class="product-action">
+                    <form method="post" action="{{ path('app_add_to_cart', {'id': product.id}) }}">
+                        <div class="input-group mb-3 custom-input-group">
+                            <div class="input-group-prepend">
+                                <button class="btn btn-outline-secondary btn-quantity" type="button" onclick="decrement()">-</button>
+                            </div>
+                            <input type="number" name="quantity" value="1" min="1" max="{{ maxQuantity }}" class="form-control text-center" id="quantity-input">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary btn-quantity" type="button" onclick="increment()">+</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary btn-add-to-cart">Ajouter au panier</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="text-danger" style="display: none;"></div>
+                </div>
+
+
+                <script>
+                    function increment() {
+                        var input = document.getElementById('quantity-input');
+                        var currentValue = parseInt(input.value);
+                        var maxValue = parseInt(input.max);
+                        var errorMessageElement = document.querySelector('.text-danger');
+
+                        if (currentValue < maxValue) {
+                            input.value = currentValue + 1;
+                            errorMessageElement.style.display = "none"; // Masquer le message d'erreur
+                        } else {
+                            errorMessageElement.textContent = "La quantité maximale autorisée est de " + maxValue;
+                            errorMessageElement.style.display = "block"; // Afficher le message d'erreur
+                        }
+                    }
+
+                    function decrement() {
+                        var input = document.getElementById('quantity-input');
+                        var currentValue = parseInt(input.value);
+                        var minValue = parseInt(input.min);
+
+                        if (currentValue > minValue) {
+                            input.value = currentValue - 1;
+                        }
+                    }
+                </script>
+
+
                 <a href="#" class="btn btn-gray view-cart d-none">Voir le panier</a>
             </div>
 
-        </div>
-    </div>
-</main>
+
+
+            <a href="#" class="btn btn-gray view-cart d-none">Voir le panier</a>
+                </div>
+
+            </div>
+    </main>
 {% endblock %}
