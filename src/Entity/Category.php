@@ -122,4 +122,18 @@ class Category
 
         return $this;
     }
+
+    public function getProductsByTag(Tag $tag)
+    {
+        // Récupérer les produits associés à la catégorie et au tag
+        $products = [];
+        foreach ($this->products as $product) {
+            if ($product->hasTag($tag)) {
+                $products[] = $product;
+            }
+        }
+
+        return $products;
+    }
+
 }

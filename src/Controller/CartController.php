@@ -25,26 +25,10 @@ class CartController extends AbstractController
 
     public function index(Cart $cart, SessionInterface $session, ShippingService $shippingService): Response
     {
-        $categoryName = 'Canon';
-        $subcategoryName = 'Cartouche d\'encre magenta';
-        $productName = 'CLI-8M';
-
-        // Récupère le poids total du panier depuis la session
-       // $totalWeight = $session->get('totalWeight');
-
-        // Récupère le pays de destination depuis la session (ou un formulaire)
-        //$pays = 'Italy';
-
-        // Récupère les frais d'expédition pour le pays et le poids total
-        //$shippingPrice = $shippingService->getShippingPrice($pays, $totalWeight);
-
         $cartTotal = $cart->getTotal();
         $cartProducts = $cart->getProducts();
 
-
-
         return $this->render('cart/index.html.twig', [
-            //'shippingPrice' => $shippingPrice,
             'cart'=>$cart->getFull(),
             'cartTotal' => $cartTotal,
             'cartProducts' => $cartProducts,
@@ -115,4 +99,6 @@ class CartController extends AbstractController
 
         return $this->redirectToRoute('app_cart');
     }
+
+
 }

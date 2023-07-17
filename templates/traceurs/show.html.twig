@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ traceur.nom }} - Traceur{% endblock %}
+
+
+{% block content %}
+
+    <div class="container">
+        <br>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('app_home') }}">
+                        <i class="fa fa-home"></i>  Accueil
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ path('app_products') }}">Traceurs</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">{{ traceur.nom }}</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="container">
+        <h1 class="page-title">{{ traceur.nom }}</h1>
+    </div>
+
+    <div class="container">
+        <div class="product-list">
+            <h2 class="section-title">Produits contenant le tag "{{ traceur.nom }}"</h2>
+        </div>
+    </div>
+
+    <div class="container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Prix</th>
+                <th scope="col"></th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for product in products %}
+                <tr>
+                    <td><img src="assets/images/hp/{{ product.illustration }}" alt=""></td>
+                    <td>{{ product.name }}</td>
+                    <td>
+                        {% if product.prixPromo is not null %}
+                            <del class="old-price">{{ (product.price / 100) | number_format(2, ',', '.') }} €</del>
+                            <span class="promo-price">{{ (product.prixPromo / 100) | number_format(2, ',', '.') }} €</span>
+                        {% else %}
+                            {{ (product.price / 100) | number_format(2, ',', '.') }} €
+                        {% endif %}
+                    </td>
+                    <td></td>
+                    <td>
+                        <a href="{{ path('app_add_to_cart', {'id': product.id}) }}" class="btn btn-primary">Ajouter au panier</a>
+                        <a href="{{ path('app_product', {'slug': product.slug}) }}" class="btn btn-secondary">Voir les détails</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

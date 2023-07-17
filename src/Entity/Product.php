@@ -11,7 +11,6 @@ use phpDocumentor\Reflection\Types\String_;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
 
-
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 #[Vich\Uploadable]
 
@@ -22,7 +21,7 @@ class Product
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(name: "name", type: "string", length: 255)]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
@@ -75,7 +74,8 @@ class Product
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductImage::class, cascade: ['persist'], orphanRemoval: true,)]
     private Collection $productImages;
 
-    #[ORM\ManyToMany(targetEntity: Tag::class, mappedBy: 'product', cascade: ['persist'])]
+    #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'product')]
+    #[ORM\JoinTable(name: 'product_tag')]
     private Collection $tags;
 
     #[ORM\Column]
@@ -92,6 +92,19 @@ class Product
 
     #[ORM\OneToMany(mappedBy: 'Produit', targetEntity: OrderDetails::class)]
     private Collection $orderDetail;
+
+    #[ORM\Column]
+    private ?bool $bestCartouches = null;
+
+    #[ORM\Column]
+    private ?bool $bestSellers = null;
+
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: Comment::class)]
+    private Collection $comments;
+
+    #[ORM\ManyToMany(targetEntity: Traceurs::class, mappedBy: 'Product')]
+    private Collection $traceurs;
+
 
     public function getId(): ?int
     {
@@ -171,6 +184,8 @@ class Product
         $this->tags = new ArrayCollection();
         $this->orderDetails = new ArrayCollection();
         $this->orderDetail = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+        $this->traceurs = new ArrayCollection();
     }
 
 
@@ -443,5 +458,100 @@ class Product
     {
         return $this->orderDetail;
     }
+
+    public function isBestCartouches(): ?bool
+    {
+        return $this->bestCartouches;
+    }
+
+    public function setBestCartouches(bool $bestCartouches): self
+    {
+        $this->bestCartouches = $bestCartouches;
+
+        return $this;
+    }
+    /**
+     * Check if the product has a specific tag.
+     *
+     * @param Tag $tag
+     * @return bool
+     */
+    public function hasTag(Tag $tag): bool
+    {
+        return $this->tags->contains($tag);
+    }
+
+    public function isBestSellers(): ?bool
+    {
+        return $this->bestSellers;
+    }
+
+    public function setBestSellers(bool $bestSellers): self
+    {
+        $this->bestSellers = $bestSellers;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getProduct() === $this) {
+                $comment->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+public function __toString(): string
+{
+    return $this->name;
+}
+
+/**
+ * @return Collection<int, Traceurs>
+ */
+public function getTraceurs(): Collection
+{
+    return $this->traceurs;
+}
+
+public function addTraceur(Traceurs $traceur): self
+{
+    if (!$this->traceurs->contains($traceur)) {
+        $this->traceurs->add($traceur);
+        $traceur->addProduct($this);
+    }
+
+    return $this;
+}
+
+public function removeTraceur(Traceurs $traceur): self
+{
+    if ($this->traceurs->removeElement($traceur)) {
+        $traceur->removeProduct($this);
+    }
+
+    return $this;
+}
 
 }

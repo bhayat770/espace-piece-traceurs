@@ -48,9 +48,14 @@
         </strong> à l'adresse suivante :
         <br/>
         {{ order.delivery |raw }}
-        <hr>
-        Pour suivre votre commande, rendez-vous dans votre <a href="{{ path('app_account') }}">compte</a> </p>
+        <hr><br>
+
     </div>
-
-
+    <div class="container">
+        <a class="btn" href="{{ path('app_account_order_show', {'reference' : order.reference}) }}">Détails de ma commande</a>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
 {% endblock %}

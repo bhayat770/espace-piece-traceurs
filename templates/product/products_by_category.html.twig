@@ -3,43 +3,54 @@
 {% block title %}Produits de la catégorie {{ category.name }}{% endblock %}
 
 {% block content %}
-  <div class="container">
-      <h1>Produits de la catégorie {{ category.name }}</h1>
-  </div>
-<div class="container">
-    <br>
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a href="{{ path('app_home') }}">
-                    <i class="fa fa-home"></i>  Accueil
-                </a>
-            </li>
-            <li class="breadcrumb-item">
-                <a href="{{ path('app_products') }}">Nos Produits</a>
-            </li>
-            <li class="breadcrumb-item active" aria-current="page">{{ category.name }}</li>
-        </ol>
-    </nav>
-</div>
-<main class="main">
     <div class="container">
-        <div class="row">
+        <h1>Produits de la catégorie {{ category.name }}</h1>
+    </div>
+    <div class="container">
+        <br>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('app_home') }}">
+                        <i class="fa fa-home"></i>  Accueil
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ path('app_products') }}">Nos Produits</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">{{ category.name }}</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="container">
+        <h3>Tags :</h3>
+        <div class="tags">
+        </div>
+    </div>
+    <main class="main">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <h3>Nos produits</h3>
+                    <br>
+                    <div class="row">
+                        {% for product in products %}
+                            <div class="col-6 col-sm-4 col-xl-3">
+                                {% include 'product/single_product.html.twig' %}
+                            </div>
+                            {% for tag in product.tags %}
+                                <a href="{{ path('app_products_by_tag', {'categoryName': product.category.name, 'tagName': tag}) }}">
+                                    {{ tag }}
+                                </a>
+                            {% endfor %}
 
-            <div class="col-md-9">
-                <h3>Nos produits</h3>
-                <br>
-                <div class="row">
-                    {% for product in products %}
-                        <div class="col-6 col-sm-4 col-xl-3">
-                            {% include 'product/single_product.html.twig' %}
-                        </div>
-                    {% endfor %}
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</main>
+    </main>
+    {% if products|length == 0 %}
         <p>Aucun produit pour cette catégorie.</p>
-
+    {% endif %}
 {% endblock %}

@@ -46,7 +46,7 @@ class Adresse
 
     public function __toString(): string
     {
-        return $this->getName().'[br]'.$this->getAdresse().'[br]'.$this->getVille().' -'.$this->getPays();
+        return $this->getName(). '[br]'.$this->getAdresse().' [br]'.$this->getVille().' - '.$this->getPays();
     }
 
     public function getId(): ?int

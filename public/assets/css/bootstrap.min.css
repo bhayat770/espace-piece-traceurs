@@ -36,7 +36,7 @@
     flex-direction: column;
     align-items: stretch;
     margin: 20px auto;
-    max-width: 83%;
+    max-width: 75%;
 }
 
 .step-progress {
@@ -52,13 +52,24 @@
 }
 
 .step.active {
-    color: #000000;
+    color: #f4a752;
+}
+
+.step.active-order {
+    color: bl;
 }
 
 .active-icon {
-    color: orange;
+    color: #f4a752;
 }
 
+.active-icon-order {
+    color: cornflowerblue;
+}
+
+.active-text {
+    color: cornflowerblue;
+}
 .step-icon {
     font-size: 24px;
     margin-bottom: 8px;
@@ -73,7 +84,11 @@
 
 .progress {
     height: 100%;
-    background-color: #ff9800;
+    background-color: orange ;
+}
+.progress-order-details {
+    height: 100%;
+    background-color: #0d6efd;
 }
 
 @media (max-width: 768px) {

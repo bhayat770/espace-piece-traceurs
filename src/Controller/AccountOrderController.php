@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Classe\Cart;
 use App\Entity\Order;
+use App\Entity\Product;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -38,16 +40,15 @@ class AccountOrderController extends AbstractController
     }
 
     #[Route('/compte/mes-commandes/{reference}', name: 'app_account_order_show')]
-
-    public function show(Cart $cart, $reference): Response
+    public function show(Cart $cart, $reference, Request $request): Response
     {
-
         $order = $this->entityManager->getRepository(Order::class)->findOneByReference($reference);
 
-        if (!$order || $order->getUser() !=$this->getUser())
-            {
-                return $this->redirectToRoute('app_account_order');
-            }
+        if (!$order) {
+            return $this->redirectToRoute('_preview_error');
+        }
+
+        $orderDetails = $order->getOrderDetails();
 
         $cartTotal = $cart->getTotal();
         $cartProducts = $cart->getProducts();
@@ -56,8 +57,8 @@ class AccountOrderController extends AbstractController
             'cartTotal' => $cartTotal,
             'cartProducts' => $cartProducts,
             'cart' => $cart->getFull(),
-            'order' => $order
+            'order' => $order,
+            'orderDetails' => $orderDetails,
         ]);
     }
-
 }

@@ -6,6 +6,7 @@
 parameters:
     app.path.product_images: /public/assets/images/hp
     app.path.images: /public/assets
+    paypal_id: AXxo95jxWw3U4QgFVNre4IwQySzaFxbo_o6kM12rP9_NA5jRd5kHfRZF0IJudnkpKDotxQ5-ABVhOq3N
 
 services:
 

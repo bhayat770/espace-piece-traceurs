@@ -3,7 +3,10 @@
 {% block title %}{{ product.name }} - Espace pièces traceurs{% endblock %}
 
 {% block content %}
-<div class="container">
+
+    <link rel="stylesheet" href="{{ asset('assets/js/main.js') }}">
+
+    <div class="container">
     <br>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -15,13 +18,28 @@
             <li class="breadcrumb-item">
                 <a href="{{ path('app_products') }}">Nos Produits</a>
             </li>
+            <li class="breadcrumb-item">
+                <a href="{{ path('app_products_by_category', { 'categoryName': product.category }) }}">{{ product.category.name }}</a>
+            </li>
+         {#    <li class="breadcrumb-item">
+                {% for tag in product.tags %}
+                    <a href="{{ path('app_products_by_tag', { 'categoryName': category.name, 'tagName': tag }) }}">{{ tag }}</a>
+                {% endfor %}
+            </li>#}
             <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
         </ol>
     </nav>
 </div>
-    <BR>
+    <br>
+
+
 
 <main class="main">
+    {# <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v12.0" nonce="xxxxxxxxx"></script>
+    <div class="fb-share-button" data-href="{{ path('app_product', {'slug': product.slug}) }}" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ path('app_product', {'slug': product.slug}) }}" class="fb-xfbml-parse-ignore">Partager</a></div>
+    <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text={{ product.name }}&url={{ path('app_product', {'slug': product.slug}) }}" data-size="small">Tweet</a>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> #}
 
     <div class="row">
         <div class="container">
@@ -69,15 +87,15 @@
                     });
                 </script>
             </div>
-            <div class="col-lg-7 col-md-6 product-single-details">
+            <div class="col-lg-7 col-md-6 product-single-details align-items-start">
                 <h1 class="product-title">{{ product.name }}</h1>
-                <div class="ratings-container">
+                {#  <div class="ratings-container">
                     <div class="product-ratings">
                         <span class="ratings" style="width:100%"></span>
                         <span class="tooltiptext tooltip-top"></span>
                     </div>
                     <a href="#" class="rating-link">( 6 Reviews )</a>
-                </div>
+                </div>#}
                 <hr class="short-divider">
                 <div class="price-box">
                     {% if product.prixPromo is not null %}
@@ -135,7 +153,6 @@
                             errorMessageElement.style.display = "block"; // Afficher le message d'erreur
                         }
                     }
-
                     function decrement() {
                         var input = document.getElementById('quantity-input');
                         var currentValue = parseInt(input.value);
@@ -147,15 +164,238 @@
                     }
                 </script>
 
-
                 <a href="#" class="btn btn-gray view-cart d-none">Voir le panier</a>
             </div>
+        </div>
+
+        <br>
+
+        <div class="container">
+            <div class="product-single-tabs">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="product-desc-tab" data-toggle="tab" href="#product-desc-content"
+                           role="tab" aria-controls="product-desc-content" aria-selected="true">Description</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" id="product-compatibles-tab" data-toggle="tab" href="#product-compatibles"
+                           role="tab" aria-controls="product-compatibles" aria-selected="false">Modèles compatibles</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" id="product-commentaire-tab" data-toggle="tab" href="#product-commentaire"
+                           role="tab" aria-controls="product-commentaire" aria-selected="false">Commentaires</a>
+                    </li>
+                </ul>
 
 
-
-            <a href="#" class="btn btn-gray view-cart d-none">Voir le panier</a>
+                <div class="tab-pane fade show active" id="product-desc-content" role="tabpanel" aria-labelledby="product-desc-tab">
+                    <div class="product-desc-content">
+                        {{ product.description|raw }}
+                    </div>
                 </div>
 
+                    <div class="tab-pane fade" id="product-compatibles" role="tabpanel"
+                         aria-labelledby="product-compatibles-tab">
+                        <div class="product-compatibles">
+                            Cette pièce est compatible avec :<br>
+                            {% for tag in product.tags %}
+                                <a href="{{ path('app_traceurs', {'slug': tag}) }}">{{ tag }}</a><br>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="product-commentaire" role="tabpanel" aria-labelledby="product-commentaire-tab">
+                        <div class="product-commentaire">
+                            <div class="container">
+                                <h2 class="comment-title">
+                                    <span id="comment-count">{{ product.comments|length }}</span> commentaire(s)
+                                </h2>
+                                <hr>
+                            </div>
+                        </div>
+
+                            <style>
+                                .comment-area {
+                                    padding: 10px;
+                                    background-color: #f5f5f5;
+                                    /* Ajoutez d'autres styles personnalisés ici */
+                                }
+
+                            </style>
+                            <div class="container">
+                                <div class="comment-area">
+                                    {{ form_start(commentForm, { 'attr': {'class': 'comment-form', 'id': 'comment-form'} }) }}
+                                    {{ form_widget(commentForm, { 'attr':{'class': 'comment-form'} }) }}
+                                    {{ form_end(commentForm) }}
+                                </div>
+                            </div>
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', () => {
+                                    const commentForm = document.getElementById('comment-form');
+                                    commentForm.addEventListener('submit', async (e) => {
+                                        e.preventDefault(); // Empêche le rechargement de la page
+
+                                        // Récupérer les données du formulaire
+                                        const formData = new FormData(commentForm);
+
+                                        // Envoyer les données en utilisant Ajax
+                                        try {
+                                            const response = await fetch('{{ path('app_comment_add') }}', {
+                                                method: 'POST',
+                                                body: formData
+                                            });
+
+                                            if (response.ok) {
+                                                const responseData = await response.json();
+
+                                                // Créer un élément div pour le nouveau commentaire
+                                                const newCommentElement = document.createElement('div');
+                                                newCommentElement.innerHTML = responseData.message;
+
+                                                // Ajouter le nouveau commentaire à la liste
+                                                const commentList = document.querySelector('.comment-list');
+                                                commentList.appendChild(newCommentElement);
+
+                                                // Mettre à jour le compteur de commentaires
+                                                const commentCountElement =document.getElementById('comment-count');
+                                                commentCountElement.textContent = responseData.numberOfComments + ' commentaire(s)';
+
+                                                // Réinitialiser le formulaire
+                                                commentForm.reset();
+                                            } else {
+                                                // Gérer les erreurs de requête
+                                                console.error('Une erreur s\'est produite lors de la soumission du formulaire');
+                                            }
+                                        } catch (error) {
+                                            // Gérer les erreurs de connexion
+                                            console.error('Une erreur s\'est produite lors de la connexion au serveur');
+                                        }
+                                    });
+                                });
+
+                            </script>
+
+                            <div class="container">
+                                <div class="comment-list">
+                                    {% for comment in product.comments %}
+                                        {{ include('comment/index.html.twig') }}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                    </div>
             </div>
-    </main>
+        </div>
+
+        {% if similarProducts is not empty %}
+            <div class="container">
+                <h2 class="text-center">Produits similaires</h2>
+            </div>
+            <div class="container">
+                <div class="card-deck">
+                    {% for product in similarProducts %}
+                        <div class="card">
+                            <img src="/assets/images/hp/{{ product.illustration }}" alt="product" class="card-img-top">
+                            <div class="card-body">
+                                <h6 class="product-title">
+                                    <a href="{{ path('app_product', {'slug': product.slug}) }}">{{ product.name }}</a>
+                                </h6>
+                                <div class="category">{{ product.marque }}</div>
+
+                                <div class="price-box">
+                                    {% if product.prixPromo is not null %}
+                                        <div class="label-group">
+                                            <div class="product-label label-hot">PROMO !</div>
+                                            <br>
+                                        </div>
+                                        <del class="product-price old" style="color: gray; text-decoration: line-through;">{{ (product.price / 100) | number_format(2, ',', '.') }} €</del>
+                                        <span class="product-price promo">{{ (product.prixPromo / 100) | number_format(2, ',', '.') }} €</span>
+                                    {% else %}
+                                        <span class="product-price">{{ (product.price / 100) | number_format(2, ',', '.') }} €</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+<style>
+
+.container {
+    margin-top: 20px;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: contain;
+    max-width: 100%;
+}
+
+.card-body {
+    text-align: center;
+}
+
+.card-title {
+    margin-bottom: 10px;
+}
+
+.btn-primary {
+    margin-top: auto;
+}
+
+.card-deck {
+    margin-top: 20px;
+}
+
+@media (min-width: 576px) {
+    .card-deck {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .card {
+        flex-basis: calc(50% - 10px);
+        margin-bottom: 20px;
+    }
+}
+</style>
+
+
+        {#  <div class="container">
+            <h2>Produits similaires</h2>
+        </div>
+        <div class="container">
+            <div class="row">
+                {% for product in similarProducts %}
+                    <div class="col-lg-1 col-md-5 col-sm-8">
+                        <div class="product">
+                            <img src="/assets/images/hp/{{ product.illustration}}" alt="product"></div>
+                            <h3>{{ product.name }}</h3>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+       #}
+
+    </div>
+</main>
 {% endblock %}

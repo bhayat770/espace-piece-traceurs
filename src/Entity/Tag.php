@@ -18,12 +18,16 @@ class Tag
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    #[ORM\ManyToMany(targetEntity: Product::class, inversedBy: 'tags')]
+    #[ORM\ManyToMany(targetEntity: Product::class, mappedBy: 'tags')]
     private Collection $product;
+
+    #[ORM\ManyToMany(targetEntity: Traceurs::class, mappedBy: 'tags')]
+    private Collection $traceurs;
 
     public function __construct()
     {
         $this->product = new ArrayCollection();
+        $this->traceurs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -70,5 +74,32 @@ class Tag
     public function __toString(): string
     {
         return $this->nom;
+    }
+
+    /**
+     * @return Collection<int, Traceurs>
+     */
+    public function getTraceurs(): Collection
+    {
+        return $this->traceurs;
+    }
+
+    public function addTraceur(Traceurs $traceur): self
+    {
+        if (!$this->traceurs->contains($traceur)) {
+            $this->traceurs->add($traceur);
+            $traceur->addTag($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTraceur(Traceurs $traceur): self
+    {
+        if ($this->traceurs->removeElement($traceur)) {
+            $traceur->removeTag($this);
+        }
+
+        return $this;
     }
 }

@@ -33,6 +33,7 @@ use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FieldAbstractType;
+use Doctrine\Common\Collections\Collection;
 
 
 
@@ -63,13 +64,40 @@ class ProductCrudController extends AbstractCrudController
             ->linkToCrudAction('detail')
             ->setCssClass('btn btn-info');
 
+        $applyDiscount = Action::new('applyDiscount', 'Appliquer la réduction', 'fa fa-percent')
+            ->linkToCrudAction('applyDiscount')
+            ->setCssClass('btn btn-info');
+
+
         return $actions
             ->add(Crud::PAGE_EDIT, $duplicate)
-            ->add('index', 'detail');
+            ->add('index', 'detail')
+            ->add(Crud::PAGE_INDEX, $applyDiscount);
+
 
 
     }
 
+    public function applyDiscount(AdminContext $context, EntityManagerInterface $entityManager, AdminUrlGenerator $adminUrlGenerator): \Symfony\Component\HttpFoundation\RedirectResponse
+    {
+        /** @var Product $product */
+        $product = $context->getEntity()->getInstance();
+
+        if ($product->getMarque() === 'HP') {
+            // Calculer la réduction de 10%
+            $newPrice = $product->getPrice() * 0.9;
+            $product->setPrice($newPrice);
+            $entityManager->persist($product);
+            $entityManager->flush();
+        }
+
+        // Générer l'URL de redirection vers la page de liste des produits
+        $url = $adminUrlGenerator->setController(ProductCrudController::class)
+            ->setAction(Action::INDEX)
+            ->generateUrl();
+
+        return $this->redirect($url);
+    }
 
     public function configureFields(string $pageName): iterable
     {
@@ -117,6 +145,8 @@ class ProductCrudController extends AbstractCrudController
                 ->autocomplete(),
             BooleanField::new('isBest'),
             BooleanField::new('enPromo'),
+            BooleanField::new('bestCartouches'),
+            BooleanField::new('bestSellers'),
             MoneyField::new('prixPromo', 'Prix promotionnel')->setCurrency('EUR')->onlyOnForms(),
 
         ];

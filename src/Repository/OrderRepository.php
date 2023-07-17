@@ -51,6 +51,20 @@ class OrderRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+
+    public function findOneByNumberAndName($reference, $name)
+    {
+        return $this->createQueryBuilder('o')
+            ->join('o.user', 'u')
+            ->andWhere('o.reference = :reference')
+            ->andWhere('u.lastname = :lastname')
+            ->setParameter('reference', $reference)
+            ->setParameter('lastname', $name)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+
 //    /**
 //     * @return Order[] Returns an array of Order objects
 //     */

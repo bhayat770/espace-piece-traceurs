@@ -30,10 +30,10 @@ class OrderDetails
     private ?float $total = null;
 
     #[ORM\ManyToOne(inversedBy: 'orderDetails')]
-    private ?Product $Produit = null;
+    private ?Product $product = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $illustration = null;
+    private ?string $illustration= null ;
 
     public function getId(): ?int
     {
@@ -48,6 +48,18 @@ class OrderDetails
     public function setMyOrder(?Order $myOrder): self
     {
         $this->myOrder = $myOrder;
+
+        return $this;
+    }
+
+    public function getProduct(): ?Product
+    {
+        return $this->product;
+    }
+
+    public function setProduct(?Product $product): self
+    {
+        $this->product = $product;
 
         return $this;
     }

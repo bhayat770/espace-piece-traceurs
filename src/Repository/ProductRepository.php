@@ -5,8 +5,11 @@ namespace App\Repository;
 use App\Classe\Search;
 use App\Entity\Category;
 use App\Entity\Product;
+use App\Entity\Traceurs;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\Tag;
 
 /**
  * @extends ServiceEntityRepository<Product>
@@ -74,8 +77,63 @@ class ProductRepository extends ServiceEntityRepository
                 ->setParameter('string',  "%{$search->string}%"); //Les caractères "%" avant et après la chaîne de recherche permettent de chercher des occurrences de la chaîne n'importe où dans le nom du produit, et non pas seulement au début ou à la fin
         }
 
+        if (!empty($search->tags)) {
+            $query = $query
+                ->join('p.tags', 't')
+                ->andWhere('t.id IN (:tags)')
+                ->setParameter('tags', $search->tags);
+        }
+        if (!empty($search->minPrice)) {
+            $query = $query
+                ->andWhere('p.price >= :minPrice')
+                ->setParameter('minPrice', $search->minPrice);
+        }
+
+        if (!empty($search->maxPrice)) {
+            $query = $query
+                ->andWhere('p.price <= :maxPrice')
+                ->setParameter('maxPrice', $search->maxPrice);
+        }
+
+
         return $query->getQuery()->getResult();
     }
+
+
+    public function findSimilarProductsByTags($tags, $currentProduct, $limit = 4)
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb->andWhere($qb->expr()->neq('p', ':currentProduct'))
+            ->setParameter('currentProduct', $currentProduct);
+
+        $qb->innerJoin('p.tags', 't', Join::WITH, $qb->expr()->in('t', ':tags'))
+            ->setParameter('tags', $tags);
+
+        $qb->setMaxResults($limit);
+
+        return $qb->getQuery()->getResult();
+    }
+
+
+    /**
+     * Récupère tous les produits ayant comme tag le traceur donné.
+     *
+     * @param Traceurs $traceur
+     * @return Product[]
+     */
+    public function findByTag($tag)
+    {
+        return $this->createQueryBuilder('p')
+            ->join('p.tags', 't')
+            ->where('t.nom = :tag')
+            ->setParameter('tag', $tag)
+            ->getQuery()
+            ->getResult();
+    }
+
+
+
+
 
 //    /**
 //     * @return Product[] Returns an array of Product objects

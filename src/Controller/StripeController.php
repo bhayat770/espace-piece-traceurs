@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 class StripeController extends AbstractController
 {
     /**
@@ -76,9 +77,10 @@ class StripeController extends AbstractController
         $order->setStripeSessionId($checkout_session->id);
         $entityManager->flush();
 
-
         $response = new JsonResponse(['id'=>$checkout_session->id]);
         return $response;
+
+
 
     }
 }

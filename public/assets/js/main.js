@@ -210,11 +210,11 @@
 					compact = $this.data( 'compact' ),
 					dateFormat = ( !$this.data( 'format' ) ) ? 'DHMS' : $this.data( 'format' ),
 					newLabels = ( !$this.data( 'labels-short' ) ) ?
-						[ 'Years', 'Months', 'Weeks', 'Days', 'Hours', 'Minutes', 'Seconds' ] :
-						[ 'Years', 'Months', 'Weeks', 'Days', 'Hours', 'Mins', 'Secs' ],
+						[ 'Years', 'Months', 'Weeks', 'Jours', 'Hours', 'Minutes', 'Seconds' ] :
+						[ 'Years', 'Months', 'Weeks', 'Jours', 'Hours', 'Mins', 'Secs' ],
 					newLabels1 = ( !$this.data( 'labels-short' ) ) ?
-						[ 'Year', 'Month', 'Week', 'Day', 'Hour', 'Minute', 'Second' ] :
-						[ 'Year', 'Month', 'Week', 'Day', 'Hour', 'Min', 'Sec' ];
+						[ 'Year', 'Month', 'Week', 'Jour', 'Hour', 'Minute', 'Second' ] :
+						[ 'Year', 'Month', 'Week', 'Jour', 'Hour', 'Min', 'Sec' ];
 
 				var newDate;
 
@@ -231,7 +231,7 @@
 					format: dateFormat,
 					padZeroes: true,
 					compact: compact,
-					compactLabels: [ 'y', 'm', 'w', ' days,' ],
+					compactLabels: [ 'y', 'm', 'w', ' jours,' ],
 					timeSeparator: ' : ',
 					labels: newLabels,
 					labels1: newLabels1
@@ -2574,3 +2574,81 @@ $(document).ready(function () {
 		zoomContainer: '.product-single-image-container'
 	});
 });
+
+
+import '../css/app.scss';
+import {Dropdown} from "bootstrap";
+
+document.addEventListener('DOMContentLoaded', ()=> {
+	new App();
+});
+class App {
+	constructor() {
+		this.enableDropdowns();
+		this.handleCommentForm();
+	}
+
+	enableDropdowns() {
+		const dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'))
+		dropdownElementList.map(function (dropdownToggleEl) {
+			return new Dropdown(dropdownToggleEl)
+		});
+	}
+
+	handleCommentForm() {
+		const commentForm = document.querySelector('form.comment-form');
+
+		if (null == commentForm) {
+			return;
+		}
+
+		console.log(commentForm);
+		commentForm.addEventListener('submit', async (e) => {
+			console.log(e);
+
+			const response = await fetch('/ajax/comments', {
+				method: 'POST',
+				body: new FormData(e.target)
+			});
+
+			if (!response.ok) {
+				return;
+			}
+
+			const json = await response.json();
+
+			if (json.code === 'COMMENT_ADDED_SUCCESSFULLY' ) {
+				const commentListe = document.querySelector('.comment-list');
+				const commentCount = document.querySelector('.comment-count');
+				const commentContent = document.querySelector('#comment-content');
+				commentListe.insertAdjacentHTML('beforeend', json.message);
+				commentListe.lastElementChild.scrollIntoView();
+				commentCount.innerText = json.numberOfComments;
+				commentContent.value = '';
+			}
+
+		});
+	}
+}
+
+$('.owl-carousel').owlCarousel({
+	loop: true,
+	margin: 0,
+	responsiveClass: true,
+	responsive: {
+		0:{
+			items: 1,
+		},
+		768: {
+			items:2,
+		},
+		1100: {
+			items:3,
+		},
+		1400:{
+			items: 4,
+			loop: false,
+		}
+	}
+})
+

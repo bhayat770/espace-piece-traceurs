@@ -3,31 +3,82 @@
 {% block title %}Ma commande - Espace pièces traceurs{% endblock %}
 
 {% block content %}
+    <div class="container">
+        <br>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('app_home') }}">
+                        <i class="fa fa-home"></i>  Accueil
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ path('app_account') }}">
+                        Mon compte
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                   <a href="{{ path('app_account_order') }}">
+                       Mes commandes
+                   </a>
+                </li>
+                <li class="breadcrumb-item">
+                    Commande {{ order.reference }}
+                </li>
+            </ol>
+        </nav>
+    </div>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" crossorigin="anonymous" />
 
-    <div class="container">
+    {# <div class="container">
     <h1>Ma commande {{ order.reference }}</h1>
     <a href="{{ path('app_account_order') }}">Retour</a>
     <hr>
-    </div>
-    <div class="container">
-    <div class="order-status">
-        <strong>Statut de la commande :</strong>
-        <div class="progress">
-            <div class="progress-bar {% if order.state == 1 %}progress-bar-success{% elseif order.state == 2 %}progress-bar-warning{% elseif order.state == 3 %}progress-bar-info{% endif %}" role="progressbar" style="width: {% if order.state == 1 %}33.33%{% elseif order.state == 2 %}66.66%{% elseif order.state == 3 %}100%{% endif %}">
-                <i class="fas fa-check"></i>
-                <i class="fas fa-truck"></i>
-                <i class="fas fa-flag-checkered"></i>
+    </div> #}
+    <div class="container-cart">
+        <div class="step-progress">
+            <div class="step {% if order.state >= 1 %}active{% endif %}">
+                <span class="step-icon {% if order.state >= 1 %}active-icon-order{% endif %}"><i class="fas fa-check"></i></span>
+                    <span class="step-text {% if order.state >= 1 %}active-text{% endif %}">Commande acceptée</span>
+            </div>
+            <div class="step {% if order.state >= 2 %}active{% endif %}">
+                <span class="step-icon {% if order.state >= 2 %}active-icon-order{% endif %}"><i class="fas fa-cogs"></i></span>
+                <span class="step-text {% if order.state >= 2 %}active-text{% endif %}">Préparation en cours</span>
+            </div>
+            <div class="step {% if order.state >= 3 %}active{% endif %}">
+                <span class="step-icon {% if order.state >= 3 %}active-icon-order{% endif %}"><i class="fas fa-truck"></i></span>
+                <span class="step-text {% if order.state >= 3 %}active-text{% endif %}">Livraison en cours</span>
             </div>
         </div>
-        <div class="status-labels">
-            <span class="status-label {% if order.state >= 1 %}active{% endif %}">Paiement accepté</span>
-            <span class="status-label {% if order.state >= 2 %}active{% endif %}">Préparation en cours</span>
-            <span class="status-label {% if order.state >= 3 %}active{% endif %}">Livraison en cours</span>
+        <div class="progress-bar">
+            <div class="progress-order-details" style="width: {% if order.state == 1 %}33.33%{% elseif order.state == 2 %}66.66%{% elseif order.state ==2 %}100%{% endif %}; {% if order.state == 3 %}background-color: #0d6efd;{% endif %}"></div>
         </div>
     </div>
+    <div style="margin: auto; width: 80%;">
+
     </div>
-    <br>
+
+    {#<div id="as-root"></div>
+    <script>
+        (function(e,t,n){var r,i=e.getElementsByTagName(t)[0];if(e.getElementById(n))return;r=e.createElement(t);r.id=n;r.src="https://button.aftership.com/all.js";i.parentNode.insertBefore(r,i)})(document,"script","aftership-jssdk")
+    </script>
+
+    <div class="as-track-button" data-domain="track.aftership.com" data-size="large" data-tracking-number="Tracking Number" data-hide-tracking-number="true"></div>
+
+    <div class="parcels-widget-wrap">
+        <iframe class="parcels-widget" src="https://parcelsapp.com/widget" frameborder="no" seamless width="300" height="250"></iframe>
+    </div>
+    <style>
+        .parcels-widget {
+            width: 300px;
+            height: 250px;
+            min-width: 300px;
+            min-height: 250px;
+        }
+    </style>
+
+
+       <br>
     <br>
         <div class="container">
     <h3>
@@ -36,6 +87,7 @@
         </strong>
     </h3>
         </div>
+    <div class="container">
     <table class="table">
         <thead>
         <tr>
@@ -52,95 +104,299 @@
                 <td>{{ product.produit }}</td>
                 <td>{{ product.quantite }}</td>
                 <td>{{ (product.prix/100)|round(2, 'floor')|number_format(2, ',', '.') }} €</td>
-                {# <td><img src="{{ asset('assets/images/hp/' ~ product.produit.illustration) }}" alt="{{ product.product.name }}" height="75px"></td> #}
+                {# <td><img src="{{ asset('assets/images/hp/' ~ product.produit.illustration) }}" alt="{{ product.product.name }}" height="75px"></td>
                 <th scope="row"></th>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+
     </div>
-    <style>
-        .order-status {
-            margin-bottom: 20px;
-        }
+    </div>
+#}
+    <div class="container">
+        <section class="order-summary">
+            <h2 class="title-level1">Commande n° {{ order.reference }}</h2>
+            <div class="checkout-summary">
+                <div class="order-info">
+                    <ul class="order-info-list">
+                        <li>Date : {{ order.createdAt | date('d-m-Y') }}</li>
+                        <li>
+                            Total Commande :
+                            <strong>{{ (order.total/100)|round(2, 'floor')|number_format(2, ',', '.') }} €</strong>
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
-        .progress {
-            position: relative;
-            height: 20px;
-            background-color: #f2f2f2;
-            border-radius: 10px;
-            overflow: hidden;
-        }
+            <div class="ship-bill-container">
+                <aside class="shipping-summary">
+                    <h3 class="title-separator">Livraison</h3>
+                    <div class="shipping-subcontainer">
+                        <h4 class="title-shipping-mode">Mode de livraison :</h4>
+                        <div class="list-shipping-mode">
+                            <div class="products-shipped-by">Articles expédiés par <strong>{{ order.carrierName }}</strong> : </div>
+                        </div><br>
+                        <h4 class="delivery-adress">Adresse de livraison :</h4>
+                        <div class="address">
+                            <strong>
+                                {{ order.delivery | raw}}
+                        </div>
+                    </div>
+                </aside>
 
-        .progress-bar {
-            position: relative;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 10px;
-            color: #ffffff;
-        }
 
-        .progress-bar i {
-            font-size: 16px;
-            margin-right: 5px;
-        }
+            </div>
 
-        .progress-bar-success {
-            background-color: #28a745;
-        }
+            <div class="user-basket">
+                <h3 class="title-separator">Récapitulatif commande</h3>
+                <div class="container-seller">
+                    <div class="shopper-checkout-summary">
+                        <div class="number-of-order">Commande n° {{ order.reference }}</div>
+                        <div class="status">
+                            {% if order.state >= 3 %}
+                                <div class="label shipped">Expédiée le {{ order.createdAt | date('d-m-Y') }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="cta-container-billing-follow">
+                          {#   <a href="http://www.chronopost.fr/expedier/inputLTNumbersNoJahia.do?listeNumeros=XW362689447JB" target="_blank" class="button alt">Suivre mon colis</a>#}
+                            <a href="{{ path('app_generate_invoice', {'orderId': order.id}) }}" target="_blank" class="button alt">Obtenir une facture</a>
+                        </div>
+                    </div>
 
-        .progress-bar-warning {
-            background-color: #ffc107;
-        }
+                    <br>
+                    <br>
+                    <br>
 
-        .progress-bar-info {
-            background-color: #17a2b8;
-        }
+                    {% for key, product in cart %}
+                    <div class="row {% if key >0 %}mt-2{% endif %}">
+                        <div class="col-2">
+                            <img src="/assets/images/hp/{{ product.product.illustration }}" alt="{{ product.product.name }}" height="75px">
+                            <br>
+                        </div>
+                        {% endfor %}
+                    <ul class="product-list">
+                        {% for product in order.orderDetails %}
+                        {% for key, products in product %}
+                        <div class="row {% if key >0 %}mt-2 {% else %} {{ product.produit }}{% endif %}">
+                            <div class="col-2">
+                                <img src="/assets/images/hp/{{ product.product.illustration }}" alt="{{ product.product.name }}" height="10%">
+                                <br>
+                            </div>
+                            {% endfor %}
+                            {{ product.produit }}
+                            <br>
+                            Quantité : {{ product.quantite }}
+                            <br>
+                            Prix unitaire : {{ (product.prix/100)|round(2, 'floor')|number_format(2, ',', '.') }} €
+                        </div>
+                        {% endfor %}
+                    </ul>
+                        <div class="info-shipping ">
+                            <div class="shipping-text">Livraison à domicile</div>
+                            <div class="shipping-price">{{ (order.carrierPrice/100)|round(2, 'floor')|number_format(2, ',', '.') }} €</div>
+                        </div>
+                        <div class="about-shopper">
+                            Une question ou un problème sur votre commande ?
+                            <a href="" target="_blank">Consultez les FAQ</a><br>
+                        </div>
 
-        .status-labels {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 5px;
-        }
+                    <div class="summary">
+                    <div class="delivery ">
+                        <div class="label">Frais de livraison</div>
+                        <div class="price">
+                            Total
+                        </div>
+                    </div>
 
-        .status-label {
-            flex: 1;
-            text-align: center;
-            font-weight: bold;
-            font-size: 14px;
-            color: #555555;
-        }
 
-        .status-label.active {
-            color: #000000;
-        }
+                    <div class="total">
+                        <div class="label">Total Commande</div>
+                        <div class="price">{{ (order.total/100)|round(2, 'floor')|number_format(2, ',', '.') }} €</div>
+                    </div>
+                </div>
+            </div>
+                </div>
+            </div>
+        </section>
 
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
+    </div>
+<style>
+    .order-summary {
+    margin-bottom: 40px;
+    padding: 20px;
+    }
 
-        .table th,
-        .table td {
-            padding: 8px;
-            border: 1px solid #cccccc;
-        }
+    .checkout-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    }
 
-        .table th {
-            background-color: #f2f2f2;
-            font-weight: bold;
-        }
+    .order-info-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    }
 
-        .table td {
-            text-align: center;
-        }
+    .order-info-list li {
+    margin-bottom: 10px;
+    }
 
-        .table img {
-            max-height: 75px;
-        }
+    .legal-link {
+    color: blue;
+    text-decoration: none;
+    }
 
-    </style>
+    .ship-bill-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    }
+
+    .shipping-summary,
+    .billing-summary {
+    flex-basis: 100%;
+    border: 1px solid #ccc;
+    padding: 20px;
+    }
+
+    .title-separator {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    }
+
+    .sub-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    }
+
+    .payment-method-label {
+    font-weight: bold;
+    }
+
+    .address {
+    margin-bottom: 10px;
+    }
+
+    .user-basket {
+    margin-bottom: 40px;
+    border: 1px solid #ccc;
+    padding: 20px;
+    }
+
+    .container-seller {
+    margin-bottom: 20px;
+    }
+
+    .number-of-order {
+    font-weight: bold;
+    margin-bottom: 10px;
+    }
+
+    .status {
+    margin-bottom: 10px;
+    }
+
+    .label {
+    display: inline-block;
+    padding: 5px 10px;
+    color: #fff;
+    }
+
+    .shipped {
+    background-color: green;
+    }
+
+    .button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: blue;
+    color: #fff;
+    text-decoration: none;
+    }
+
+    .product-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    }
+
+    .item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    }
+
+    .item img {
+    margin-right: 10px;
+    }
+
+    .prices strong {
+    font-weight: bold;
+    }
+
+    .info-shipping {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    }
+
+    .shipping-price {
+    font-weight: bold;
+    }
+
+    .about-shopper {
+    margin-top: 20px;
+    }
+
+    .summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #ccc;
+    padding-top: 20px;
+    }
+
+    .delivery,
+    .total {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    }
+
+    .price {
+    font-weight: bold;
+    }
+
+    @media screen and (max-width: 768px) {
+    .ship-bill-container {
+    flex-direction: column;
+    }
+    }
+
+    @media screen and (max-width: 768px) {
+    .shipping-summary,
+    .billing-summary {
+    margin-bottom: 20px;
+    }
+    }
+
+    @media screen and (max-width: 480px) {
+    .container {
+    padding: 10px;
+    }
+    }
+
+    @media screen and (max-width: 480px) {
+    .order-summary,
+    .ship-bill-container,
+    .user-basket {
+    margin-bottom: 20px;
+    }
+    }
+</style>
 {% endblock %}

@@ -87,22 +87,30 @@ class OrderController extends AbstractController
             $order->SetState(0);
             $this->entityManager->persist($order);
 
-
-            // Enregistrer les produits de la commande dans la base de données
+// Enregistrer les produits de la commande dans la base de données
             foreach ($cart->getFull() as $product) {
                 $orderDetails = new OrderDetails();
                 $orderDetails->setMyOrder($order);
                 $orderDetails->setProduit($product['product']->getName());
                 $orderDetails->setQuantite($product['quantity']);
-                if ($product['product']->getPrixPromo() !== null) {
-                    $orderDetails->setPrix($product['product']->getPrixPromo());
+
+                $prixPromo = $product['product']->getPrixPromo();
+                if ($prixPromo != null) {
+                    $orderDetails->setPrix($prixPromo);
+                    $orderDetails->setTotal($prixPromo * $product['quantity']);
+
                 } else {
                     $orderDetails->setPrix($product['product']->getPrice());
+                    $orderDetails->setTotal($product['product']->getPrice() * $product['quantity']);
                 }
-                $orderDetails->setTotal($product['product']->getPrice() * $product['quantity']);
 
                 // Enregistrer les détails de la commande dans la base de données
                 $this->entityManager->persist($orderDetails);
+
+                $productEntity = $product['product'];
+                $newQuantity = $productEntity->getQuantite() - $product['quantity'];
+                $productEntity->setQuantite($newQuantity);
+                $this->entityManager->persist($productEntity);
 
             }
 
@@ -112,6 +120,7 @@ class OrderController extends AbstractController
 
             $cartTotal = $cart->getTotal();
             $cartProducts = $cart->getProducts();
+
 
 
             return $this->render('order/add.html.twig', [

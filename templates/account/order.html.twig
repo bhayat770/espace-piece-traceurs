@@ -3,7 +3,26 @@
 {% block title %}Mes commandes - Espace pièces traceurs{% endblock %}
 
 {% block content %}
-
+    <div class="container">
+        <br>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('app_home') }}">
+                        <i class="fa fa-home"></i>  Accueil
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ path('app_account') }}">
+                        Mon compte
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    Mes commandes
+                </li>
+            </ol>
+        </nav>
+    </div>
     <div class="container">
     <h1>Mes commandes</h1>
         <br>
@@ -42,8 +61,8 @@
                     </thead>
                     <tbody>
 
-        {% for order in orders %}
-                    <tr class="first_item ">
+                    {% for order in orders %}
+                        <tr class="first_item ">
                         <td class="history_link bold footable-first-column">
                             <span class="footable-toggle"></span>
                             <a class="color-myaccount">

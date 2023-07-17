@@ -22,7 +22,7 @@
         };
         (function (d) {
             var wf = d.createElement('script'), s = d.scripts[0];
-            wf.src = '/public/assets/js/webfont.js';
+          //  wf.src = 'public/assets/js/plugins/webfont.js';
             wf.async = true;
             s.parentNode.insertBefore(wf, s);
         })(document);
@@ -30,9 +30,13 @@
 
     <!-- Plugins CSS File -->
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="owlcarousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="owlcarousel/owl.theme.default.min.css">
 
     <!-- Main CSS File -->
     <link rel="stylesheet" href="{{ asset('assets/css/demo35.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/owl.theme.default.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/simple-line-icons/css/simple-line-icons.min.css') }}">
 
@@ -51,72 +55,64 @@
 </div>
 
 <div class="page-wrapper">
-    <header class="header">
-        <div class="header-top">
-            <div class="container">
-                <div class="header-left d-none d-xl-block">
-                    <div class="info-box info-box-icon-left p-0">
-                        <i class="icon-shipping text-primary"></i>
-                        <div class="info-box-content0">
-                            <h4 class="mb-0">Livraison gratuite à partir de 150 €</h4>
-                        </div><!-- End .info-box-content -->
-                    </div><!-- End .info-box -->
-                </div><!-- End .header-left -->
-                <div class="header-dropdown mr-4 pl-2 font2">
-                    <a href="#">ENG</a>
-                    <div class="header-menu">
-                        <ul>
-                            <li><a href="#">ENG</a></li>
-                            <li><a href="#">FRH</a></li>
-                        </ul>
-                    </div><!-- End .header-menu -->
-                </div><!-- End .header-dropown -->
+        <header class="header">
+            <div class="header-top">
+                <div class="container">
+                    <div class="header-left d-none d-xl-block">
+                        <div class="info-box info-box-icon-left p-0">
+                            <i class="icon-shipping text-primary"></i>
+                            <div class="info-box-content0">
+                                <h4 class="mb-0">Livraison gratuite à partir de 150 €</h4>
+                            </div><!-- End .info-box-content -->
+                        </div><!-- End .info-box -->
+                    </div><!-- End .header-left -->
 
-                <div class="separator d-none d-lg-inline"></div>
 
-                <div class="header-dropdown dropdown-expanded d-none d-lg-block">
-                    <a href="#">Links</a>
-                    <div class="header-menu">
-                        <ul>
-                            <li>
-                                <a href="#">
-                                    <i class="icon-pin"></i>
-                                    Our Stores
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="icon-shipping-truck"></i>
-                                    Track Your Order
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="icon-help-circle"></i>
-                                    Help
-                                </a>
-                            </li>
-                            <li>
-                                <a href="wishlist.html">
-                                    <i class="icon-wishlist-2"></i>
-                                    Wishlist
-                                </a>
-                            </li>
-                        </ul>
+                    <div class="separator d-none d-lg-inline"></div>
+
+                    <div class="header-dropdown dropdown-expanded d-none d-lg-block">
+                        <a href="#">Links</a>
+                        <div class="header-menu">
+                            <ul>
+                                <li>
+                                    <a href="#">
+                                        <i class="icon-pin"></i>
+                                        Nos magasins
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('suivi_commande') }}">
+                                        <i class="icon-shipping-truck"></i>
+                                        Suivez votre commande
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="icon-help-circle"></i>
+                                        Aide
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="wishlist.html">
+                                        <i class="icon-wishlist-2"></i>
+                                        Liste d'envies
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
 
-                <span class="separator d-none d-lg-inline"></span>
+                    <span class="separator d-none d-lg-inline"></span>
 
-                <div class="social-icons">
-                    <a href="#" class="social-icon social-instagram icon-instagram" target="_blank"></a>
-                    <a href="#" class="social-icon social-twitter icon-twitter" target="_blank"></a>
-                    <a href="#" class="social-icon social-facebook icon-facebook" target="_blank"></a>
-                </div><!-- End .social-icons -->
-            </div><!-- End .container -->
-        </div>
-    </header>
-</div><!-- End .header-top -->
+                    <div class="social-icons">
+                        <a href="#" class="social-icon social-instagram icon-instagram" target="_blank"></a>
+                        <a href="#" class="social-icon social-twitter icon-twitter" target="_blank"></a>
+                        <a href="#" class="social-icon social-facebook icon-facebook" target="_blank"></a>
+                    </div><!-- End .social-icons -->
+                </div><!-- End .container -->
+            </div>
+        </header>
+    </div><!-- End .header-top -->
 </body>
 
 
@@ -133,11 +129,11 @@
                 <a href="#" class="search-toggle" role="button"><i class="icon-magnifier"></i></a>
                 <form action="#" method="get">
                     <div class="header-search-wrapper">
-                        <input type="search" class="form-control" name="q" id="q" placeholder="Search..."
+                        <input type="search" class="form-control" name="q" id="q" placeholder="Recherche..."
                                required>
                         <div class="select-custom">
                             <select id="cat" name="cat">
-                                <option value="">All Categories</option>
+                                <option value="">Toutes les catégories</option>
                                 <option value="4">Fashion</option>
                                 <option value="12">- Women</option>
                                 <option value="13">- Men</option>
@@ -283,14 +279,13 @@
             </div>
         {% endif %}
     </div>
-
+<br>
         <div class="header-bottom">
             <div class="container">
                 <div class="header-center w-100 ml-0">
                     <nav class="main-nav d-flex font2">
                         <div class="menu-depart">
-                            <a href="demo35.html"><i class="fa fa-bars align-middle mr-3"></i>All
-                                Departments</a>
+                            <a href="demo35.html"><i class="fa fa-bars align-middle mr-3"></i>Toutes les catégories</a>
                             <ul class="menu menu-vertical">
                                 <li>
                                     <a href="#"><i class="icon-category-fashion"></i>Fashion</a>
@@ -300,7 +295,9 @@
                                             <div class="col-md-6">
                                                 <div class="row">
                                                     <div class="col-md-6 mb-1">
-                                                        <a href="#" class="nolink pl-0">Woman</a>
+                                                      {#   <a href="{{ path('app_products_by_tag', {'tagName': tag|replace({' ': '-'})|url_encode }) }}">
+                                                            {{ tag }}
+                                                        </a>#}
                                                         <ul class="submenu">
                                                             <li><a href="demo35-shop.html">Tops &amp; Blouses</a></li>
                                                             <li><a href="demo35-shop.html">Accessories</a></li>
@@ -933,9 +930,9 @@
                             </div><!-- End .row -->
                         </div><!-- End .megamenu -->
                     </li>
-                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="blog.html">Codes pane</a></li>
                     <li>
-                        <a href="#">Pages</a>
+                        <a href="#">A propos de nous</a>
                         <ul>
                             <li><a href="wishlist.html">Wishlist</a></li>
                             <li><a href="cart.html">Shopping Cart</a></li>
@@ -953,7 +950,7 @@
                             <li><a href="forgot-password.html">Forgot Password</a></li>
                         </ul>
                     </li>
-                    <li><a href="#">Elements</a>
+                    <li><a href="#">FAQ</a>
                         <ul class="custom-scrollbar">
                             <li><a href="element-accordions.html">Accordion</a></li>
                             <li><a href="element-alerts.html">Alerts</a></li>
@@ -973,15 +970,15 @@
                             <li><a href="element-testimonial.html">Testimonials</a></li>
                         </ul>
                     </li>
-                    <li><a href="#" target="blank">Buy Porto!</a></li>
+                    <li><a href="#" target="blank">Nous contacter</a></li>
                 </ul>
             </nav>
             <div class="info-boxes font2 align-items-center ml-auto">
                 <div class="info-item">
-                    <a href="#"><i class="icon-percent-shape"></i>Special Offers</a>
+                    <a href="#"><i class="icon-percent-shape"></i>Offres spéciales</a>
                 </div>
                 <div class="info-item">
-                    <a href="#"><i class="icon-business-book"></i>Recipes</a>
+                    <a href="#"><i class="icon-business-book"></i>Tutoriels</a>
                 </div>
             </div>
         </div>
@@ -991,7 +988,11 @@
 
 {% block content %}
 {% endblock %}
-
+<br>
+<br>
+<br>
+<br>
+<br>
 <footer>
 
     <!-- Footer Start-->
@@ -1089,7 +1090,10 @@
 <script src="{{ asset('assets/js/jquery.appear.min.js') }}"></script>
 <script src="{{ asset('assets/js/jquery.plugin.min.js') }}"></script>
 <script src="{{ asset('assets/js/jquery.countdown.min.js') }}"></script>
+<script src="{{ asset('assets/js/owl.carousel.js') }}"></script>
 <script src="https://kit.fontawesome.com/fe52aecc4f.js" crossorigin="anonymous"></script>
+<script src="jquery.min.js"></script>
+<script src="owlcarousel/owl.carousel.min.js"></script>
 
 
 <!-- Include jQuery -->

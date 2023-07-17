@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tous les Traceurs{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Tous les Traceurs</h1>
+    </div>
+    <div class="container">
+        <div class="row">
+            {% for traceur in traceurs %}
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ traceur.nom }}</h5>
+                            <a href="{{ path('app_traceurs', {'nom': traceur.nom}) }}" class="btn btn-primary">Voir les produits</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+        {% endblock %}

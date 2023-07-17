@@ -1,0 +1,78 @@
+/* Exemple de styles pour la page du traceur */
+.page-title {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.section-title {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.product-card {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 30px;
+}
+
+.product-image {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.product-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.product-description {
+    margin-bottom: 10px;
+}
+
+.product-price {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.old-price {
+    color: #999;
+    text-decoration: line-through;
+    margin-right: 10px;
+}
+
+.promo-price {
+    color: #e74c3c;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn {
+    padding: 8px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.btn-primary {
+    background-color: #3498db;
+}
+
+.btn-secondary {
+    background-color: #e67e22;
+}
+
+.btn:hover {
+    background-color: #333;
+}

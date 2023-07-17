@@ -4,11 +4,13 @@ namespace App\Controller\Admin;
 
 use App\Entity\Carrier;
 use App\Entity\Category;
+use App\Entity\Comment;
 use App\Entity\Marque;
 use App\Entity\Order;
 use App\Entity\Product;
 use App\Entity\ProductImage;
 use App\Entity\Tag;
+use App\Entity\Traceurs;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -45,6 +47,8 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
+        yield MenuItem::linkToRoute('Aller sur le site', 'fa fa-undo', 'app_home');
+
         yield MenuItem::section("Utilisateurs");
         yield MenuItem::subMenu("Actions",'fas fa-user')->setSubItems([
             MenuItem::linkToCrud('Ajouter un utilisateur', 'fas fa-plus', User::class)->setAction(Crud::PAGE_NEW),
@@ -90,6 +94,7 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Ajouter un tag', 'fas fa-plus', Tag::class)->setAction(Crud::PAGE_NEW),
             MenuItem::linkToCrud('Voir les tags', 'fas fa-eye', Tag::class)
         ]);
-        // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
+         yield MenuItem::linkToCrud('Commentaires', 'fas fa-comment', Comment::class);
+         yield MenuItem::linkToCrud('Traceurs', 'fas fa-shopping', Traceurs::class);
     }
 }

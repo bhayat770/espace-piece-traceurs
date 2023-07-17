@@ -60,6 +60,40 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->save($user, true);
     }
 
+    public function countUserOrders($userId)
+    {
+        // Ajoutez votre logique personnalisée pour compter les commandes de l'utilisateur
+        // Par exemple, vous pouvez effectuer une requête personnalisée ou utiliser des agrégations selon vos besoins
+
+        $qb = $this->createQueryBuilder('u')
+            ->select('COUNT(o) as orderCount')
+            ->join('u.orders', 'o')
+            ->andWhere('u.id = :userId')
+            ->setParameter('userId', $userId)
+            ->getQuery();
+
+        $result = $qb->getSingleScalarResult();
+        return $result;
+    }
+
+    public function findRandomUser()
+    {
+        $count = $this->createQueryBuilder('u')
+            ->select('COUNT(u)')
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        $offset = rand(0, $count - 1);
+
+        return $this->createQueryBuilder('u')
+            ->setMaxResults(1)
+            ->setFirstResult($offset)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+
+
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */
