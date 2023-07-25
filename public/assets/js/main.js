@@ -2438,7 +2438,7 @@
 				var areaWishlistPopupMsg = document.createElement( 'div' );
 				areaWishlistPopup.className = "wishlist-popup";
 				areaWishlistPopupMsg.className = "wishlist-popup-msg";
-				areaWishlistPopupMsg.innerText = "Product added!";
+				areaWishlistPopupMsg.innerText = "Le produit a bien été ajouté à votre liste de souhaits !";
 				$( '.page-wrapper' )[ 0 ].appendChild( areaWishlistPopup );
 				$( '.wishlist-popup' ).append( areaWishlistPopupMsg );
 

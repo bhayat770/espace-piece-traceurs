@@ -26,7 +26,7 @@ class TraceursController extends AbstractController
         $cartTotal = $cart->getTotal();
         $cartProducts = $cart->getProducts();
 
-        return $this->render('traceurs/index.html.twig', [
+        return $this->render('traceurs/show.html.twig', [
             'traceurs' => $traceurs,
             'cartTotal' => $cartTotal,
             'cartProducts' => $cartProducts,
@@ -45,7 +45,6 @@ class TraceursController extends AbstractController
         // Récupérer tous les produits ayant comme tag le traceur actuel
       //
         $products = $this->entityManager->getRepository(Product::class)->findByTag($slug);
-
 
         $cartTotal = $cart->getTotal();
         $cartProducts = $cart->getProducts();

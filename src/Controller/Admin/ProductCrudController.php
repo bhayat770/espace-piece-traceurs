@@ -108,12 +108,18 @@ class ProductCrudController extends AbstractCrudController
             '2 kg' => '4',
             '3 kg' => '5',
             // Ajoutez les poids que vous voulez ici
+
+        ];
+
+        $etat = [
+            'Neuf' => '1',
+            'Refurbished' => '2'
         ];
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('name', 'Nom'),
-            SlugField::new('slug')->setTargetFieldName('name'),
-            AssociationField::new('category', 'Catégorie')
+            SlugField::new('slug')->setTargetFieldName('name')->hideOnIndex(),
+            AssociationField::new('category', 'Catégorie')->hideOnIndex()
                 ->setQueryBuilder(function (QueryBuilder $queryBuilder) {
                     $queryBuilder->where('entity.active = true');
             }),
@@ -130,7 +136,6 @@ class ProductCrudController extends AbstractCrudController
             MoneyField::new('price', 'Prix')->setCurrency('EUR'),
             TextEditorField::new('description')
             ->setFormType(CKEditorType::class),
-
             DateTimeField::new('updatedAt')->hideOnForm()->hideOnIndex(),
             DateTimeField::new('createdAt')->hideOnForm()->hideOnIndex(),
             BooleanField::new('active', 'Activé'),
@@ -143,6 +148,7 @@ class ProductCrudController extends AbstractCrudController
                     'by_reference' => false,
                 ])
                 ->autocomplete(),
+            ChoiceField::new('etat', 'Etat')->setChoices($etat),
             BooleanField::new('isBest'),
             BooleanField::new('enPromo'),
             BooleanField::new('bestCartouches'),

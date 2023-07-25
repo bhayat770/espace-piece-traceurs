@@ -21,7 +21,7 @@ class Traceurs
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $reference = null;
 
     #[ORM\Column(length: 255)]
@@ -35,6 +35,9 @@ class Traceurs
 
     #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'traceurs')]
     private Collection $tag;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $serie = null;
 
     public function __construct()
     {
@@ -158,6 +161,18 @@ class Traceurs
     public function __toString()
     {
         return $this->nom;
+    }
+
+    public function getSerie(): ?string
+    {
+        return $this->serie;
+    }
+
+    public function setSerie(?string $serie): self
+    {
+        $this->serie = $serie;
+
+        return $this;
     }
 
 }

@@ -25,6 +25,7 @@ class TraceursCrudController extends AbstractCrudController
             TextField::new('marque'),
             TextField::new('nom'),
             TextField::new('reference'),
+            TextField::new('serie'),
            // TextEditorField::new('description'),
             ImageField::new('photo')
                 ->setBasePath('/public/assets/images/hp')

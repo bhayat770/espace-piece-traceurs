@@ -38,6 +38,71 @@ class TraceursRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    public function getDistinctMarques()
+    {
+        $qb = $this->createQueryBuilder('t')
+            ->select('DISTINCT t.marque')
+            ->orderBy('t.marque', 'ASC');
+
+        $query = $qb->getQuery();
+
+        return $query->getResult();
+    }
+
+    public function getDistinctSeriesByMarque($marque)
+    {
+        $qb = $this->createQueryBuilder('t')
+            ->select('DISTINCT t.serie')
+            ->where('t.marque = :marque')
+            ->setParameter('marque', $marque)
+            ->orderBy('t.serie', 'ASC');
+
+        $query = $qb->getQuery();
+
+        return $query->getResult();
+    }
+
+    public function getDistinctModelesByMarqueAndSerie($marque, $serie)
+    {
+        $qb = $this->createQueryBuilder('t')
+            ->select('DISTINCT t.modele')
+            ->where('t.marque = :marque')
+            ->andWhere('t.serie = :serie')
+            ->setParameter('marque', $marque)
+            ->setParameter('serie', $serie)
+            ->orderBy('t.reference', 'ASC');
+
+        $query = $qb->getQuery();
+
+        return $query->getResult();
+    }
+
+    public function getCodesPanesByMarqueSerieAndModele($marque, $serie, $reference)
+    {
+        $qb = $this->createQueryBuilder('t')
+            ->select('t.codePane')
+            ->where('t.marque = :marque')
+            ->andWhere('t.serie = :serie')
+            ->andWhere('t.reference = :reference')
+            ->setParameter('marque', $marque)
+            ->setParameter('serie', $serie)
+            ->setParameter('reference', $reference);
+
+        $query = $qb->getQuery();
+
+        return $query->getResult();
+    }
+
+    public function getTraceurByModele()
+    {
+        return $this->createQueryBuilder('t')
+            ->where('t.nom LIKE :nom')
+            ->setParameter('nom', '%DesignJet%')
+            ->getQuery()
+            ->getResult();
+    }
+
+
 
 //    /**
 //     * @return Traceurs[] Returns an array of Traceurs objects

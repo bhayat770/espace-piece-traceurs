@@ -43,7 +43,8 @@
 
     <div class="row">
         <div class="container">
-            <div class="col-lg-4 col-md-5">
+            <div class="col-lg-5 col-md-6">
+
                 <div class="slider-for">
                     {#  <div><img src="/assets/images/hp/{{ firstImage.name }}" alt="product"></div>#}
                     {% for image in product.productImages %}
@@ -51,6 +52,7 @@
                             <img src="/assets/images/hp/{{ image.name}}" alt="product"></div>
                     {% endfor %}
                 </div>
+                <div class="prod-thumbnail owl-dots">
                 <div class="slider-nav">
                     {#  <div><img src="/assets/images/hp/{{ firstImage.name }}" alt="product"></div>#}
                     {% for image in product.productImages %}
@@ -58,6 +60,7 @@
                             <img src="{{ asset('assets/images/hp/' ~ image.name) }}" alt="product">
                         </div>
                     {% endfor %}
+                </div>
                 </div>
                 <!-- Ajoutez les fichiers CSS et JS de Slick Carousel ici -->
                 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -87,7 +90,9 @@
                     });
                 </script>
             </div>
-            <div class="col-lg-7 col-md-6 product-single-details align-items-start">
+
+
+            <div class="col-lg-7 col-md-6 product-single-details">
                 <h1 class="product-title">{{ product.name }}</h1>
                 {#  <div class="ratings-container">
                     <div class="product-ratings">
@@ -167,7 +172,7 @@
                 <a href="#" class="btn btn-gray view-cart d-none">Voir le panier</a>
             </div>
         </div>
-
+    </div>
         <br>
 
         <div class="container">
@@ -175,7 +180,7 @@
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" id="product-desc-tab" data-toggle="tab" href="#product-desc-content"
-                           role="tab" aria-controls="product-desc-content" aria-selected="true">Description</a>
+                           role="tab" aria-controls="tab" aria-selected="true">Description</a>
                     </li>
 
                     <li class="nav-item">
@@ -189,32 +194,72 @@
                     </li>
                 </ul>
 
-
-                <div class="tab-pane fade show active" id="product-desc-content" role="tabpanel" aria-labelledby="product-desc-tab">
-                    <div class="product-desc-content">
-                        {{ product.description|raw }}
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="product-desc-content" role="tabpanel"
+                         aria-labelledby="product-tab-desc">
+                        <div class="product-desc" role="tabpanel" aria-labelledby="product-tab-desc">
+                            {{ product.description|raw }}
+                        </div>
                     </div>
-                </div>
 
                     <div class="tab-pane fade" id="product-compatibles" role="tabpanel"
                          aria-labelledby="product-compatibles-tab">
                         <div class="product-compatibles">
                             Cette pièce est compatible avec :<br>
                             {% for tag in product.tags %}
-                                <a href="{{ path('app_traceurs', {'slug': tag}) }}">{{ tag }}</a><br>
+                                {% set slug = tag|slugify %}
+                                <a href="{{ path('app_traceurs', {'slug': slug}) }}">{{ tag|replace({'-': ' '}) }}</a><br>
                             {% endfor %}
+
+
                         </div>
                     </div>
+
 
                     <div class="tab-pane fade" id="product-commentaire" role="tabpanel" aria-labelledby="product-commentaire-tab">
                         <div class="product-commentaire">
                             <div class="container">
-                                <h2 class="comment-title">
-                                    <span id="comment-count">{{ product.comments|length }}</span> commentaire(s)
-                                </h2>
+                                <div class="product-reviews-content">
+                                    <h3 class="review-title">{{ product.comments|length }} commentaire(s) pour {{ product.name }}</h3>                                </div>
                                 <hr>
                             </div>
                         </div>
+
+
+                        <div class="comment-list">
+                            {% for comment in product.comments %}
+
+                                <div class="comment mb-5" id="{{ comment.id }}">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="comment-header">
+                                                <div class="comment-arrow"></div>
+                                                <div class="ratings-container float-sm-right">
+                                                    <div class="product-ratings">
+                                                        <span class="ratings" style="width:60%"></span>
+                                                        <!-- End .ratings -->
+                                                        <span class="tooltiptext tooltip-top"></span>
+                                                    </div><!-- End .product-ratings -->
+                                                </div>
+                                                <span class="comment-by">
+                                    {% if comment.user %}
+                                        <strong>{{ comment.user.fullName }}</strong>
+                                    {% else %}
+                                        <strong>Anonyme</strong>
+                                    {% endif %}
+                                    – {{ comment.createdAt|date('d M Y') }}
+                                </span>
+                                            </div>
+                                            <div class="comment-content">
+                                                <p>{{ comment.content }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="divider"></div>
+                            {% endfor %}
+                        </div>
+
 
                             <style>
                                 .comment-area {
@@ -224,15 +269,23 @@
                                 }
 
                             </style>
-                            <div class="container">
-                                <div class="comment-area">
-                                    {{ form_start(commentForm, { 'attr': {'class': 'comment-form', 'id': 'comment-form'} }) }}
-                                    {{ form_widget(commentForm, { 'attr':{'class': 'comment-form'} }) }}
-                                    {{ form_end(commentForm) }}
-                                </div>
-                            </div>
+                        <div class="container">
+                            <div class="add-product-review col-md-6 col-xl-12">
+                                <h3 class="review-title">Ajouter un commentaire</h3>
 
-                            <script>
+                                {{ form_start(commentForm, { 'attr': {'class': 'comment-form', 'id': 'comment-form'} }) }}
+
+                                <div class="form-group">
+                                    <label>Votre commentaire <span class="required">*</span></label>
+                                    {{ form_widget(commentForm.content, { 'attr': {'class': 'form-control form-control-sm'} }) }}
+                                </div><!-- End .form-group -->
+
+                                {{ form_end(commentForm) }}
+                            </div>
+                        </div>
+
+
+                        <script>
                                 document.addEventListener('DOMContentLoaded', () => {
                                     const commentForm = document.getElementById('comment-form');
                                     commentForm.addEventListener('submit', async (e) => {
@@ -278,105 +331,216 @@
 
                             </script>
 
-                            <div class="container">
-                                <div class="comment-list">
-                                    {% for comment in product.comments %}
-                                        {{ include('comment/index.html.twig') }}
-                                    {% endfor %}
-                                </div>
-                            </div>
                     </div>
             </div>
         </div>
+        </div>
 
-        {% if similarProducts is not empty %}
-            <div class="container">
-                <h2 class="text-center">Produits similaires</h2>
-            </div>
-            <div class="container">
-                <div class="card-deck">
-                    {% for product in similarProducts %}
-                        <div class="card">
-                            <img src="/assets/images/hp/{{ product.illustration }}" alt="product" class="card-img-top">
-                            <div class="card-body">
-                                <h6 class="product-title">
-                                    <a href="{{ path('app_product', {'slug': product.slug}) }}">{{ product.name }}</a>
-                                </h6>
-                                <div class="category">{{ product.marque }}</div>
+    <div class="container">
+        <div class="products-section pt-0">
+            <h2 class="section-title">Produits similaires</h2>
 
-                                <div class="price-box">
-                                    {% if product.prixPromo is not null %}
-                                        <div class="label-group">
-                                            <div class="product-label label-hot">PROMO !</div>
-                                            <br>
+            {% if similarProducts is not empty %}
+
+
+                <div class="products-slider owl-carousel owl-theme dots-top dots-small owl-loaded owl-drag">
+                    <div class="owl-stage-outer">
+                        <div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 1500px;">
+                            {% for product in similarProducts %}
+                                <div class="owl-item active" style="width: 280px; margin-right: 20px;">
+                                    <div class="product-default">
+                                        <figure>
+                                            <a href="{{ path('app_product', {'slug': product.slug}) }}">
+                                                <img src="/assets/images/hp/{{ product.illustration }}" class="product-image" alt="product">
+                                            </a>
+                                            <div class="label-group">
+                                            </div>
+                                        </figure>
+                                        <div class="product-details">
+                                            <div class="category-list">
+                                                <a href="{{ path('app_products_by_category', {'categoryName' : product.marque}) }}" class="product-category">{{ product.marque }}</a>
+                                            </div>
+                                            <h3 class="product-title">
+                                                <a href="{{ path('app_product', {'slug': product.slug}) }}">{{ product.name }}</a>
+                                            </h3>
+
+                                            <!-- End .product-container -->
+                                            <div class="price-box">
+                                                {% if product.prixPromo is not null %}
+                                                    <div class="label-group">
+                                                        <div class="product-label label-hot">PROMO !</div>
+                                                    </div>
+                                                    <del class="old-price" style="color: gray; text-decoration: line-through;">
+                                                        {{ (product.price / 100) | number_format(2, ',', '.') }} €
+                                                    </del>
+                                                    <span class="product-price promo">
+                                        {{ (product.prixPromo / 100) | number_format(2, ',', '.') }} €
+                                    </span>
+                                                {% else %}
+                                                    <span class="product-price">
+                                        {{ (product.price / 100) | number_format(2, ',', '.') }} €
+                                    </span>
+                                                {% endif %}
+                                            </div>
+                                            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+                                            <!-- End .price-box -->
+                                            <div class="product-action">
+                                                <!-- Assuming you have access to the product ID from your backend template -->
+                                                <a href="#" title="Wishlist" class="btn-icon-wish" onclick="addToWishlist({{ product.id }})"><i class="icon-heart"></i></a>
+                                                <script>
+                                                    function addToWishlist(productId) {
+                                                        // Effectuez la requête AJAX pour ajouter le produit à la liste de souhaits
+                                                        $.ajax({
+                                                            url: "{{ path('app_wishlist_add', {'productId': product.id}) }}",
+                                                            method: "POST",
+                                                            success: function(response) {
+                                                                // Redirigez l'utilisateur vers la page de la liste de souhaits
+                                                                window.location.href = "{{ path('app_wishlist') }}";
+                                                            },
+                                                            error: function(error) {
+                                                                // Gérez les erreurs ici, si nécessaire
+                                                                console.error("Une erreur s'est produite lors de l'ajout du produit à la liste de souhaits.");
+                                                            }
+                                                        });
+                                                    }
+                                                </script>
+
+                                                <a href="{{ path('app_add_to_cart', {'id': product.id}) }}" class="btn-icon btn-add-cart"><i class="fa fa-arrow-right"></i><span>AJOUTER AU PANIER</span></a>
+                                                <a href="ajax/product-quick-view.html" class="btn-quickview" title="Aperçu rapide"><i class="fas fa-external-link-alt"></i></a>
+                                            </div>
                                         </div>
-                                        <del class="product-price old" style="color: gray; text-decoration: line-through;">{{ (product.price / 100) | number_format(2, ',', '.') }} €</del>
-                                        <span class="product-price promo">{{ (product.prixPromo / 100) | number_format(2, ',', '.') }} €</span>
-                                    {% else %}
-                                        <span class="product-price">{{ (product.price / 100) | number_format(2, ',', '.') }} €</span>
-                                    {% endif %}
+                                        <!-- End .product-details -->
+                                    </div>
                                 </div>
-                            </div>
+                            {% endfor %}
                         </div>
-                    {% endfor %}
+                    </div>
                 </div>
-            </div>
-        {% endif %}
+            {% endif %}
 
-<style>
 
-.container {
-    margin-top: 20px;
-}
+            <style>
+                .product-default {
+                    text-align: center;
+                    padding: 15px;
+                    margin-bottom: 30px;
+                    background-color: #f7f7f7;
+                    border: 1px solid #e1e1e1;
+                }
 
-.card {
-    border: none;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
+                .product-default .product-image {
+                    width: 100%;
+                    height: auto;
+                    max-height: 250px; /* Adjust this value as needed */
+                }
 
-.card:hover {
-    transform: translateY(-5px);
-}
+                .product-default .product-title {
+                    font-size: 16px;
+                    margin-top: 10px;
+                    margin-bottom: 5px;
+                }
 
-.card-img-top {
-    height: 200px;
-    object-fit: contain;
-    max-width: 100%;
-}
+                .product-default .price-box {
+                    margin-bottom: 10px;
+                }
 
-.card-body {
-    text-align: center;
-}
+                .product-default .product-action {
+                    margin-top: 10px;
+                }
+                @media screen and (max-width: 767px) {
+                    .product-default {
+                        padding: 10px;
+                    }
 
-.card-title {
-    margin-bottom: 10px;
-}
+                    .product-default .product-image {
+                        max-height: 200px;
+                    }
 
-.btn-primary {
-    margin-top: auto;
-}
+                    .product-default .product-title {
+                        font-size: 14px;
+                    }
 
-.card-deck {
-    margin-top: 20px;
-}
+                    .product-default .price-box {
+                        margin-bottom: 5px;
+                    }
 
-@media (min-width: 576px) {
-    .card-deck {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
+                    .product-default .product-action {
+                        margin-top: 5px;
+                    }
+                }
 
-    .card {
-        flex-basis: calc(50% - 10px);
-        margin-bottom: 20px;
-    }
-}
-</style>
+                /* Responsive adjustments for smaller screens (less than 576px) */
+                @media screen and (max-width: 576px) {
+                    .product-default {
+                        padding: 10px;
+                    }
+
+                    .product-default .product-image {
+                        max-height: 200px;
+                    }
+
+                    .product-default .product-title {
+                        font-size: 14px;
+                    }
+
+                    .product-default .price-box {
+                        margin-bottom: 5px;
+                    }
+
+                    .product-default .product-action {
+                        margin-top: 5px;
+                    }
+                }
+
+                /* Responsive adjustments for even smaller screens (less than 414px, typical smartphone) */
+                @media screen and (max-width: 414px) {
+                    .product-default {
+                        padding: 15px;
+                    }
+
+                    .product-default .product-image {
+                        max-height: 150px;
+                    }
+
+                    .product-default .product-title {
+                        font-size: 12px;
+                    }
+
+                    .product-default .price-box {
+                        margin-bottom: 3px;
+                    }
+
+                    .product-default .product-action {
+                        margin-top: 3px;
+                    }
+                }
+                @media screen and (max-width: 375px) {
+                    .product-default {
+                        padding: 10px;
+                    }
+
+                    .product-default .product-image {
+                        max-height: 200px;
+                        height: auto;
+
+                    }
+
+                    .product-default .product-title {
+                        font-size: 14px;
+                    }
+
+                    .product-default .price-box {
+                        margin-bottom: 5px;
+                    }
+
+                    .product-default .product-action {
+                        margin-top: 5px;
+                    }
+                }
+
+            </style>
+
 
 
         {#  <div class="container">
@@ -395,7 +559,7 @@
             </div>
         </div>
        #}
-
+        </div>
     </div>
 </main>
 {% endblock %}

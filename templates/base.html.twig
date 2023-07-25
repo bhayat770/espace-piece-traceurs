@@ -29,9 +29,10 @@
     </script>
 
     <!-- Plugins CSS File -->
+    <link rel="stylesheet" href="{{ asset('assets/css/style.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="owlcarousel/owl.carousel.min.css">
-    <link rel="stylesheet" href="owlcarousel/owl.theme.default.min.css">
+   {#  <link rel="stylesheet" href="owlcarousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="owlcarousel/owl.theme.default.min.css">#}
 
     <!-- Main CSS File -->
     <link rel="stylesheet" href="{{ asset('assets/css/demo35.min.css') }}">
@@ -75,7 +76,7 @@
                         <div class="header-menu">
                             <ul>
                                 <li>
-                                    <a href="#">
+                                    <a href="{{ path('app_stores') }}">
                                         <i class="icon-pin"></i>
                                         Nos magasins
                                     </a>
@@ -93,7 +94,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="wishlist.html">
+                                    <a href="{{ path('app_wishlist') }}">
                                         <i class="icon-wishlist-2"></i>
                                         Liste d'envies
                                     </a>
@@ -134,7 +135,7 @@
                         <div class="select-custom">
                             <select id="cat" name="cat">
                                 <option value="">Toutes les catégories</option>
-                                <option value="4">Fashion</option>
+                                <option value="4">Cartouches d'encre</option>
                                 <option value="12">- Women</option>
                                 <option value="13">- Men</option>
                                 <option value="66">- Jewellery</option>
@@ -288,7 +289,7 @@
                             <a href="demo35.html"><i class="fa fa-bars align-middle mr-3"></i>Toutes les catégories</a>
                             <ul class="menu menu-vertical">
                                 <li>
-                                    <a href="#"><i class="icon-category-fashion"></i>Fashion</a>
+                                    <a href="#"><i class="icon-category-fashion"></i>Cartouches d'encres</a>
                                     <span class="menu-btn"></span>
                                     <div class="megamenu megamenu-fixed-width megamenu-one">
                                         <div class="row">
@@ -298,11 +299,12 @@
                                                       {#   <a href="{{ path('app_products_by_tag', {'tagName': tag|replace({' ': '-'})|url_encode }) }}">
                                                             {{ tag }}
                                                         </a>#}
+                                                        <a href="#" class="nolink pl-0">Marques</a>
                                                         <ul class="submenu">
-                                                            <li><a href="demo35-shop.html">Tops &amp; Blouses</a></li>
-                                                            <li><a href="demo35-shop.html">Accessories</a></li>
-                                                            <li><a href="demo35-shop.html">Dresses &amp; Skirts</a></li>
-                                                            <li><a href="demo35-shop.html">Shoes &amp; Boots</a></li>
+                                                            <li><a href="demo35-shop.html">HP</a></li>
+                                                            <li><a href="demo35-shop.html">Canon</a></li>
+                                                            <li><a href="demo35-shop.html">Epson</a></li>
+                                                            <li><a href="demo35-shop.html">Autres</a></li>
                                                         </ul>
                                                     </div>
 
@@ -367,15 +369,15 @@
                                                             }
                                                         }">
                                                 <div class="partner">
-                                                    <img src="{{ asset('assets/images/logo.png') }}"
+                                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/HP_logo_2012.svg/1200px-HP_logo_2012.svg.png"
                                                          alt="logo image" width="140" height="60">
                                                 </div>
                                                 <div class="partner">
-                                                    <img src="{{ asset('assets/images/logo.png') }}"
+                                                    <img src="https://logos-marques.com/wp-content/uploads/2021/02/Canon-logo.png"
                                                          alt="logo image" width="140" height="60">
                                                 </div>
                                                 <div class="partner">
-                                                    <img src="{{ asset('assets/images/logo.png') }}"
+                                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Epson_logo.svg/2560px-Epson_logo.svg.png"
                                                          alt="logo image" width="140" height="60">
                                                 </div>
                                                 <div class="partner">
@@ -393,14 +395,21 @@
                             </div><!-- End .megamenu -->
                         </li>
                         <li>
-                            <a href="#"><i class="icon-category-electronics"></i>Electronics</a>
+                            <a href="#"><i class="icon-category-electronics"></i>Pièces HP</a>
                             <span class="menu-btn"></span>
                             <div class="megamenu megamenu-fixed-width megamenu-two">
                                 <div class="row">
                                     <div class="col-lg-3 mb-1">
-                                        <a href="#" class="nolink pl-0">ACCESSORIES</a>
+                                        <a href="#" class="nolink pl-0">DesignJet</a>
                                         <ul class="submenu">
-                                            <li><a href="demo35-shop.html">Cables &amp; Adapters</a></li>
+                                            <li><a href="demo35-shop.html">
+                                                 {#    {% for traceur in traceurs %}
+                                                        <li>
+                                                            <a href="{{ path('app_traceurs', {'slug': traceur.slug}) }}">{{ traceur.nom }}</a>
+                                                        </li>
+                                                    {% endfor %}
+                                                 #}
+                                                </a></li>
                                             <li><a href="demo35-shop.html">Electronic Cigarattes</a></li>
                                             <li><a href="demo35-shop.html">Batteries</a></li>
                                             <li><a href="demo35-shop.html">Chargers</a></li>
@@ -753,47 +762,6 @@
                             </div><!-- End .megamenu -->
                         </li>
                         <li>
-                            <a href="demo35-shop.html"><i class="icon-category-music"></i>Music</a>
-                            <span class="menu-btn"></span>
-                            <div class="megamenu megamenu-fixed-width megamenu-five text-transform-none p-0"
-                                 style="background-image: url('public/assets/images/offre_mai.png');">
-                                <div class="row m-0">
-                                    <div class="col-lg-4 pt-0">
-                                        <a href="#" class="nolink text-white pl-0">INSTRUMENTS</a>
-                                        <ul class="submenu bg-transparent">
-                                            <li><a href="demo35-shop.html">Guitar</a></li>
-                                            <li><a href="demo35-shop.html">Drums Sets</a></li>
-                                            <li><a href="demo35-shop.html">Percussions</a></li>
-                                            <li><a href="demo35-shop.html">Pedals & Effects</a></li>
-                                            <li><a href="demo35-shop.html">Sound Cards</a></li>
-                                            <li><a href="demo35-shop.html">Studio Equipments</a></li>
-                                            <li><a href="demo35-shop.html">Piano & Keyboards</a></li>
-                                        </ul>
-
-                                        <a href="#" class="nolink text-white pl-0">EXTRA</a>
-                                        <ul class="submenu bg-transparent pb-0">
-                                            <li><a href="demo35-shop.html">Strings</a></li>
-                                            <li><a href="demo35-shop.html">Recorders</a></li>
-                                            <li><a href="demo35-shop.html">Amplifiers</a></li>
-                                            <li><a href="demo35-shop.html">Accessories</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-lg-8 pt-0 d-lg-block d-none">
-                                        <div class="banner menu-banner-5 d-flex align-items-center">
-                                            <div class="banner-layer text-right pt-0">
-                                                <h6 class="text-transform-none font1 mb-1">
-                                                    CHECK NEW
-                                                    ARRIVALS</h6>
-                                                <h3 class="font1 text-white">PROFESSIONAL</h3>
-                                                <h2 class="font1 text-transform-none text-white">HEADPHONES</h2>
-                                                <a href="demo35-shop.html" class="btn btn-dark font1">VIEW ALL NOW</a>
-                                            </div><!-- End .banner-layer -->
-                                        </div><!-- End .home-slide -->
-                                    </div>
-                                </div><!-- End .row -->
-                            </div><!-- End .megamenu -->
-                        </li>
-                        <li>
                             <a href="demo35-shop.html"><i class="icon-cat-sport"></i>Sports</a>
                             <span class="menu-btn"></span>
                             <div class="megamenu megamenu-fixed-width megamenu-six text-transform-none">
@@ -930,9 +898,9 @@
                             </div><!-- End .row -->
                         </div><!-- End .megamenu -->
                     </li>
-                    <li><a href="blog.html">Codes pane</a></li>
+                    <li><a href="{{ path('app_codes_pane') }}">Codes pane</a></li>
                     <li>
-                        <a href="#">A propos de nous</a>
+                        <a href="{{ path('app_about') }}">A propos de nous</a>
                         <ul>
                             <li><a href="wishlist.html">Wishlist</a></li>
                             <li><a href="cart.html">Shopping Cart</a></li>
@@ -950,7 +918,7 @@
                             <li><a href="forgot-password.html">Forgot Password</a></li>
                         </ul>
                     </li>
-                    <li><a href="#">FAQ</a>
+                    <li><a href="{{ path('app_faq') }}">FAQ</a>
                         <ul class="custom-scrollbar">
                             <li><a href="element-accordions.html">Accordion</a></li>
                             <li><a href="element-alerts.html">Alerts</a></li>
@@ -1092,9 +1060,7 @@
 <script src="{{ asset('assets/js/jquery.countdown.min.js') }}"></script>
 <script src="{{ asset('assets/js/owl.carousel.js') }}"></script>
 <script src="https://kit.fontawesome.com/fe52aecc4f.js" crossorigin="anonymous"></script>
-<script src="jquery.min.js"></script>
-<script src="owlcarousel/owl.carousel.min.js"></script>
-
+<script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="a32b9fe6-0aec-4467-a377-789dc6a6bbef";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
 
 <!-- Include jQuery -->
 

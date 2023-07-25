@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ma Wishlist{% endblock %}
+
+{% block content %}
+    <br>
+    <div class="container">
+        <main class="main">
+            <div class="container">
+            </div>
+            <div class="wishlist-table-container">
+                <h2 class="p-2">Ma wishlist</h2>
+                {% if wishlist.product|length > 0 %}
+                    <table class="table table-wishlist mb-0">
+                        <thead>
+                        <tr>
+                            <th class="thumbnail-col"></th>
+                            <th class="product-col">Produits</th>
+                            <th class="price-col">Prix</th>
+                            <th class="status-col">Stock Status</th>
+                            <th class="action-col">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for product in wishlist.product %}
+                            <tr class="product-row">
+                                <td>
+                                    <figure class="product-image-container">
+                                        <a href="#" class="product-image">
+                                            <img src="assets/images/hp/{{ product.illustration }}" alt="product">
+                                        </a>
+
+                                        <a href="{{ path('app_wishlist_remove', {'productId': product.id}) }}" class="btn-remove icon-cancel"></a>
+                                    </figure>
+                                </td>
+                                <td>
+                                    <h5 class="product-title">
+                                        <a href="{{ path('app_product', {'slug': product.slug}) }}">{{ product.name }}</a>
+                                    </h5>
+                                </td>
+                                <td class="price-box">
+                                    {% if product.prixPromo is not null %}
+                                        <div class="label-group">
+                                            <br>
+                                        </div>
+                                        <span class="product-price promo">{{ (product.prixPromo / 100) | number_format(2, ',', '.') }} €</span>
+                                    {% else %}
+                                        <span class="product-price">{{ (product.price / 100) | number_format(2, ',', '.') }} €</span>
+                                    {% endif %}
+                                </td>
+
+                                <td>
+                                    <span class="stock-status">En stock</span>
+                                </td>
+                                <td class="action">
+                                    <a href="{{ path('app_product', {'slug': product.slug}) }}" class="btn btn-quickview mt-1 mt-md-0" title="Quick View">Voir</a>
+                                    <a href="{{ path('app_add_to_cart', {'id': product.id}) }}" class="btn btn-dark btn-add-cart">
+                                        Ajouter au panier
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>Votre wishlist est vide. <a href="{{ path('app_products') }}">Cliquez ici</a> pour découvrir nos produits.</p>
+                {% endif %}
+            </div>
+        </main>
+    </div>
+
+{% endblock %}

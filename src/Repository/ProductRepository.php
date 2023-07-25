@@ -7,9 +7,11 @@ use App\Entity\Category;
 use App\Entity\Product;
 use App\Entity\Traceurs;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Tag;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
  * @extends ServiceEntityRepository<Product>
@@ -21,9 +23,11 @@ use App\Entity\Tag;
  */
 class ProductRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, SluggerInterface $slugger)
     {
         parent::__construct($registry, Product::class);
+        $this->slugger = $slugger;
+
     }
 
     public function save(Product $entity, bool $flush = false): void
@@ -121,18 +125,65 @@ class ProductRepository extends ServiceEntityRepository
      * @param Traceurs $traceur
      * @return Product[]
      */
-    public function findByTag($tag)
+    public function findByTag(string $tag): array
     {
+        $slug = $this->slugger->slug($tag)->lower();
         return $this->createQueryBuilder('p')
             ->join('p.tags', 't')
-            ->where('t.nom = :tag')
+            ->where('t.nom = :tag') // Modifier 't.slug' en 't.nom'
             ->setParameter('tag', $tag)
             ->getQuery()
             ->getResult();
+
     }
 
 
+    public function findForPagination(?Category $category = null): Query
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->orderBy('a.createdAt', 'DESC');
 
+        if ($category){
+            $qb->leftJoin('a.categories', 'c')
+                ->where($qb->expr()->eq('c.id', ':categoryId'))
+                ->setParameter('categoryId', $category->getId())
+            ;
+        }
+        return $qb->getQuery();
+
+    }
+
+    public function getProductsByTag(Tag $tag)
+    {
+        // Récupérer les produits associés à la catégorie et au tag
+        $products = [];
+        foreach ($this->products as $product) {
+            if ($product->hasTag($tag)) {
+                $products[] = $product;
+            }
+        }
+    }
+    public function findByProductsByTagAndCategory(Tag $tag, Category $category)
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb->innerJoin('p.tags', 't')
+            ->innerJoin('p.category', 'c')
+            ->where($qb->expr()->eq('t.id', ':tagId'))
+            ->andWhere($qb->expr()->eq('c.id', ':categoryId'))
+            ->setParameter('tagId', $tag->getId())
+            ->setParameter('categoryId', $category->getId());
+
+        return $qb->getQuery()->getResult();
+    }
+    public function findByProductsByCategory(Category $category): Query
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb->innerJoin('p.category', 'c')
+            ->where($qb->expr()->eq('c.id', ':categoryId'))
+            ->setParameter('categoryId', $category->getId());
+
+        return $qb->getQuery();
+    }
 
 
 //    /**

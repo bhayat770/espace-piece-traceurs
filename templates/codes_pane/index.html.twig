@@ -1,0 +1,133 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="container">
+        <h1>Codes Pane</h1>
+    </div>
+    <div class="container">
+        <form id="codesPaneForm">
+            <div class="form-group">
+                <label for="marqueSelect">Marque du traceur</label>
+                <select id="marqueSelect" class="form-control">
+                    <option value="">Sélectionnez une marque</option>
+                    {% for marque in marquesTraceur %}
+                        <option value="{{ marque }}">{{ marque }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="serieSelect">Série de traceur</label>
+                <select id="serieSelect" class="form-control" disabled>
+                    <option value="">Sélectionnez une série</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="modeleSelect">Modèle de traceur</label>
+                <select id="modeleSelect" class="form-control" disabled>
+                    <option value="">Sélectionnez un modèle</option>
+                </select>
+            </div>
+        </form>
+
+        <div id="codesPaneContainer" style="display: none;">
+            <!-- Codes panes will be dynamically populated here -->
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const marqueSelect = document.getElementById('marqueSelect');
+            const serieSelect = document.getElementById('serieSelect');
+            const modeleSelect = document.getElementById('modeleSelect');
+            const codesPaneContainer = document.getElementById('codesPaneContainer');
+
+            // Event listener for marque selection
+            marqueSelect.addEventListener('change', async () => {
+                const marque = marqueSelect.value;
+
+                // Reset serie and modele selects
+                serieSelect.innerHTML = '<option value="">Sélectionnez une série</option>';
+                modeleSelect.innerHTML = '<option value="">Sélectionnez un modèle</option>';
+                serieSelect.disabled = true;
+                modeleSelect.disabled = true;
+
+                if (marque !== '') {
+                    // Fetch series based on selected marque
+                    const seriesResponse = await fetch(`/codes-pane/series/${marque}`);
+                    const seriesData = await seriesResponse.json();
+
+                    // Populate serie select
+                    for (const serie of seriesData) {
+                        const option = document.createElement('option');
+                        option.value = serie;
+                        option.textContent = serie;
+                        serieSelect.appendChild(option);
+                    }
+
+                    // Enable serie select
+                    serieSelect.disabled = false;
+                }
+            });
+
+            // Event listener for serie selection
+            serieSelect.addEventListener('change', async () => {
+                const marque = marqueSelect.value;
+                const serie = serieSelect.value;
+
+                // Reset modele select
+                modeleSelect.innerHTML = '<option value="">Sélectionnez un modèle</option>';
+                modeleSelect.disabled = true;
+
+                if (marque !== '' && serie !== '') {
+                    // Fetch modeles based on selected marque and serie
+                    const modelesResponse = await fetch(`/codes-pane/modeles/${marque}/${serie}`);
+                    const modelesData = await modelesResponse.json();
+
+                    // Populate modele select
+                    for (const modele of modelesData) {
+                        const option = document.createElement('option');
+                        option.value = modele;
+                        option.textContent = modele;
+                        modeleSelect.appendChild(option);
+                    }
+
+                    // Enable modele select
+                    modeleSelect.disabled = false;
+                }
+            });
+
+            // Event listener for modele selection
+            modeleSelect.addEventListener('change', async () => {
+                const marque = marqueSelect.value;
+                const serie = serieSelect.value;
+                const modele = modeleSelect.value;
+
+                if (marque !== '' && serie !== '' && modele !== '') {
+                    // Fetch codes panes based on selected marque, serie and modele
+                    const codesPanesResponse = await fetch(`/codes-pane/codes/${marque}/${serie}/${modele}`);
+                    const codesPanesData = await codesPanesResponse.json();
+
+                    // Clear existing codes panes
+                    codesPaneContainer.innerHTML = '';
+
+                    // Populate codes panes
+                    for (const codePane of codesPanesData) {
+                        const codePaneDiv = document.createElement('div');
+                        codePaneDiv.textContent = codePane;
+                        codesPaneContainer.appendChild(codePaneDiv);
+                    }
+
+                    // Show codes pane container
+                    codesPaneContainer.style.display = 'block';
+                } else {
+                    // Hide codes pane container if no selections
+                    codesPaneContainer.style.display = 'none';
+                }
+            });
+        });
+    </script>
+{% endblock %}

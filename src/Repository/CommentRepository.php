@@ -2,8 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\Category;
 use App\Entity\Comment;
+use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -39,28 +42,18 @@ class CommentRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Comment[] Returns an array of Comment objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findForPagination(?Product $product = null): Query
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->orderBy('c.createdAt', 'DESC');
 
-//    public function findOneBySomeField($value): ?Comment
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        if ($product) {
+            $qb->leftJoin(' c.product', 'p') // Remplacez 'category' par le nom de la relation entre Product et Category
+            ->where($qb->expr()->eq('p.id', ':productId'))
+                ->setParameter('productId', $product->getId());
+        }
+
+        return $qb->getQuery();
+    }
+
 }

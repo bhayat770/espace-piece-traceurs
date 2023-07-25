@@ -44,6 +44,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class)]
     private Collection $comments;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Wishlist::class,  cascade: ['persist'])]
+    private Collection $wishlists;
+
     public function __construct()
     {
         $this->adresses = new ArrayCollection();
@@ -240,4 +243,40 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Wishlist>
+     */
+    public function getWishlists(): Collection
+    {
+        return $this->wishlists;
+    }
+
+    public function addWishlist(Wishlist $wishlist): self
+    {
+        if (!$this->wishlists->contains($wishlist)) {
+            $this->wishlists->add($wishlist);
+            $wishlist->setUser($this);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * @param Wishlist $wishlist
+     * @return $this
+     */
+    public function removeWishlist(Wishlist $wishlistId): self
+    {
+        $this->wishlists->removeElement($wishlistId);
+
+        // Définir le côté propriétaire à null (à moins qu'il n'ait déjà été modifié)
+        if ($wishlistId->getUser() === $this) {
+            $wishlistId->setUser(null);
+        }
+
+        return $this;
+    }
 }
+

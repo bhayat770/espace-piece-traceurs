@@ -6,16 +6,19 @@ use App\Repository\TagRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[ORM\Entity(repositoryClass: TagRepository::class)]
 class Tag
 {
+    private $slugify;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $nom = null;
 
     #[ORM\ManyToMany(targetEntity: Product::class, mappedBy: 'tags')]
@@ -29,6 +32,13 @@ class Tag
         $this->product = new ArrayCollection();
         $this->traceurs = new ArrayCollection();
     }
+
+
+    public function getSlug(): ?string
+    {
+        return $this->slugify->slug($this->nom);
+    }
+
 
     public function getId(): ?int
     {
@@ -102,4 +112,5 @@ class Tag
 
         return $this;
     }
+
 }

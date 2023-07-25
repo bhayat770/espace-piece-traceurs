@@ -16,7 +16,7 @@ class ProductImage
     #[ORM\Column]
     private ?int $id = null;
 
-    #[Vich\UploadableField(mapping: 'product', fileNameProperty: 'name', size: 'size',)]
+    #[Vich\UploadableField(mapping: 'product', fileNameProperty: 'name', size: 'size')]
     private ?File $file = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -59,7 +59,7 @@ class ProductImage
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
 
@@ -71,7 +71,7 @@ class ProductImage
         return $this->size;
     }
 
-    public function setSize(int $size): self
+    public function setSize(?int $size): self
     {
         $this->size = $size;
 

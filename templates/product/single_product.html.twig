@@ -3,9 +3,19 @@
         <a href="{{ path('app_product', {'slug': product.slug}) }}">
             <img class="product-image" src="assets/images/hp/{{ product.illustration }}" alt="product">
         </a>
-
+        <div class="btn-icon-group">
+            <a href="{{ path('app_add_to_cart', {'id': product.id}) }}"
+               class="btn-icon  product-type-simple"><i
+                        class="icon-shopping-cart"></i></a>
+        </div>
     </figure>
-
+    <div class="category-wrap">
+        <div class="category-list">
+            <a href="#" class="product-category">{{ product.marque }}</a>
+        </div>
+        <a href="{{ path('app_wishlist_add', {'productId': product.id}) }}" ><i
+                    class="icon-heart"></i></a>
+    </div>
     <div class="product-details">
         <h3 class="product-title">
             <a href="{{ path('app_product', {'slug': product.slug}) }}">{{ product.name }}</a>
@@ -21,5 +31,8 @@
                 <span class="product-price">{{ (product.price / 100) | number_format(2, ',', '.') }} €</span>
             {% endif %}
         </div>
+
+            <a href="{{ path('app_add_to_cart', {'id': product.id}) }}" class="btn-icon btn-add-cart"><i class="fa fa-arrow-right"></i><span>AJOUTER AU PANIER</span></a>
+
     </div>
 </div>

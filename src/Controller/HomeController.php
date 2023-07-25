@@ -6,6 +6,8 @@ use App\Classe\Cart;
 use App\Classe\Mail;
 use App\Entity\Category;
 use App\Entity\Product;
+use App\Entity\Traceurs;
+use App\Repository\TraceursRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,14 +19,24 @@ class HomeController extends AbstractController
 {
 
     private $entityManager;
+    private $traceursRepository;
 
-    public function __construct(EntityManagerInterface $entityManager)
+
+    public function __construct(EntityManagerInterface $entityManager, TraceursRepository $traceursRepository)
     {
         $this->entityManager = $entityManager;
+        $this->traceursRepository = $traceursRepository;
+
     }
     #[Route('/', name: 'app_home')]
-    public function index(Request $request, SessionInterface $session, Cart $cart): Response
+    public function index(Request $request, SessionInterface $session, Cart $cart, ?string $slug, TraceursRepository $traceursRepository): Response
     {
+
+    //    $modele = 'DesignJet'; // Remplacez cette valeur par celle que vous souhaitez rechercher
+
+      //  $traceurs = $this->traceursRepository->getTraceurByModele($modele);
+
+
         $products = $this->entityManager->getRepository(Product::class)->findByIsBest(1);
         $promos = $this->entityManager->getRepository(Product::class)->findByEnPromo(1);
         $cartouches = $this->entityManager->getRepository(Product::class)->findByBestCartouches(1);
@@ -44,8 +56,6 @@ class HomeController extends AbstractController
         $cartTotal = $cart->getTotal();
         $cartProducts = $cart->getProducts();
 
-
-
         return $this->render('home/index.html.twig',[
             'cartTotal' => $cartTotal,
             'cartProducts' => $cartProducts,
@@ -54,7 +64,10 @@ class HomeController extends AbstractController
             'promos' => $promos,
             'cartouches'=>$cartouches,
             'category' => $category,
-            'bestSellersHP'=>$bestSellersHP,
+            'bestSellersHP'=>$bestSellersHP
         ]);
     }
+
+
+
 }

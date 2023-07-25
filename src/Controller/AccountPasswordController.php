@@ -53,6 +53,7 @@ class AccountPasswordController extends AbstractController
             'cartTotal' => $cartTotal,
             'cartProducts' => $cartProducts,
             'cart'=>$cart->getFull(),
+            'user'=>$user
         ]);
     }
 

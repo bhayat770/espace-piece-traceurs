@@ -1,0 +1,15 @@
+when@prod:
+    sentry:
+        dsn: "%env(https://c2438eefadce4e0b94d3f4bea37408c4@o4504989192290304.ingest.sentry.io/4504989193797632)%"
+
+#        If you are using Monolog, you also need this additional configuration to log the errors correctly:
+#        https://docs.sentry.io/platforms/php/guides/symfony/#monolog-integration
+#        register_error_listener: false
+#        register_error_handler: false
+
+#    monolog:
+#        handlers:
+#            sentry:
+#                type: sentry
+#                level: !php/const Monolog\Logger::ERROR
+#                hub_id: Sentry\State\HubInterface

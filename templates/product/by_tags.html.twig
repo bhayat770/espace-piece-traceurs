@@ -1,14 +1,72 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-    <h1>Produits de la catégorie {{ category.name }} avec le tag {{ tag }}</h1>
+    <div class="container">
+        <h1>Produits {{ tag|replace({'-': ' '}) }}</h1>
+    </div>
+    <div class="container">
+        <h3>Tags :</h3>
+        <div class="tags">
+        </div>
+    </div>
+    <main class="main">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <h3>Nos produits</h3>
+                    <br>
+                    <div class="row">
+                        {% for product in products %}
+                            <div class="col-6 col-sm-4 col-xl-3">
+                                <div class="product-default inner-quickview inner-icon">
+                                    <figure>
+                                        <a href="{{ path('app_product', {'slug': product.slug}) }}">
+                                            <img class="product-image" src="/assets/images/hp/{{ product.illustration }}" alt="product">
+                                        </a>
 
-    <ul>
-        {% for product in products %}
+                                    </figure>
 
-            <li>{{ product.name }}</li>
-            <a href="{{ path('app_product', {'slug': product.slug}) }}">{{ product.name }}</a>
-        {% endfor %}
-    </ul>
+                                    <div class="product-details">
+                                        <h3 class="product-title">
+                                            <a href="{{ path('app_product', {'slug': product.slug}) }}">{{ product.name }}</a>
+                                        </h3>
+                                        <div class="price-box">
+                                            {% if product.prixPromo is not null %}
+                                                <div class="label-group">
+                                                    <div class="product-label label-hot">PROMO</div>
+                                                </div>
+                                                <del class="product-price old" style="color: gray; text-decoration: line-through;">{{ (product.price / 100) | number_format(2, ',', '.') }} €</del>
+                                                <span class="product-price promo">{{ (product.prixPromo / 100) | number_format(2, ',', '.') }} €</span>
+                                            {% else %}
+                                                <span class="product-price">{{ (product.price / 100) | number_format(2, ',', '.') }} €</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="d-flex align-items-center justify-content-center">
+                            {{ knp_pagination_render(products) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    {% if products|length == 0 %}
+        <p>Aucun produit pour cette catégorie.</p>
+    {% endif %}
+
+    <div class="container">
+        <div class="row">
+            <div class="d-flex align-items-center justify-content-center">
+                {{ knp_pagination_render(products) }}
+            </div>
+        </div>
+    </div>
 
 {% endblock %}

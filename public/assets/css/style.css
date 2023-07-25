@@ -12123,13 +12123,14 @@ main .sticky-header .product-ratings:before {
 .prod-thumbnail {
   display: flex;
   display: -ms-flexbox;
-  margin: 8px 0 0;
+  margin: 10px 0 0;
   padding: 0 1px;
 }
 .prod-thumbnail > .owl-dot {
   flex: 0 0 25%;
   max-width: 25%;
   padding: 4px;
+  position: relative;
 }
 .prod-thumbnail.owl-theme .owl-nav [class*=owl-]:hover {
   color: #08C;

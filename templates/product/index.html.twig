@@ -37,11 +37,19 @@
                     <h3>Nos produits</h3>
                     <br>
                     <div class="row">
-                        {% for product in products %}
+                        {% for product in product_filtre %}
                             <div class="col-6 col-sm-4 col-xl-3">
                                 {% include 'product/single_product.html.twig' %}
                             </div>
                         {% endfor %}
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="d-flex align-items-center justify-content-center">
+                            {{ knp_pagination_render(products) }}
+                        </div>
                     </div>
                 </div>
             </div>

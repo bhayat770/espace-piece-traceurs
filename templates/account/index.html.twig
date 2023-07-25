@@ -13,20 +13,21 @@
     - Mes commandes<br/>
     <hr> #}
 
-    <!-- Plugins CSS File -->
-
 
     <!-- Main CSS File -->
     {% if not app.user %}
-    {% set redirectUrl = path('app_login') %}
-    {% set seconds = 5 %}
-    <script>
-        setTimeout(function() {
-            window.location.href = "{{ redirectUrl }}";
-        }, {{ seconds * 2 }});
-    </script>
-    <p>Redirection vers la page de connexion dans {{ seconds }} secondes...</p>
+    	{% set redirectUrl = path('app_login') %}
+        {% set seconds = 1 %}
+        	<script>
+          	  setTimeout(function() {
+            	    window.location.href = "{{ redirectUrl }}";
+            	}, {{ seconds * 1 }});
+        	</script>
+        <p>
+            Redirection vers la page de connexion dans {{ seconds }} secondes...
+        </p>
     {% else %}
+
 <main class="main">
     <div class="container">
         <br>
@@ -47,7 +48,296 @@
     <br>
     <br>
 
+    <main class="main">
 
+
+    <div class="container account-container custom-account-container">
+        <div class="row">
+            <div class="sidebar widget widget-dashboard mb-lg-0 mb-3 col-lg-3 order-0">
+                <h2 class="text-uppercase">Mon compte</h2>
+                <ul class="nav nav-tabs list flex-column mb-0" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="dashboard-tab" data-toggle="tab" href="#dashboard"
+                           role="tab" aria-controls="dashboard" aria-selected="true">Tableau de bord</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" id="order-tab" data-toggle="tab" href="#order" role="tab"
+                           aria-controls="order" aria-selected="true">Commandes</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" id="download-tab" data-toggle="tab" href="#download" role="tab"
+                           aria-controls="download" aria-selected="false">Téléchargements</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" id="address-tab" data-toggle="tab" href="#address" role="tab"
+                           aria-controls="address" aria-selected="false">Adresses</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" id="edit-tab" data-toggle="tab" href="#edit" role="tab"
+                           aria-controls="edit" aria-selected="false">Détails du compte</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="wishlist.html">Wishlist</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html">Déconnexion</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-9 order-lg-last order-1 tab-content">
+                <div class="tab-pane fade show active" id="dashboard" role="tabpanel">
+                    <div class="dashboard-content">
+                        <p>
+                            Bonjour <strong class="text-dark">{{ user.firstName }}</strong>
+                        </p>
+
+                        <p>
+                            From your account dashboard you can view your
+                            <a class="btn btn-link link-to-tab" href="#order">recent orders</a>,
+                            manage your
+                            <a class="btn btn-link link-to-tab" href="#address">shipping and billing
+                                addresses</a>, and
+                            <a class="btn btn-link link-to-tab" href="#edit">edit your password and account
+                                details.</a>
+                        </p>
+
+                        <div class="mb-4"></div>
+
+                        <div class="row row-lg">
+                            <div class="col-6 col-md-4">
+                                <div class="feature-box text-center pb-4">
+                                    <a href="#order" class="link-to-tab"><i
+                                                class="sicon-social-dropbox"></i></a>
+                                    <div class="feature-box-content">
+                                        <h3>Commandes</h3>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-6 col-md-4">
+                                <div class="feature-box text-center pb-4">
+                                    <a href="{{ path('app_account_password') }}" class="link-to-tab"><i
+                                                class="sicon-key"></i></a>
+                                    <div class=" feature-box-content">
+                                        <h3>Modifier mon mot de passe</h3>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-6 col-md-4">
+                                <div class="feature-box text-center pb-4">
+                                    <a href="#address" class="link-to-tab"><i
+                                                class="sicon-location-pin"></i></a>
+                                    <div class="feature-box-content">
+                                        <h3>ADRESSES</h3>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-6 col-md-4">
+                                <div class="feature-box text-center pb-4">
+                                    <a href="#edit" class="link-to-tab"><i class="icon-user-2"></i></a>
+                                    <div class="feature-box-content p-0">
+                                        <h3>Détails du compte</h3>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-6 col-md-4">
+                                <div class="feature-box text-center pb-4">
+                                    <a href="{{ path('app_wishlist') }}"><i class="sicon-heart"></i></a>
+                                    <div class="feature-box-content">
+                                        <h3>WISHLIST</h3>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-6 col-md-4">
+                                <div class="feature-box text-center pb-4">
+                                    <a href="login.html"><i class="sicon-logout"></i></a>
+                                    <div class="feature-box-content">
+                                        <h3>Déconnexion</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- End .row -->
+                    </div>
+                </div><!-- End .tab-pane -->
+
+                <div class="tab-pane fade " id="order" role="tabpanel">
+                    <div class="order-content">
+                        <h3 class="account-sub-title d-none d-md-block"><i
+                                    class="sicon-social-dropbox align-middle mr-3"></i>COMMANDES</h3>
+                        <div class="order-table-container text-center">
+                            {% if orders %}
+
+                                <table class="table table-order text-left">
+                                    <thead>
+                                    <tr>
+
+                                        <th class="order-id">COMMANDES</th>
+                                        <th class="order-date">DATE</th>
+                                        <th class="order-status">STATUS</th>
+                                        <th class="order-price">TOTAL</th>
+                                        <th class="order-action">ACTIONS</th>
+                                    </tr>
+                                    </thead>
+                                    {% for order in orders %}
+                                        <tr class="first_item ">
+                                            <td class="history_link bold footable-first-column">
+                                                <span class="footable-toggle"></span>
+                                                <a class="color-myaccount">
+                                                    {{ order.reference }}
+                                                </a>
+                                            </td>
+                                            <td data-value="20200819173703" class="history_date bold">
+                                                {{ order.createdAt | date('d-m-Y') }}
+                                            </td>
+                                            <td class="history_price" data-value="" style="display: table-cell;">
+                                            <span class="price">
+                                                {{ ((order.carrierPrice + order.getTotal) /100) |number_format(2,',','.') }} €
+                                            </span>
+                                            </td>
+                                            <td class="history_invoice" style="display: table-cell;">
+                                                {% if order.state ==1 %}
+                                                    Paiement accepté
+                                                {% elseif order.state ==2 %}
+                                                    Préparation en cours
+                                                {% elseif order.state == 3 %}
+                                                    Livraison en cours
+                                                {% endif %}
+                                            </td>
+                                            <td class="history_detail footable-last-column" style="display: table-cell;">
+                                                <a class="btn btn-default button button-small" href="{{ path('app_account_order_show', {'reference' : order.reference}) }}">
+                                                <span>
+                                                    Détails
+                                                    <i class="icon-chevron-right right">
+                                                    </i>
+                                                </span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            {% else %}
+                                <p>Vous n'avez pas encore passé de commandes. Explorez nos <a href="{{ path('app_products') }}">produits</a> dès à présent ! </p>
+                            {% endif %}
+
+                            <hr class="mt-0 mb-3" />
+
+                            <a href="category.html" class="btn btn-dark">Go Shop</a>
+                        </div>
+                    </div>
+                </div><!-- End .tab-pane -->
+
+
+                <div class="tab-pane fade" id="address" role="tabpanel">
+                    <h3 class="account-sub-title d-none d-md-block mb-1"><i class="sicon-location-pin align-middle mr-3"></i>Adresses</h3>
+                    <div class="addresses-content">
+                        <p class="mb-4">
+                            Ces adresses pourront être choisies lors de votre commande
+                        </p>
+
+                        <style>
+                            .custom-address-card {
+                                width: 350px;
+                                /* Ajoutez d'autres styles personnalisés si nécessaire */
+                            }
+                        </style>
+
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="row address-grid mt-5 mt-md-0">
+                                    <div class="col-md-12">
+                                        <div class="heading d-flex">
+                                            <h4 class="text-dark mb-0">
+                                                Adresses de livraison
+                                            </h4>
+                                        </div>
+                                    </div>
+
+                                    {% set addresses = app.user.adresses %}
+                                    {% set noAddresses = addresses | length == 0 %}
+
+                                    {% if noAddresses %}
+                                        <div class="col-md-12">
+                                            <p class="text-center">
+                                                Vous n'avez pas encore ajouté d'adresse à votre compte client. Pour en ajouter une, <a href="{{ path('app_account_adresse_add') }}">cliquez-ici</a> !
+                                            </p>
+                                        </div>
+                                    {% else %}
+                                        {% for address in addresses %}
+                                            <div class="col-md-4 mb-5">
+                                                <div class="card custom-address-card">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">{{ address.name }}</h5>
+                                                        <p class="card-text">
+                                                            {{ address.adresse }},<br>
+                                                            {{ address.postal }} - {{ address.ville }} - {{ address.pays }}
+                                                        </p>
+                                                        <div class="card-links">
+                                                            <a href="{{ path('app_account_adresse_edit', {'id' : address.id}) }}" class="btn btn-sm btn-primary">Modifier</a>
+                                                            <a href="{{ path('app_account_adresse_delete', {'id' : address.id }) }}" class="btn btn-sm btn-danger">Supprimer</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                    <a href="{{ path('app_account_adresse_add') }}" class="btn btn-default address-action link-to-tab">Ajouter une adresse</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                        <div class="tab-pane fade" id="edit" role="tabpanel">
+                    <h3 class="account-sub-title d-none d-md-block mt-0 pt-1 ml-1"><i
+                                class="icon-user-2 align-middle mr-3 pr-1"></i>Détails du compte</h3>
+                    <div class="account-content">
+                        <form action="#">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="acc-name">Prénom <span class="required">*</span></label>
+                                        <input type="text" class="form-control" placeholder="{{ user.firstname }}" id="acc-name" name="acc-name" required readonly />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="acc-lastname">Last name <span class="required">*</span></label>
+                                        <input type="text" class="form-control" placeholder="{{ user.lastname }}" id="acc-lastname" name="acc-lastname" required readonly />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <label for="acc-email">Adresse mail<span class="required">*</span></label>
+                                <input type="email" class="form-control" id="acc-email" name="acc-email" placeholder="{{ user.email }}" required readonly />
+                            </div>
+
+
+
+                            <div class="form-footer mt-3 mb-0">
+                                <button type="submit" class="btn btn-dark mr-0">
+                                    Save changes
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- End .tab-pane -->
+            </div><!-- End .tab-content -->
+        </div><!-- End .row -->
+    </div><!-- End .container -->
+
+
+
+{#
 
     <div class="container account-container custom-account-container">
         <div class="row">
@@ -326,19 +616,13 @@
                             <div class="form-group mb-4">
                                 <label for="acc-email">Adresse e-mail </label>
                                 <input type="email" class="form-control" id="acc-email" name="acc-email"
-                                       placeholder="{{ user.email }}" required readonly />
+                                       placeholder="{{ u }}" required readonly />
                             </div>
                         </form>
                     </div>
                 </div><!-- End .tab-pane -->
 
             </div><!-- End .tab-content -->
-        </div><!-- End .row -->
-    </div><!-- End .container -->
+        </div><!-- End .row -->#}
 {% endif %}
-</main><!-- End .main -->
-
-
-
-
 {% endblock %}

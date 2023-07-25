@@ -79,12 +79,10 @@ class SearchType extends AbstractType
         ]);
     }
 
-
     public function getBlockPrefix()
     {
         return '';
     }
-
 
 
 }

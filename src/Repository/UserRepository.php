@@ -2,7 +2,9 @@
 
 namespace App\Repository;
 
+use App\Entity\Product;
 use App\Entity\User;
+use App\Entity\Wishlist;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -91,7 +93,14 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getQuery()
             ->getOneOrNullResult();
     }
-
+    public function addWishlistProduct(Wishlist $wishlist, Product $product)
+    {
+        if (!$wishlist->getProduct()->contains($product)) {
+            $wishlist->addProduct($product);
+            $this->_em->persist($wishlist);
+            $this->_em->flush();
+        }
+    }
 
 
 //    /**

@@ -5,6 +5,38 @@
 
 {% block content %}
 
+    <style>
+        .page-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .product-list {
+            margin-top: 40px;
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .table {
+            width: 100%;
+        }
+        .table th, .table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        .table th {
+            text-align: left;
+        }
+        .table td a {
+            color: #000;
+            text-decoration: none;
+        }
+        .table td a.btn {
+            margin-right: 10px;
+        }
+
+    </style>
     <div class="container">
         <br>
         <nav aria-label="breadcrumb">
@@ -17,21 +49,34 @@
                 <li class="breadcrumb-item">
                     <a href="{{ path('app_products') }}">Traceurs</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">{{ traceur.nom }}</li>
+                <li class="breadcrumb-item">
+                    {{ traceur.marque }}
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    {{ traceur.nom|replace({'-': ' '}) }}
+                </li>
             </ol>
         </nav>
     </div>
+    <br>
 
     <div class="container">
-        <h1 class="page-title">{{ traceur.nom }}</h1>
-    </div>
+        <h1 class="page-title">
+            {{ traceur.nom|replace({'-': ' '}) }}
+        </h1>
 
+    <img src="/assets/images/hp/{{ traceur.photo }}" alt="assets/images/hp/{{ traceur.photo }}">
+        <br>
+    </div>
     <div class="container">
         <div class="product-list">
-            <h2 class="section-title">Produits contenant le tag "{{ traceur.nom }}"</h2>
+
+            <h2 class="section-title">
+                Produits compatibles avec {{ traceur.nom|replace({'-': ' '}) }}
+            </h2>
         </div>
     </div>
-
+<br>
     <div class="container">
         <table class="table">
             <thead>
@@ -39,29 +84,33 @@
                 <th scope="col">Nom</th>
                 <th scope="col">Prix</th>
                 <th scope="col"></th>
-                <th scope="col">Action</th>
             </tr>
             </thead>
             <tbody>
-            {% for product in products %}
-                <tr>
-                    <td><img src="assets/images/hp/{{ product.illustration }}" alt=""></td>
-                    <td>{{ product.name }}</td>
-                    <td>
-                        {% if product.prixPromo is not null %}
-                            <del class="old-price">{{ (product.price / 100) | number_format(2, ',', '.') }} €</del>
-                            <span class="promo-price">{{ (product.prixPromo / 100) | number_format(2, ',', '.') }} €</span>
-                        {% else %}
-                            {{ (product.price / 100) | number_format(2, ',', '.') }} €
-                        {% endif %}
-                    </td>
-                    <td></td>
-                    <td>
-                        <a href="{{ path('app_add_to_cart', {'id': product.id}) }}" class="btn btn-primary">Ajouter au panier</a>
-                        <a href="{{ path('app_product', {'slug': product.slug}) }}" class="btn btn-secondary">Voir les détails</a>
-                    </td>
-                </tr>
-            {% endfor %}
+                {% for product in products %}
+                    <tr>
+                        <td>
+                            {{ product.name }}
+                        </td>
+                        <td>
+                            {% if product.prixPromo is not null %}
+                                <span class="promo-price">
+                                    {{ (product.prixPromo / 100) | number_format(2, ',', '.') }} €
+                                </span>
+                            {% else %}
+                                {{ (product.price / 100) | number_format(2, ',', '.') }} €
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ path('app_add_to_cart', {'id': product.id}) }}" class="btn btn-primary">
+                                Ajouter au panier
+                            </a>
+                            <a href="{{ path('app_product', {'slug': product.slug}) }}" class="btn btn-secondary">
+                                Voir les détails
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

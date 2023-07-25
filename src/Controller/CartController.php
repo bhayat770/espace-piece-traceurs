@@ -100,5 +100,14 @@ class CartController extends AbstractController
         return $this->redirectToRoute('app_cart');
     }
 
+    #[Route('/add-to-cart-ajax', name: 'app_add_to_cart_ajax', methods: ['POST'])]
+    public function addToCartAjax(Request $request): Response
+    {
+        $productId = $request->request->get('productId');
+
+        // Ajouter le produit au panier (implémentation de votre logique d'ajout au panier)
+
+        return new Response('Produit ajouté au panier !', Response::HTTP_OK);
+    }
 
 }

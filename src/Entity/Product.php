@@ -99,11 +99,17 @@ class Product
     #[ORM\Column]
     private ?bool $bestSellers = null;
 
-    #[ORM\OneToMany(mappedBy: 'product', targetEntity: Comment::class)]
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: Comment::class, cascade: ['remove'])]
     private Collection $comments;
 
     #[ORM\ManyToMany(targetEntity: Traceurs::class, mappedBy: 'Product')]
     private Collection $traceurs;
+
+    #[ORM\Column(length: 255)]
+    private ?string $etat = null;
+
+    #[ORM\ManyToMany(targetEntity: Wishlist::class, mappedBy: 'product')]
+    private Collection $wishlists;
 
 
     public function getId(): ?int
@@ -186,6 +192,7 @@ class Product
         $this->orderDetail = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->traceurs = new ArrayCollection();
+        $this->wishlists = new ArrayCollection();
     }
 
 
@@ -549,6 +556,45 @@ public function removeTraceur(Traceurs $traceur): self
 {
     if ($this->traceurs->removeElement($traceur)) {
         $traceur->removeProduct($this);
+    }
+
+    return $this;
+}
+
+public function getEtat(): ?string
+{
+    return $this->etat;
+}
+
+public function setEtat(string $etat): self
+{
+    $this->etat = $etat;
+
+    return $this;
+}
+
+/**
+ * @return Collection<int, Wishlist>
+ */
+public function getWishlists(): Collection
+{
+    return $this->wishlists;
+}
+
+public function addWishlist(Wishlist $wishlist): self
+{
+    if (!$this->wishlists->contains($wishlist)) {
+        $this->wishlists->add($wishlist);
+        $wishlist->addProduct($this);
+    }
+
+    return $this;
+}
+
+public function removeWishlist(Wishlist $wishlist): self
+{
+    if ($this->wishlists->removeElement($wishlist)) {
+        $wishlist->removeProduct($this);
     }
 
     return $this;
